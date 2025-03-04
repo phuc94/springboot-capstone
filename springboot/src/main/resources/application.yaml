@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: capstone
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+logging:
+  level:
+    org:
+      hibernate:
+        stat: debug

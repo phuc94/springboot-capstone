@@ -1,4 +1,4 @@
-### SPRING BOOT
+##### SPRING BOOT
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -104,7 +104,7 @@ local.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse
 
-### NEXTJS
+##### NEXTJS
 # build output
 dist
 !.github/actions/*/dist
@@ -166,3 +166,26 @@ test-timings.json
 
 # Storybook
 *storybook.log
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
