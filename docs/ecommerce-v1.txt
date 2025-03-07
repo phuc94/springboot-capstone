@@ -1,0 +1,217 @@
+Table games {
+  id interger
+  title varchar
+  price double
+  publisher_id interger
+  images varchar
+  play_mode varchar
+  realease_date timestamp
+  size double
+  is_dlc boolean
+  game_dlc_id interger
+  esrb_rating esrb_rating
+  developer_id interger
+  description_id interger
+  no_player_id interger
+}
+
+enum esrb_rating {
+  EVERYONE
+  EVERYONE_10
+  TEEN
+  MATURE
+  ADULT
+  PENDING
+  PENDING_17
+}
+
+Table support_language {
+  id interger
+  language varchar
+}
+
+Table game_support_language {
+  id interger
+  support_language_id interger
+  game_id interger
+}
+
+Table genre {
+  id interger
+  genre varchar
+}
+
+Table game_genre {
+  id interger
+  genre_id interger
+  game_id interger
+}
+
+Table no_player {
+  id interger
+  number varchar
+}
+
+Table medias {
+  id interger
+  product_id interger
+  media_type media_type
+  url varchar
+  is_primary bool
+}
+enum media_type {
+  IMAGE
+  VIDEO
+}
+
+Table game_description {
+  id interger
+  descrition varchar
+}
+
+Table publishers {
+  id interger
+  name varchar
+}
+
+Table publisher_sale {
+  id interger
+  sale_id interger
+  publisher_id interger
+}
+
+Table developer {
+  id interger
+  name varchar
+}
+
+Table play_mode {
+  id interger
+  name varchar
+}
+
+Table game_play_mode {
+  id interger
+  game_id interger
+  play_mode_id interger
+}
+
+Table users {
+  id interger
+  email varchar
+  password varchar
+  name varchar
+  address varchar
+}
+
+Table orders {
+  id interger
+  user_id interger
+  order_status order_status
+  total_amount double
+  payment_method payment_method
+  payment_status payment_status
+  discount_amount double
+  original_amount double
+}
+enum order_status {
+  PENDING
+  PROCESSING
+  CANCELLED
+  FAILED
+}
+enum payment_method {
+  STRIPE
+}
+enum payment_status {
+  PENDING
+  PAID
+  FAIL
+}
+
+Table order_item {
+  id interger
+  product_id interger
+  order_id interger
+}
+enum item_type {
+  GAME
+  MERCHANDISE
+}
+
+Table sales {
+  id interger
+  start_date timestamp
+  end_date timestamp
+}
+
+Table coupons {
+  id interger
+  code varchar
+  discount_amount interger
+  usage_limit interger
+  used_count interger
+  start_date timestamp
+  end_date timestamp
+  status coupon_status
+}
+enum coupon_status {
+  ACTIVE
+  DISABLE
+  EXPIRE
+}
+
+Table order_coupon {
+  id interger
+  coupon_id interger
+  order_id interger
+}
+
+Table carts {
+  id interger
+  user_id interger
+}
+
+Table cart_items {
+  id interger
+  cart_id interger
+  product_id interger
+}
+
+Table wishlist {
+  id interger
+  user_id interger
+}
+
+Table wishlist_item {
+  id interger
+  product_id interger
+  wishlist_id interger
+}
+
+
+Ref: publishers.id < games.publisher_id
+Ref: games.description_id - game_description.id
+Ref: games.id - game_play_mode.game_id
+Ref: play_mode.id - game_play_mode.play_mode_id
+Ref: no_player.id < games.no_player_id
+Ref: genre.id - game_genre.game_id
+Ref: games.id - game_genre.genre_id
+Ref: developer.id < games.developer_id
+Ref: games.id - game_support_language.game_id
+Ref: support_language.id - game_support_language.support_language_id
+Ref: games.game_dlc_id - games.id
+Ref: order_item.order_id - orders.id 
+Ref: order_item.product_id - games.id
+Ref: order_coupon.coupon_id - coupons.id
+Ref: order_coupon.order_id - orders.id
+Ref: carts.user_id - users.id
+Ref: publishers.id - publisher_sale.publisher_id 
+Ref: publisher_sale.sale_id - sales.id
+Ref: medias.product_id - games.id
+Ref: orders.user_id - users.id
+Ref: cart_items.cart_id - carts.id
+Ref: cart_items.product_id - games.id
+Ref: wishlist.user_id - users.id
+Ref: wishlist_item.wishlist_id - wishlist.id
+Ref: wishlist_item.product_id - games.id
