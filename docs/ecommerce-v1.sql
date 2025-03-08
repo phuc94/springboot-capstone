@@ -41,19 +41,27 @@ CREATE TYPE "coupon_status" AS ENUM (
   'EXPIRE'
 );
 
+CREATE TYPE "cart_status" AS ENUM (
+  'ACTIVE',
+  'CHECKED_OUT',
+  'EXPIRED',
+  'ABANDONED'
+);
+
 CREATE TABLE "games" (
   "id" interger PRIMARY KEY,
-  "is_dlc" boolean,
+  "is_dlc" boolean NOT NULL DEFAULT false,
   "game_dlc_id" interger,
   "title" varchar NOT NULL,
   "price" double,
   "realease_date" timestamp,
-  "size" double,
+  "size" interger,
   "esrb_rating" esrb_rating,
+  "is_deleted" bool,
   "developer_id" interger,
   "description_id" interger,
-  "no_player_id" interger,
-  "publisher_id" interger
+  "publisher_id" interger,
+  "no_player_id" interger
 );
 
 CREATE TABLE "support_language" (
@@ -157,6 +165,7 @@ CREATE TABLE "sales" (
 
 CREATE TABLE "coupons" (
   "id" interger PRIMARY KEY,
+  "type_id" integer NOT NULL,
   "code" varchar NOT NULL,
   "discount_amount" interger,
   "usage_limit" interger,
@@ -164,6 +173,11 @@ CREATE TABLE "coupons" (
   "start_date" timestamp,
   "end_date" timestamp,
   "status" coupon_status
+);
+
+CREATE TABLE "coupon_types" (
+  "id" interger PRIMARY KEY,
+  "type" varchar NOT NULL
 );
 
 CREATE TABLE "order_coupon" (
@@ -174,7 +188,9 @@ CREATE TABLE "order_coupon" (
 
 CREATE TABLE "carts" (
   "id" interger PRIMARY KEY,
-  "user_id" interger NOT NULL
+  "user_id" interger,
+  "session_id" interger,
+  "status" cart_status
 );
 
 CREATE TABLE "cart_items" (
@@ -259,3 +275,5 @@ ALTER TABLE "users" ADD FOREIGN KEY ("id") REFERENCES "wishlist" ("user_id");
 ALTER TABLE "wishlist" ADD FOREIGN KEY ("id") REFERENCES "wishlist_item" ("wishlist_id");
 
 ALTER TABLE "games" ADD FOREIGN KEY ("id") REFERENCES "wishlist_item" ("product_id");
+
+ALTER TABLE "coupon_types" ADD FOREIGN KEY ("id") REFERENCES "coupons" ("type_id");

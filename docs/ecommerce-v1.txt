@@ -1,3 +1,6 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
 enum esrb_rating {
   EVERYONE
   EVERYONE_10
@@ -34,20 +37,27 @@ enum coupon_status {
   DISABLE
   EXPIRE
 }
+enum cart_status {
+  ACTIVE
+  CHECKED_OUT
+  EXPIRED
+  ABANDONED
+}
 
 Table games {
   id interger pk
-  is_dlc boolean
+  is_dlc boolean  [not null, default: false]
   game_dlc_id interger
   title varchar [not null]
   price double
   realease_date timestamp
-  size double
+  size interger
   esrb_rating esrb_rating
+  is_deleted bool
   developer_id interger
   description_id interger
-  no_player_id interger
   publisher_id interger
+  no_player_id interger
 }
 
 Table support_language {
@@ -166,6 +176,7 @@ Table sales {
 
 Table coupons {
   id interger pk
+  type_id integer [not null]
   code varchar [not null]
   discount_amount interger
   usage_limit interger
@@ -173,6 +184,10 @@ Table coupons {
   start_date timestamp
   end_date timestamp
   status coupon_status
+}
+Table coupon_types {
+  id interger pk
+  type varchar [not null]
 }
 
 Table order_coupon {
@@ -186,7 +201,9 @@ Table order_coupon {
 
 Table carts {
   id interger pk
-  user_id interger [not null]
+  user_id interger
+  session_id interger
+  status cart_status
 }
 
 Table cart_items {
@@ -238,4 +255,5 @@ Ref: cart_items.product_id - games.id
 Ref: wishlist.user_id - users.id
 Ref: wishlist_item.wishlist_id - wishlist.id
 Ref: wishlist_item.product_id - games.id
+Ref: coupons.type_id - coupon_types.id
 
