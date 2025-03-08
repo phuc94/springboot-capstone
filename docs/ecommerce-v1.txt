@@ -39,118 +39,134 @@ Table games {
   id interger pk
   is_dlc boolean
   game_dlc_id interger
-  title varchar
+  title varchar [not null]
   price double
-  publisher_id interger
   realease_date timestamp
   size double
   esrb_rating esrb_rating
   developer_id interger
   description_id interger
   no_player_id interger
+  publisher_id interger
 }
 
 Table support_language {
   id interger pk
-  language varchar
+  language varchar [not null]
 }
 
 Table game_support_language {
   id interger pk
-  support_language_id interger
-  game_id interger
+  support_language_id interger [not null]
+  game_id interger [not null]
+  indexes {
+    (support_language_id, game_id) [unique]
+  }
 }
 
 Table genre {
   id interger pk
-  genre varchar
+  genre varchar [not null]
 }
 
 Table game_genre {
   id interger pk
-  genre_id interger
-  game_id interger
+  genre_id interger [not null]
+  game_id interger [not null]
+  indexes {
+    (genre_id, game_id) [unique]
+  }
 }
 
 Table no_player {
   id interger pk
-  number varchar
+  number varchar [not null]
 }
 
 Table medias {
   id interger pk
-  product_id interger
-  media_type media_type
-  url varchar
-  is_primary bool
+  product_id interger [not null]
+  media_type media_type [not null]
+  url varchar [not null]
+  is_primary bool [not null, default: false]
 }
 
 Table game_description {
   id interger pk
-  descrition varchar
+  descrition varchar [not null]
 }
 
 Table publishers {
   id interger pk
-  name varchar
+  name varchar [not null]
 }
 
 Table publisher_sale {
   id interger pk
-  sale_id interger
-  publisher_id interger
+  sale_id interger  [not null]
+  publisher_id interger  [not null]
+  indexes {
+    (sale_id, publisher_id) [unique]
+  }
 }
 
 Table developer {
   id interger pk
-  name varchar
+  name varchar [not null]
 }
 
 Table play_mode {
   id interger pk
-  name varchar
+  name varchar [not null]
 }
 
 Table game_play_mode {
   id interger pk
-  game_id interger
-  play_mode_id interger
+  game_id interger [not null]
+  play_mode_id interger [not null]
+  indexes {
+    (game_id, play_mode_id) [unique]
+  }
 }
 
 Table users {
   id interger pk
-  email varchar
-  password varchar
+  email varchar [not null]
+  password varchar [not null]
   name varchar
   address varchar
 }
 
 Table orders {
   id interger pk
-  user_id interger
-  order_status order_status
-  total_amount double
-  payment_method payment_method
-  payment_status payment_status
-  discount_amount double
+  user_id interger [not null]
+  order_status order_status [not null]
+  payment_method payment_method [not null]
+  payment_status payment_status [not null]
   original_amount double
+  discount_amount double
+  total_amount double [not null]
 }
 
 Table order_item {
   id interger pk
-  product_id interger
-  order_id interger
+  product_id interger [not null]
+  order_id interger [not null]
+  indexes {
+    (product_id, order_id) [unique]
+  }
 }
 
 Table sales {
   id interger pk
   start_date timestamp
   end_date timestamp
+  amount double [not null]
 }
 
 Table coupons {
   id interger pk
-  code varchar
+  code varchar [not null]
   discount_amount interger
   usage_limit interger
   used_count interger
@@ -161,30 +177,39 @@ Table coupons {
 
 Table order_coupon {
   id interger pk
-  coupon_id interger
-  order_id interger
+  coupon_id interger [not null]
+  order_id interger [not null]
+  indexes {
+    (coupon_id, order_id) [unique]
+  }
 }
 
 Table carts {
   id interger pk
-  user_id interger
+  user_id interger [not null]
 }
 
 Table cart_items {
   id interger pk
-  cart_id interger
-  product_id interger
+  cart_id interger [not null]
+  product_id interger [not null]
+  indexes {
+    (cart_id, product_id) [unique]
+  }
 }
 
 Table wishlist {
   id interger pk
-  user_id interger
+  user_id interger [not null]
 }
 
 Table wishlist_item {
   id interger pk
-  product_id interger
-  wishlist_id interger
+  product_id interger [not null]
+  wishlist_id interger [not null]
+  indexes {
+    (wishlist_id, product_id) [unique]
+  }
 }
 
 
@@ -213,3 +238,4 @@ Ref: cart_items.product_id - games.id
 Ref: wishlist.user_id - users.id
 Ref: wishlist_item.wishlist_id - wishlist.id
 Ref: wishlist_item.product_id - games.id
+

@@ -45,118 +45,119 @@ CREATE TABLE "games" (
   "id" interger PRIMARY KEY,
   "is_dlc" boolean,
   "game_dlc_id" interger,
-  "title" varchar,
+  "title" varchar NOT NULL,
   "price" double,
-  "publisher_id" interger,
   "realease_date" timestamp,
   "size" double,
   "esrb_rating" esrb_rating,
   "developer_id" interger,
   "description_id" interger,
-  "no_player_id" interger
+  "no_player_id" interger,
+  "publisher_id" interger
 );
 
 CREATE TABLE "support_language" (
   "id" interger PRIMARY KEY,
-  "language" varchar
+  "language" varchar NOT NULL
 );
 
 CREATE TABLE "game_support_language" (
   "id" interger PRIMARY KEY,
-  "support_language_id" interger,
-  "game_id" interger
+  "support_language_id" interger NOT NULL,
+  "game_id" interger NOT NULL
 );
 
 CREATE TABLE "genre" (
   "id" interger PRIMARY KEY,
-  "genre" varchar
+  "genre" varchar NOT NULL
 );
 
 CREATE TABLE "game_genre" (
   "id" interger PRIMARY KEY,
-  "genre_id" interger,
-  "game_id" interger
+  "genre_id" interger NOT NULL,
+  "game_id" interger NOT NULL
 );
 
 CREATE TABLE "no_player" (
   "id" interger PRIMARY KEY,
-  "number" varchar
+  "number" varchar NOT NULL
 );
 
 CREATE TABLE "medias" (
   "id" interger PRIMARY KEY,
-  "product_id" interger,
-  "media_type" media_type,
-  "url" varchar,
-  "is_primary" bool
+  "product_id" interger NOT NULL,
+  "media_type" media_type NOT NULL,
+  "url" varchar NOT NULL,
+  "is_primary" bool NOT NULL DEFAULT false
 );
 
 CREATE TABLE "game_description" (
   "id" interger PRIMARY KEY,
-  "descrition" varchar
+  "descrition" varchar NOT NULL
 );
 
 CREATE TABLE "publishers" (
   "id" interger PRIMARY KEY,
-  "name" varchar
+  "name" varchar NOT NULL
 );
 
 CREATE TABLE "publisher_sale" (
   "id" interger PRIMARY KEY,
-  "sale_id" interger,
-  "publisher_id" interger
+  "sale_id" interger NOT NULL,
+  "publisher_id" interger NOT NULL
 );
 
 CREATE TABLE "developer" (
   "id" interger PRIMARY KEY,
-  "name" varchar
+  "name" varchar NOT NULL
 );
 
 CREATE TABLE "play_mode" (
   "id" interger PRIMARY KEY,
-  "name" varchar
+  "name" varchar NOT NULL
 );
 
 CREATE TABLE "game_play_mode" (
   "id" interger PRIMARY KEY,
-  "game_id" interger,
-  "play_mode_id" interger
+  "game_id" interger NOT NULL,
+  "play_mode_id" interger NOT NULL
 );
 
 CREATE TABLE "users" (
   "id" interger PRIMARY KEY,
-  "email" varchar,
-  "password" varchar,
+  "email" varchar NOT NULL,
+  "password" varchar NOT NULL,
   "name" varchar,
   "address" varchar
 );
 
 CREATE TABLE "orders" (
   "id" interger PRIMARY KEY,
-  "user_id" interger,
-  "order_status" order_status,
-  "total_amount" double,
-  "payment_method" payment_method,
-  "payment_status" payment_status,
+  "user_id" interger NOT NULL,
+  "order_status" order_status NOT NULL,
+  "payment_method" payment_method NOT NULL,
+  "payment_status" payment_status NOT NULL,
+  "original_amount" double,
   "discount_amount" double,
-  "original_amount" double
+  "total_amount" double NOT NULL
 );
 
 CREATE TABLE "order_item" (
   "id" interger PRIMARY KEY,
-  "product_id" interger,
-  "order_id" interger
+  "product_id" interger NOT NULL,
+  "order_id" interger NOT NULL
 );
 
 CREATE TABLE "sales" (
   "id" interger PRIMARY KEY,
   "start_date" timestamp,
-  "end_date" timestamp
+  "end_date" timestamp,
+  "amount" double NOT NULL
 );
 
 CREATE TABLE "coupons" (
   "id" interger PRIMARY KEY,
-  "code" varchar,
+  "code" varchar NOT NULL,
   "discount_amount" interger,
   "usage_limit" interger,
   "used_count" interger,
@@ -167,31 +168,47 @@ CREATE TABLE "coupons" (
 
 CREATE TABLE "order_coupon" (
   "id" interger PRIMARY KEY,
-  "coupon_id" interger,
-  "order_id" interger
+  "coupon_id" interger NOT NULL,
+  "order_id" interger NOT NULL
 );
 
 CREATE TABLE "carts" (
   "id" interger PRIMARY KEY,
-  "user_id" interger
+  "user_id" interger NOT NULL
 );
 
 CREATE TABLE "cart_items" (
   "id" interger PRIMARY KEY,
-  "cart_id" interger,
-  "product_id" interger
+  "cart_id" interger NOT NULL,
+  "product_id" interger NOT NULL
 );
 
 CREATE TABLE "wishlist" (
   "id" interger PRIMARY KEY,
-  "user_id" interger
+  "user_id" interger NOT NULL
 );
 
 CREATE TABLE "wishlist_item" (
   "id" interger PRIMARY KEY,
-  "product_id" interger,
-  "wishlist_id" interger
+  "product_id" interger NOT NULL,
+  "wishlist_id" interger NOT NULL
 );
+
+CREATE UNIQUE INDEX ON "game_support_language" ("support_language_id", "game_id");
+
+CREATE UNIQUE INDEX ON "game_genre" ("genre_id", "game_id");
+
+CREATE UNIQUE INDEX ON "publisher_sale" ("sale_id", "publisher_id");
+
+CREATE UNIQUE INDEX ON "game_play_mode" ("game_id", "play_mode_id");
+
+CREATE UNIQUE INDEX ON "order_item" ("product_id", "order_id");
+
+CREATE UNIQUE INDEX ON "order_coupon" ("coupon_id", "order_id");
+
+CREATE UNIQUE INDEX ON "cart_items" ("cart_id", "product_id");
+
+CREATE UNIQUE INDEX ON "wishlist_item" ("wishlist_id", "product_id");
 
 ALTER TABLE "games" ADD FOREIGN KEY ("publisher_id") REFERENCES "publishers" ("id");
 
