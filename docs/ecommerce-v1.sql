@@ -42,16 +42,14 @@ CREATE TYPE "coupon_status" AS ENUM (
 );
 
 CREATE TABLE "games" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
+  "is_dlc" boolean,
+  "game_dlc_id" interger,
   "title" varchar,
   "price" double,
   "publisher_id" interger,
-  "images" varchar,
-  "play_mode" varchar,
   "realease_date" timestamp,
   "size" double,
-  "is_dlc" boolean,
-  "game_dlc_id" interger,
   "esrb_rating" esrb_rating,
   "developer_id" interger,
   "description_id" interger,
@@ -59,34 +57,34 @@ CREATE TABLE "games" (
 );
 
 CREATE TABLE "support_language" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "language" varchar
 );
 
 CREATE TABLE "game_support_language" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "support_language_id" interger,
   "game_id" interger
 );
 
 CREATE TABLE "genre" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "genre" varchar
 );
 
 CREATE TABLE "game_genre" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "genre_id" interger,
   "game_id" interger
 );
 
 CREATE TABLE "no_player" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "number" varchar
 );
 
 CREATE TABLE "medias" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "product_id" interger,
   "media_type" media_type,
   "url" varchar,
@@ -94,39 +92,39 @@ CREATE TABLE "medias" (
 );
 
 CREATE TABLE "game_description" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "descrition" varchar
 );
 
 CREATE TABLE "publishers" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "name" varchar
 );
 
 CREATE TABLE "publisher_sale" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "sale_id" interger,
   "publisher_id" interger
 );
 
 CREATE TABLE "developer" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "name" varchar
 );
 
 CREATE TABLE "play_mode" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "name" varchar
 );
 
 CREATE TABLE "game_play_mode" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "game_id" interger,
   "play_mode_id" interger
 );
 
 CREATE TABLE "users" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "email" varchar,
   "password" varchar,
   "name" varchar,
@@ -134,7 +132,7 @@ CREATE TABLE "users" (
 );
 
 CREATE TABLE "orders" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "user_id" interger,
   "order_status" order_status,
   "total_amount" double,
@@ -145,19 +143,19 @@ CREATE TABLE "orders" (
 );
 
 CREATE TABLE "order_item" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "product_id" interger,
   "order_id" interger
 );
 
 CREATE TABLE "sales" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "start_date" timestamp,
   "end_date" timestamp
 );
 
 CREATE TABLE "coupons" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "code" varchar,
   "discount_amount" interger,
   "usage_limit" interger,
@@ -168,29 +166,29 @@ CREATE TABLE "coupons" (
 );
 
 CREATE TABLE "order_coupon" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "coupon_id" interger,
   "order_id" interger
 );
 
 CREATE TABLE "carts" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "user_id" interger
 );
 
 CREATE TABLE "cart_items" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "cart_id" interger,
   "product_id" interger
 );
 
 CREATE TABLE "wishlist" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "user_id" interger
 );
 
 CREATE TABLE "wishlist_item" (
-  "id" interger,
+  "id" interger PRIMARY KEY,
   "product_id" interger,
   "wishlist_id" interger
 );

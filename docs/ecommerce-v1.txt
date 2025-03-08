@@ -1,20 +1,3 @@
-Table games {
-  id interger
-  title varchar
-  price double
-  publisher_id interger
-  images varchar
-  play_mode varchar
-  realease_date timestamp
-  size double
-  is_dlc boolean
-  game_dlc_id interger
-  esrb_rating esrb_rating
-  developer_id interger
-  description_id interger
-  no_player_id interger
-}
-
 enum esrb_rating {
   EVERYONE
   EVERYONE_10
@@ -24,95 +7,9 @@ enum esrb_rating {
   PENDING
   PENDING_17
 }
-
-Table support_language {
-  id interger
-  language varchar
-}
-
-Table game_support_language {
-  id interger
-  support_language_id interger
-  game_id interger
-}
-
-Table genre {
-  id interger
-  genre varchar
-}
-
-Table game_genre {
-  id interger
-  genre_id interger
-  game_id interger
-}
-
-Table no_player {
-  id interger
-  number varchar
-}
-
-Table medias {
-  id interger
-  product_id interger
-  media_type media_type
-  url varchar
-  is_primary bool
-}
 enum media_type {
   IMAGE
   VIDEO
-}
-
-Table game_description {
-  id interger
-  descrition varchar
-}
-
-Table publishers {
-  id interger
-  name varchar
-}
-
-Table publisher_sale {
-  id interger
-  sale_id interger
-  publisher_id interger
-}
-
-Table developer {
-  id interger
-  name varchar
-}
-
-Table play_mode {
-  id interger
-  name varchar
-}
-
-Table game_play_mode {
-  id interger
-  game_id interger
-  play_mode_id interger
-}
-
-Table users {
-  id interger
-  email varchar
-  password varchar
-  name varchar
-  address varchar
-}
-
-Table orders {
-  id interger
-  user_id interger
-  order_status order_status
-  total_amount double
-  payment_method payment_method
-  payment_status payment_status
-  discount_amount double
-  original_amount double
 }
 enum order_status {
   PENDING
@@ -128,25 +25,131 @@ enum payment_status {
   PAID
   FAIL
 }
-
-Table order_item {
-  id interger
-  product_id interger
-  order_id interger
-}
 enum item_type {
   GAME
   MERCHANDISE
 }
+enum coupon_status {
+  ACTIVE
+  DISABLE
+  EXPIRE
+}
+
+Table games {
+  id interger pk
+  is_dlc boolean
+  game_dlc_id interger
+  title varchar
+  price double
+  publisher_id interger
+  realease_date timestamp
+  size double
+  esrb_rating esrb_rating
+  developer_id interger
+  description_id interger
+  no_player_id interger
+}
+
+Table support_language {
+  id interger pk
+  language varchar
+}
+
+Table game_support_language {
+  id interger pk
+  support_language_id interger
+  game_id interger
+}
+
+Table genre {
+  id interger pk
+  genre varchar
+}
+
+Table game_genre {
+  id interger pk
+  genre_id interger
+  game_id interger
+}
+
+Table no_player {
+  id interger pk
+  number varchar
+}
+
+Table medias {
+  id interger pk
+  product_id interger
+  media_type media_type
+  url varchar
+  is_primary bool
+}
+
+Table game_description {
+  id interger pk
+  descrition varchar
+}
+
+Table publishers {
+  id interger pk
+  name varchar
+}
+
+Table publisher_sale {
+  id interger pk
+  sale_id interger
+  publisher_id interger
+}
+
+Table developer {
+  id interger pk
+  name varchar
+}
+
+Table play_mode {
+  id interger pk
+  name varchar
+}
+
+Table game_play_mode {
+  id interger pk
+  game_id interger
+  play_mode_id interger
+}
+
+Table users {
+  id interger pk
+  email varchar
+  password varchar
+  name varchar
+  address varchar
+}
+
+Table orders {
+  id interger pk
+  user_id interger
+  order_status order_status
+  total_amount double
+  payment_method payment_method
+  payment_status payment_status
+  discount_amount double
+  original_amount double
+}
+
+Table order_item {
+  id interger pk
+  product_id interger
+  order_id interger
+}
 
 Table sales {
-  id interger
+  id interger pk
   start_date timestamp
   end_date timestamp
 }
 
 Table coupons {
-  id interger
+  id interger pk
   code varchar
   discount_amount interger
   usage_limit interger
@@ -155,36 +158,31 @@ Table coupons {
   end_date timestamp
   status coupon_status
 }
-enum coupon_status {
-  ACTIVE
-  DISABLE
-  EXPIRE
-}
 
 Table order_coupon {
-  id interger
+  id interger pk
   coupon_id interger
   order_id interger
 }
 
 Table carts {
-  id interger
+  id interger pk
   user_id interger
 }
 
 Table cart_items {
-  id interger
+  id interger pk
   cart_id interger
   product_id interger
 }
 
 Table wishlist {
-  id interger
+  id interger pk
   user_id interger
 }
 
 Table wishlist_item {
-  id interger
+  id interger pk
   product_id interger
   wishlist_id interger
 }
