@@ -32,5 +32,4 @@ public class Games {
     private Publishers publisher;
     private Developers developer;
     private NoPlayers noPlayer;
-
 }
