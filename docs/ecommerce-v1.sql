@@ -165,14 +165,14 @@ CREATE TABLE "sales" (
 
 CREATE TABLE "coupons" (
   "id" interger PRIMARY KEY,
-  "type_id" integer NOT NULL,
   "code" varchar NOT NULL,
   "discount_amount" interger,
   "usage_limit" interger,
   "used_count" interger,
   "start_date" timestamp,
   "end_date" timestamp,
-  "status" coupon_status
+  "status" coupon_status,
+  "type_id" integer NOT NULL
 );
 
 CREATE TABLE "coupon_types" (
@@ -199,15 +199,18 @@ CREATE TABLE "cart_items" (
   "product_id" interger NOT NULL
 );
 
-CREATE TABLE "wishlist" (
-  "id" interger PRIMARY KEY,
-  "user_id" interger NOT NULL
-);
-
 CREATE TABLE "wishlist_item" (
   "id" interger PRIMARY KEY,
   "product_id" interger NOT NULL,
-  "wishlist_id" interger NOT NULL
+  "user_id" interger NOT NULL
+);
+
+CREATE TABLE "reviews" (
+  "id" interger PRIMARY KEY,
+  "product_id" interger NOT NULL,
+  "user_id" interger NOT NULL,
+  "rating" interger NOT NULL DEFAULT 5,
+  "comment" varchar
 );
 
 CREATE UNIQUE INDEX ON "game_support_language" ("support_language_id", "game_id");
@@ -224,7 +227,9 @@ CREATE UNIQUE INDEX ON "order_coupon" ("coupon_id", "order_id");
 
 CREATE UNIQUE INDEX ON "cart_items" ("cart_id", "product_id");
 
-CREATE UNIQUE INDEX ON "wishlist_item" ("wishlist_id", "product_id");
+CREATE UNIQUE INDEX ON "wishlist_item" ("user_id", "product_id");
+
+CREATE UNIQUE INDEX ON "reviews" ("product_id", "user_id");
 
 ALTER TABLE "games" ADD FOREIGN KEY ("publisher_id") REFERENCES "publishers" ("id");
 
@@ -270,10 +275,12 @@ ALTER TABLE "carts" ADD FOREIGN KEY ("id") REFERENCES "cart_items" ("cart_id");
 
 ALTER TABLE "games" ADD FOREIGN KEY ("id") REFERENCES "cart_items" ("product_id");
 
-ALTER TABLE "users" ADD FOREIGN KEY ("id") REFERENCES "wishlist" ("user_id");
-
-ALTER TABLE "wishlist" ADD FOREIGN KEY ("id") REFERENCES "wishlist_item" ("wishlist_id");
-
 ALTER TABLE "games" ADD FOREIGN KEY ("id") REFERENCES "wishlist_item" ("product_id");
 
 ALTER TABLE "coupon_types" ADD FOREIGN KEY ("id") REFERENCES "coupons" ("type_id");
+
+ALTER TABLE "users" ADD FOREIGN KEY ("id") REFERENCES "wishlist_item" ("user_id");
+
+ALTER TABLE "games" ADD FOREIGN KEY ("id") REFERENCES "reviews" ("product_id");
+
+ALTER TABLE "users" ADD FOREIGN KEY ("id") REFERENCES "reviews" ("user_id");

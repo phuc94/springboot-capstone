@@ -176,7 +176,6 @@ Table sales {
 
 Table coupons {
   id interger pk
-  type_id integer [not null]
   code varchar [not null]
   discount_amount interger
   usage_limit interger
@@ -184,6 +183,7 @@ Table coupons {
   start_date timestamp
   end_date timestamp
   status coupon_status
+  type_id integer [not null]
 }
 Table coupon_types {
   id interger pk
@@ -215,17 +215,22 @@ Table cart_items {
   }
 }
 
-Table wishlist {
-  id interger pk
-  user_id interger [not null]
-}
-
 Table wishlist_item {
   id interger pk
   product_id interger [not null]
-  wishlist_id interger [not null]
+  user_id interger [not null]
   indexes {
-    (wishlist_id, product_id) [unique]
+    (user_id, product_id) [unique]
+  }
+}
+Table reviews {
+  id interger pk
+  product_id interger [not null]
+  user_id interger [not null]
+  rating interger [not null, default: 5]
+  comment varchar
+  indexes {
+    (product_id, user_id) [unique]
   }
 }
 
@@ -252,8 +257,8 @@ Ref: medias.product_id - games.id
 Ref: orders.user_id - users.id
 Ref: cart_items.cart_id - carts.id
 Ref: cart_items.product_id - games.id
-Ref: wishlist.user_id - users.id
-Ref: wishlist_item.wishlist_id - wishlist.id
 Ref: wishlist_item.product_id - games.id
 Ref: coupons.type_id - coupon_types.id
-
+Ref: wishlist_item.user_id - users.id
+Ref: reviews.product_id - games.id
+Ref: reviews.user_id - users.id

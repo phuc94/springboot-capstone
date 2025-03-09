@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Wishlist {
+public class Reviews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
