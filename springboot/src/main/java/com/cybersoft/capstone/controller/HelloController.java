@@ -1,6 +1,6 @@
 package com.cybersoft.capstone.controller;
 
-import com.cybersoft.capstone.entity.User;
+import com.cybersoft.capstone.entity.Users;
 import com.cybersoft.capstone.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +21,12 @@ public class HelloController {
     }
 
     @PostMapping("/user")
-    public User saveUser(@RequestBody User user) {
+    public Users saveUser(@RequestBody Users user) {
         return userRepository.save(user);
     }
 
     @GetMapping("/user")
-    public List<User> getUser() {
+    public List<Users> getUser() {
         return userRepository.findAll();
     }
 }

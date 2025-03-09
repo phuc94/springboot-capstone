@@ -4,11 +4,12 @@ import com.cybersoft.capstone.entity.enums.EsrbRating;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Entity
 @Data
-public class Games {
+public class Games implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
