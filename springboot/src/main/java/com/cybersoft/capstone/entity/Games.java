@@ -36,4 +36,6 @@ public class Games implements Serializable {
     private Developers developer;
     private NoPlayers noPlayer;
 
+    @OneToOne(mappedBy = "game")
+    private GameMedia gameMedia;
 }
