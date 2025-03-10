@@ -30,6 +30,8 @@ public class Games implements Serializable {
     private GameSupportLanguage gameSupportLanguage;
     private GameGenre gameGenre;
     private Medias media;
+    @ManyToOne
+    @JoinColumn(name = "publisher_id", referencedColumnName = "id")
     private Publishers publisher;
     private Developers developer;
     private NoPlayers noPlayer;
