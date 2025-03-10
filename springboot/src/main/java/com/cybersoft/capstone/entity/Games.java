@@ -29,7 +29,6 @@ public class Games implements Serializable {
     private GameDescription gameDescription;
     private GameSupportLanguage gameSupportLanguage;
     private GameGenre gameGenre;
-    private GameMedia media;
     private Publishers publisher;
     private Developers developer;
     private NoPlayers noPlayer;
