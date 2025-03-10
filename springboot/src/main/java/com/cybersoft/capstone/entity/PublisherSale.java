@@ -1,9 +1,6 @@
 package com.cybersoft.capstone.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,4 +11,12 @@ public class PublisherSale implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @OneToOne
+    @JoinColumn(name = "sale_id", referencedColumnName = "id")
+    private Sales sales;
+
+    @OneToOne
+    @JoinColumn(name = "publisher_id", referencedColumnName = "id")
+    private Publishers publishers;
 }
