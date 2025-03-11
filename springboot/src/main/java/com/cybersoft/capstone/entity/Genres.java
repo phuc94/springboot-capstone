@@ -8,6 +8,7 @@ import java.util.List;
 @Entity(name = "genres")
 @Data
 public class Genres {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -15,4 +16,5 @@ public class Genres {
 
     @OneToMany(mappedBy = "genres")
     private List<GameGenre> gameGenres;
+    
 }

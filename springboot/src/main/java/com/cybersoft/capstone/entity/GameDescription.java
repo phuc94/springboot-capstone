@@ -9,6 +9,7 @@ import java.util.List;
 @Entity(name = "game_description")
 @Data
 public class GameDescription implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,4 +18,5 @@ public class GameDescription implements Serializable {
 
     @OneToMany(mappedBy = "gameDescription")
     private List<Games> games;
+
 }

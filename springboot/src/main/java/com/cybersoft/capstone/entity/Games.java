@@ -11,6 +11,7 @@ import java.util.List;
 @Entity(name = "games")
 @Data
 public class Games implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -9,10 +9,6 @@ import java.io.Serializable;
 @Data
 public class GameGenreId implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
     @Column(name = "genre_id")
     private int genreId;
 
