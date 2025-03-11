@@ -12,9 +12,10 @@ public class Genres {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String genre;
 
     @OneToMany(mappedBy = "genres")
     private List<GameGenre> gameGenres;
-    
+
 }

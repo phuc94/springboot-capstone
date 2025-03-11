@@ -10,8 +10,9 @@ import java.io.Serializable;
 @Data
 public class GameGenre implements Serializable {
 
-    @EmbeddedId
-    private GameGenreId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @ManyToOne
     @JoinColumn(name = "genre_id", referencedColumnName = "id")
