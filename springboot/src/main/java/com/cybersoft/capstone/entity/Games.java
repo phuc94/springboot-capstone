@@ -6,8 +6,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
-@Entity
+@Entity(name = "games")
 @Data
 public class Games implements Serializable {
     @Id
@@ -26,9 +27,16 @@ public class Games implements Serializable {
     // Entities mapping
     private Games gameDlcId;
     private GamePlayMode gamePlayMode;
+
+    @ManyToOne
+    @JoinColumn(name = "description_id")
     private GameDescription gameDescription;
+
     private GameSupportLanguage gameSupportLanguage;
-    private GameGenre gameGenre;
+
+    @OneToMany(mappedBy = "games")
+    private List<GameGenre> gameGenres;
+
     private Medias media;
     @ManyToOne
     @JoinColumn(name = "publisher_id", referencedColumnName = "id")

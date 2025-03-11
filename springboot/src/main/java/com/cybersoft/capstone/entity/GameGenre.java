@@ -1,17 +1,24 @@
 package com.cybersoft.capstone.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.cybersoft.capstone.entity.keys.GameGenreId;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
 
-@Entity
+@Entity(name = "game_genre")
 @Data
 public class GameGenre implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+
+    @EmbeddedId
+    private GameGenreId id;
+
+    @ManyToOne
+    @JoinColumn(name = "genre_id", insertable = false, updatable = false)
+    private Genres genres;
+
+    @ManyToOne
+    @JoinColumn(name = "game_id", insertable = false, updatable = false)
+    private Games games;
+
 }
