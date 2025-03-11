@@ -14,11 +14,11 @@ public class GameGenre implements Serializable {
     private GameGenreId id;
 
     @ManyToOne
-    @JoinColumn(name = "genre_id", insertable = false, updatable = false)
+    @JoinColumn(name = "genre_id", referencedColumnName = "id")
     private Genres genres;
 
     @ManyToOne
-    @JoinColumn(name = "game_id", insertable = false, updatable = false)
+    @JoinColumn(name = "game_id", referencedColumnName = "id")
     private Games games;
 
 }
