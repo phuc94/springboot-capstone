@@ -17,6 +17,6 @@ public class CartItem implements Serializable {
     private Carts carts;
 
     @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @JoinColumn(name = "game_id", referencedColumnName = "id")
     private Games games;
 }

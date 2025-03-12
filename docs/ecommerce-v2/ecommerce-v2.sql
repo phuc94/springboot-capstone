@@ -107,7 +107,7 @@ CREATE TABLE "game_no_player" (
 
 CREATE TABLE "medias" (
   "id" interger PRIMARY KEY,
-  "product_id" interger NOT NULL,
+  "game_id" interger NOT NULL,
   "media_type" media_type NOT NULL,
   "url" varchar NOT NULL,
   "is_primary" bool NOT NULL DEFAULT false
@@ -171,7 +171,7 @@ CREATE TABLE "orders" (
 
 CREATE TABLE "order_item" (
   "id" interger PRIMARY KEY,
-  "product_id" interger NOT NULL,
+  "game_id" interger NOT NULL,
   "order_id" interger NOT NULL
 );
 
@@ -215,19 +215,19 @@ CREATE TABLE "carts" (
 
 CREATE TABLE "cart_items" (
   "id" interger PRIMARY KEY,
-  "product_id" interger NOT NULL,
+  "game_id" interger NOT NULL,
   "cart_id" interger NOT NULL
 );
 
 CREATE TABLE "wishlist_item" (
   "id" interger PRIMARY KEY,
-  "product_id" interger NOT NULL,
+  "game_id" interger NOT NULL,
   "user_id" interger NOT NULL
 );
 
 CREATE TABLE "reviews" (
   "id" interger PRIMARY KEY,
-  "product_id" interger NOT NULL,
+  "game_id" interger NOT NULL,
   "user_id" interger NOT NULL,
   "rating" interger NOT NULL DEFAULT 5,
   "comment" varchar
@@ -241,15 +241,15 @@ CREATE UNIQUE INDEX ON "publisher_sale" ("sale_id", "publisher_id");
 
 CREATE UNIQUE INDEX ON "game_play_mode" ("game_id", "play_mode_id");
 
-CREATE UNIQUE INDEX ON "order_item" ("product_id", "order_id");
+CREATE UNIQUE INDEX ON "order_item" ("game_id", "order_id");
 
 CREATE UNIQUE INDEX ON "order_coupon" ("coupon_id", "order_id");
 
-CREATE UNIQUE INDEX ON "cart_items" ("cart_id", "product_id");
+CREATE UNIQUE INDEX ON "cart_items" ("cart_id", "game_id");
 
-CREATE UNIQUE INDEX ON "wishlist_item" ("user_id", "product_id");
+CREATE UNIQUE INDEX ON "wishlist_item" ("user_id", "game_id");
 
-CREATE UNIQUE INDEX ON "reviews" ("product_id", "user_id");
+CREATE UNIQUE INDEX ON "reviews" ("game_id", "user_id");
 
 ALTER TABLE "games" ADD FOREIGN KEY ("publisher_id") REFERENCES "publishers" ("id");
 
@@ -277,7 +277,7 @@ ALTER TABLE "games" ADD FOREIGN KEY ("id") REFERENCES "games" ("game_dlc_id");
 
 ALTER TABLE "order_item" ADD FOREIGN KEY ("order_id") REFERENCES "orders" ("id");
 
-ALTER TABLE "order_item" ADD FOREIGN KEY ("product_id") REFERENCES "games" ("id");
+ALTER TABLE "order_item" ADD FOREIGN KEY ("game_id") REFERENCES "games" ("id");
 
 ALTER TABLE "order_coupon" ADD FOREIGN KEY ("coupon_id") REFERENCES "coupons" ("id");
 
@@ -289,21 +289,21 @@ ALTER TABLE "publisher_sale" ADD FOREIGN KEY ("publisher_id") REFERENCES "publis
 
 ALTER TABLE "publisher_sale" ADD FOREIGN KEY ("sale_id") REFERENCES "sales" ("id");
 
-ALTER TABLE "medias" ADD FOREIGN KEY ("product_id") REFERENCES "games" ("id");
+ALTER TABLE "medias" ADD FOREIGN KEY ("game_id") REFERENCES "games" ("id");
 
 ALTER TABLE "orders" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "cart_items" ADD FOREIGN KEY ("cart_id") REFERENCES "carts" ("id");
 
-ALTER TABLE "cart_items" ADD FOREIGN KEY ("product_id") REFERENCES "games" ("id");
+ALTER TABLE "cart_items" ADD FOREIGN KEY ("game_id") REFERENCES "games" ("id");
 
-ALTER TABLE "wishlist_item" ADD FOREIGN KEY ("product_id") REFERENCES "games" ("id");
+ALTER TABLE "wishlist_item" ADD FOREIGN KEY ("game_id") REFERENCES "games" ("id");
 
 ALTER TABLE "coupon_types" ADD FOREIGN KEY ("id") REFERENCES "coupons" ("type_id");
 
 ALTER TABLE "wishlist_item" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
-ALTER TABLE "reviews" ADD FOREIGN KEY ("product_id") REFERENCES "games" ("id");
+ALTER TABLE "reviews" ADD FOREIGN KEY ("game_id") REFERENCES "games" ("id");
 
 ALTER TABLE "reviews" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
