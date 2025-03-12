@@ -3,6 +3,8 @@ package com.cybersoft.capstone.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity(name = "users")
 @Data
 public class Users {
@@ -16,4 +18,7 @@ public class Users {
 
     @OneToOne(mappedBy = "user")
     private Carts cart;
+
+    @OneToMany(mappedBy = "user")
+    private List<WishlistItem> wishlistItems;
 }
