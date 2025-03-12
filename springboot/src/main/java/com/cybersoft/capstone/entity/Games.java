@@ -34,7 +34,6 @@ public class Games implements Serializable {
 
     private GameSupportLanguage gameSupportLanguage;
 
-
     @OneToMany(mappedBy = "games")
     private List<GameGenre> gameGenres;
 
@@ -46,4 +45,7 @@ public class Games implements Serializable {
 
     @OneToOne(mappedBy = "game")
     private GameMedia gameMedia;
+
+    @OneToMany(mappedBy = "games")
+    private List<CartItem> cartItems;
 }
