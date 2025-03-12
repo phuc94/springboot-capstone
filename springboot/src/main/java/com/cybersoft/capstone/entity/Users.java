@@ -14,6 +14,6 @@ public class Users {
     private String name;
     private String address;
 
-    @OneToOne(mappedBy = "users")
-    private Carts carts;
+    @OneToOne(mappedBy = "user")
+    private Carts cart;
 }
