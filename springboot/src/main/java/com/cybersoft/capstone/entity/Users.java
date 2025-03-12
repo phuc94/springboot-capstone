@@ -3,7 +3,7 @@ package com.cybersoft.capstone.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
+@Entity(name = "users")
 @Data
 public class Users {
     @Id
@@ -13,4 +13,7 @@ public class Users {
     private String password;
     private String name;
     private String address;
+
+    @OneToOne(mappedBy = "users")
+    private Carts carts;
 }
