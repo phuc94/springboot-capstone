@@ -111,7 +111,7 @@ Table game_no_player {
 
 Table medias {
   id interger pk
-  product_id interger [not null]
+  game_id interger [not null]
   media_type media_type [not null]
   url varchar [not null]
   is_primary bool [not null, default: false]
@@ -181,10 +181,10 @@ Table orders {
 
 Table order_item {
   id interger pk
-  product_id interger [not null]
+  game_id interger [not null]
   order_id interger [not null]
   indexes {
-    (product_id, order_id) [unique]
+    (game_id, order_id) [unique]
   }
 }
 
@@ -230,29 +230,29 @@ Table carts {
 
 Table cart_items {
   id interger pk
-  product_id interger [not null]
+  game_id interger [not null]
   cart_id interger [not null]
   indexes {
-    (cart_id, product_id) [unique]
+    (cart_id, game_id) [unique]
   }
 }
 
 Table wishlist_item {
   id interger pk
-  product_id interger [not null]
+  game_id interger [not null]
   user_id interger [not null]
   indexes {
-    (user_id, product_id) [unique]
+    (user_id, game_id) [unique]
   }
 }
 Table reviews {
   id interger pk
-  product_id interger [not null]
+  game_id interger [not null]
   user_id interger [not null]
   rating interger [not null, default: 5]
   comment varchar
   indexes {
-    (product_id, user_id) [unique]
+    (game_id, user_id) [unique]
   }
 }
 
@@ -270,20 +270,20 @@ Ref: game_support_language.game_id > games.id
 Ref: game_support_language.support_language_id > support_language.id
 Ref: games.game_dlc_id - games.id
 Ref: order_item.order_id > orders.id 
-Ref: order_item.product_id > games.id
+Ref: order_item.game_id > games.id
 Ref: order_coupon.coupon_id > coupons.id
 Ref: order_coupon.order_id > orders.id
 Ref: carts.user_id - users.id
 Ref: publisher_sale.publisher_id > publishers.id
 Ref: publisher_sale.sale_id > sales.id
-Ref: medias.product_id > games.id
+Ref: medias.game_id > games.id
 Ref: orders.user_id > users.id
 Ref: cart_items.cart_id > carts.id
-Ref: cart_items.product_id > games.id
-Ref: wishlist_item.product_id > games.id
+Ref: cart_items.game_id > games.id
+Ref: wishlist_item.game_id > games.id
 Ref: coupons.type_id - coupon_types.id
 Ref: wishlist_item.user_id > users.id
-Ref: reviews.product_id > games.id
+Ref: reviews.game_id > games.id
 Ref: reviews.user_id > users.id
 Ref: carts.session_id - guests.session_id
 
