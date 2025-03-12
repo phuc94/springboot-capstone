@@ -14,8 +14,8 @@ public class Publishers implements Serializable {
     private int id;
     private String name;
 
-    @OneToOne(mappedBy = "publisher_sale")
-    private PublisherSale publisherSale;
+    @OneToMany(mappedBy = "publishers")
+    private List<PublisherSale> publisherSale;
 
     @OneToMany(mappedBy = "publisher")
     private List<Games> games;
