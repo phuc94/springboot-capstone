@@ -12,11 +12,11 @@ public class PublisherSale implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "sale_id", referencedColumnName = "id")
     private Sales sales;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "publisher_id", referencedColumnName = "id")
     private Publishers publishers;
 }
