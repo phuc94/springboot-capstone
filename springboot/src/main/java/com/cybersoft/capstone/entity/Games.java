@@ -27,7 +27,11 @@ public class Games implements Serializable {
     // Entities mapping
     private Games gameDlcId;
     private GamePlayMode gamePlayMode;
+
+    @OneToOne
+    @JoinColumn(name = "description_id", referencedColumnName = "id")
     private GameDescription gameDescription;
+
     private GameSupportLanguage gameSupportLanguage;
 
 
