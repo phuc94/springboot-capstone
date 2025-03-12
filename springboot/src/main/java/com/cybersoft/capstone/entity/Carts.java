@@ -13,15 +13,17 @@ public class Carts implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Enumerated(EnumType.STRING)
+    private CartStatus status;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private Users users;
+    private Users user;
 
-    private int sessionId;
+    @OneToOne
+    @JoinColumn(name = "session_id", referencedColumnName = "id")
+    private Guests guest;
 
-    @Enumerated(EnumType.STRING)
-    private CartStatus status;
 
     @OneToMany(mappedBy = "carts")
     private List<CartItem> cartItems;

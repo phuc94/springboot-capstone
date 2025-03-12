@@ -1,5 +1,6 @@
 package com.cybersoft.capstone.entity;
 
+import com.cybersoft.capstone.entity.enums.SaleStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,8 @@ public class Sales implements Serializable {
     private Timestamp startDate;
     private Timestamp endDate;
     private double amount;
+
+    private SaleStatus status;
 
     @OneToMany(mappedBy = "sales")
     private List<PublisherSale> publisherSale;
