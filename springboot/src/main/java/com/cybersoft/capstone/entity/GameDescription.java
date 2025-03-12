@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Entity(name = "game_description")
 @Data
@@ -16,7 +15,7 @@ public class GameDescription implements Serializable {
 
     private String description;
 
-    @OneToMany(mappedBy = "gameDescription")
-    private List<Games> games;
+    @OneToOne(mappedBy = "gameDescription")
+    private Games games;
 
 }

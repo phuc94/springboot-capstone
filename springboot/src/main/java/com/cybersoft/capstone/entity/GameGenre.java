@@ -1,12 +1,14 @@
 package com.cybersoft.capstone.entity;
 
-import com.cybersoft.capstone.entity.keys.GameGenreId;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Entity(name = "game_genre")
+@Table(name = "game_genre", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"genre_id", "game_id"})
+})
 @Data
 public class GameGenre implements Serializable {
 

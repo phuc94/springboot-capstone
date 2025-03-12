@@ -29,7 +29,7 @@ public class Games implements Serializable {
     private Games gameDlcId;
     private GamePlayMode gamePlayMode;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "description_id", referencedColumnName = "id")
     private GameDescription gameDescription;
 
@@ -47,4 +47,7 @@ public class Games implements Serializable {
 
     @OneToOne(mappedBy = "game")
     private GameMedia gameMedia;
+
+    @OneToMany(mappedBy = "games")
+    private List<CartItem> cartItems;
 }
