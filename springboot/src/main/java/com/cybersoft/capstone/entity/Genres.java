@@ -1,16 +1,19 @@
 package com.cybersoft.capstone.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
+import java.util.List;
+
+@Entity(name = "genres")
 @Data
 public class Genres {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String genre;
+
+    @OneToMany(mappedBy = "genres")
+    private List<GameGenre> gameGenres;
 }
