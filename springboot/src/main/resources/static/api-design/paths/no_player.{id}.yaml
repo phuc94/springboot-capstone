@@ -1,0 +1,93 @@
+get:
+  summary: Get a no-player type by ID
+  description: getNoPlayerById
+  operationId: getNoPlayerById
+  tags:
+    - no_player
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "ok"
+              data:
+                $ref: "../schemas/NoPlayer.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+post:
+  summary: Update a no-player type by ID
+  description: updateNoPlayer
+  operationId: updateNoPlayer
+  tags:
+    - no_player
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/NoPlayerCreate.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "updated"
+              data:
+                $ref: "../schemas/NoPlayer.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+delete:
+  summary: Delete a no-player type by ID
+  description: deleteNoPlayer
+  operationId: deleteNoPlayer
+  tags:
+    - no_player
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "deleted"
+              data:
+                type: object
+                example: {}
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"

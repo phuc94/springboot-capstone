@@ -1,0 +1,93 @@
+get:
+  summary: Get a sale by ID
+  description: getSaleById
+  operationId: getSaleById
+  tags:
+    - sale
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "ok"
+              data:
+                $ref: "../schemas/Sale.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+post:
+  summary: Update a sale by ID
+  description: updateSale
+  operationId: updateSale
+  tags:
+    - sale
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/SaleCreate.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "updated"
+              data:
+                $ref: "../schemas/Sale.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+delete:
+  summary: Delete a sale by ID
+  description: deleteSale
+  operationId: deleteSale
+  tags:
+    - sale
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "deleted"
+              data:
+                type: object
+                example: {}
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"

@@ -1,0 +1,61 @@
+post:
+  summary: Create a new no-player type
+  description: createNoPlayer
+  operationId: createNoPlayer
+  tags:
+    - no_player
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/NoPlayerCreate.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "created"
+              data:
+                $ref: "../schemas/NoPlayer.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+get:
+  summary: Get all no-player types
+  description: getAllNoPlayers
+  operationId: getAllNoPlayers
+  tags:
+    - no_player
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "ok"
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/NoPlayer.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"

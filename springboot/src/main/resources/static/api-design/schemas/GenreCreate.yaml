@@ -1,0 +1,7 @@
+type: object
+properties:
+  genre:
+    type: string
+    example: "Adventure"
+required:
+  - genre

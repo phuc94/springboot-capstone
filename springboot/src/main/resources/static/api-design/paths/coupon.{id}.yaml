@@ -1,0 +1,93 @@
+get:
+  summary: Get a coupon by ID
+  description: getCouponById
+  operationId: getCouponById
+  tags:
+    - coupon
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "ok"
+              data:
+                $ref: "../schemas/Coupon.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+post:
+  summary: Update a coupon by ID
+  description: updateCoupon
+  operationId: updateCoupon
+  tags:
+    - coupon
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/CouponCreate.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "updated"
+              data:
+                $ref: "../schemas/Coupon.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+delete:
+  summary: Delete a coupon by ID
+  description: deleteCoupon
+  operationId: deleteCoupon
+  tags:
+    - coupon
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "deleted"
+              data:
+                type: object
+                example: {}
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"

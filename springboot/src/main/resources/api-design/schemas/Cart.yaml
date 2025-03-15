@@ -1,6 +1,0 @@
-type: object
-properties:
-  id:
-    $ref: '/standard_id.yaml'
-  status:
-    $ref: '../enums/cart_status.yaml'

@@ -1,0 +1,86 @@
+get:
+  summary: Get a Genre by ID
+  operationId: getGenreById
+  tags:
+    - genre
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  responses:
+    "200":
+      description: Genre details
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'ok'
+              data:
+                $ref: '../schemas/Genre.yaml'
+    "404":
+      $ref: "../responses/404.yaml"
+
+post:
+  summary: Update a Genre by ID
+  operationId: updateGenre
+  tags:
+    - genre
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/GenreCreate.yaml"
+  responses:
+    "200":
+      description: Genre updated successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'ok'
+              data:
+                $ref: '../schemas/Genre.yaml'
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+delete:
+  summary: Delete a Genre by ID
+  operationId: deleteGenre
+  tags:
+    - genre
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'deleted'
+              data:
+                type: object
+                example: {}
+    "404":
+      $ref: "../responses/404.yaml"

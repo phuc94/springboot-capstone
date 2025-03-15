@@ -1,0 +1,15 @@
+type: object
+properties:
+  page:
+    type: integer
+    example: 1
+  size:
+    type: integer
+    example: 10
+  total_records:
+    type: integer
+    example: 180
+  total_pages:
+    type: integer
+    example: 18
+

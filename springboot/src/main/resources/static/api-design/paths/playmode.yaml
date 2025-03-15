@@ -1,0 +1,61 @@
+post:
+  summary: Create a new play mode
+  description: createPlayMode
+  operationId: createPlayMode
+  tags:
+    - playmode
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/PlayModeCreate.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "created"
+              data:
+                $ref: "../schemas/PlayMode.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+get:
+  summary: Get all play modes
+  description: getAllPlayModes
+  operationId: getAllPlayModes
+  tags:
+    - playmode
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "ok"
+              data:
+                type: array
+                items:
+                  $ref: "../schemas/PlayMode.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"

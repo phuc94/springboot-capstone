@@ -1,7 +1,0 @@
-type: object
-properties:
-  id:
-    $ref: '/standard_id.yaml'
-  description:
-    type: string
-    example: "Some description"

@@ -1,0 +1,93 @@
+get:
+  summary: Get a publisher by ID
+  description: getPublisherById
+  operationId: getPublisherById
+  tags:
+    - publisher
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  responses:
+    "200":
+      description: getPublisherById
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "ok"
+              data:
+                $ref: "../schemas/Publisher.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+post:
+  summary: Update a publisher by ID
+  description: updatePublisher
+  operationId: updatePublisher
+  tags:
+    - publisher
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/PublisherCreate.yaml"
+  responses:
+    "200":
+      description: 'successful operation'
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "updated"
+              data:
+                $ref: "../schemas/Publisher.yaml"
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"
+
+delete:
+  summary: Delete a publisher by ID
+  description: deletePublisher
+  operationId: deletePublisher
+  tags:
+    - publisher
+  parameters:
+    - $ref: "../params/{id}.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "200"
+              message:
+                type: string
+                example: "deleted"
+              data:
+                type: object
+                example: {}
+    "400":
+      $ref: "../responses/400.yaml"
+    "404":
+      $ref: "../responses/404.yaml"

@@ -1,0 +1,14 @@
+type: object
+properties:
+  media_type:
+    $ref: '../enums/media_type.yaml'
+  url:
+    type: string
+    example: https://example.com/image
+  is_primary:
+    type: boolean
+    example: true
+required:
+  - media_type
+  - url
+  - is_primary
