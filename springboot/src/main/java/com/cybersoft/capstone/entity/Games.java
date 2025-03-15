@@ -1,5 +1,6 @@
 package com.cybersoft.capstone.entity;
 
+import com.cybersoft.capstone.entity.enums.Availability;
 import com.cybersoft.capstone.entity.enums.EsrbRating;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -23,6 +24,8 @@ public class Games implements Serializable {
     // Enum
     @Enumerated(EnumType.STRING)
     private EsrbRating esrbRating;
+    @Enumerated(EnumType.STRING)
+    private Availability availability;
 
     // Entities mapping
     private Games gameDlcId;
