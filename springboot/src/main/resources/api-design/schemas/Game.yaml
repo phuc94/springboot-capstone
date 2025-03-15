@@ -1,0 +1,30 @@
+type: object
+properties:
+  id:
+    $ref: '/standard_id.yaml'
+  is_dlc:
+    type: boolean
+    example: false
+  game_dlc_id:
+    type: integer
+  title:
+    type: string
+  price:
+    type: number
+  realease_date:
+    type: string
+    format: date-time
+  esrb_rating:
+    type: string
+    enum: [EVERYONE, EVERYONE_10, TEEN, MATURE, ADULT, PENDING, PENDING_17]
+  is_deleted:
+    type: boolean
+  publisher:
+    $ref: '/Publisher.yaml'
+  status:
+    type: string
+    enum: [DRAFT, VISIBLE, HIDDEN, ARCHIVED]
+  description:
+    $ref: '/GameDescription.yaml'
+  developer:
+    $ref: '/Developer.yaml'

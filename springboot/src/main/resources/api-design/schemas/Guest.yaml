@@ -1,0 +1,7 @@
+type: object
+properties:
+  id:
+    $ref: '/standard_id.yaml'
+  status:
+    type: string
+    enum: ["ACTIVE", "CHECKED_OUT", "EXPIRED", "ABANDONED"]

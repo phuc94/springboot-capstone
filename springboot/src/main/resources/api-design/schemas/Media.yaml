@@ -1,0 +1,13 @@
+type: object
+properties:
+  id:
+    $ref: '/standard_id.yaml'
+  media_type:
+    type: string
+    enum: [IMAGE, VIDEO]
+  url:
+    type: string
+    example: http://example.com/image
+  is_primary:
+    type: boolean
+    example: true

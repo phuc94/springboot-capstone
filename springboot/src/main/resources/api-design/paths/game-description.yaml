@@ -1,0 +1,27 @@
+get:
+  tags:
+    - Game Description
+  summary: Get all Game Description
+  operationId: getAllGameDescription
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: ok
+              data:
+                type: array
+                items:
+                  $ref: '../schemas/GameDescription.yaml'
+    "400":
+      description: Invalid username supplied
+    "404":
+      $ref: '../responses/404.yaml'

@@ -1,0 +1,24 @@
+type: object
+properties:
+  id:
+    $ref: '/standard_id.yaml'
+  user:
+    $ref: "#/components/schemas/User"
+  order_status:
+    type: string
+    enum: ["PROCESSING", "PENDING", "CANCELLED", "FAILED"]
+  payment_status:
+    type: string
+    enum: ["PENDING", "PAID", "FAIL"]
+  payment_method:
+    type: string
+    enum: ["STRAPI"]
+  original_amount:
+    type: number
+    example: "822.6"
+  discount_amount:
+    type: number
+    example: "30"
+  total_amount:
+    type: number
+    example: "792.6"
