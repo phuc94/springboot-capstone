@@ -1,9 +1,9 @@
 get:
-  summary: Get a developer by ID
-  description: getDeveloperById
-  operationId: getDeveloperById
+  summary: Get a coupon by ID
+  description: getCouponById
+  operationId: getCouponById
   tags:
-    - developer
+    - coupon
   parameters:
     - $ref: "../params/{id}.yaml"
   responses:
@@ -21,18 +21,18 @@ get:
                 type: string
                 example: "ok"
               data:
-                $ref: "../schemas/Developer.yaml"
+                $ref: "../schemas/Coupon.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"
 
 post:
-  summary: Update a developer by ID
-  description: updateDeveloper
-  operationId: updateDeveloper
+  summary: Update a coupon by ID
+  description: updateCoupon
+  operationId: updateCoupon
   tags:
-    - developer
+    - coupon
   parameters:
     - $ref: "../params/{id}.yaml"
   requestBody:
@@ -40,7 +40,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: "../schemas/DeveloperCreate.yaml"
+          $ref: "../schemas/CouponCreate.yaml"
   responses:
     "200":
       description: successful operation
@@ -56,18 +56,18 @@ post:
                 type: string
                 example: "updated"
               data:
-                $ref: "../schemas/Developer.yaml"
+                $ref: "../schemas/Coupon.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"
 
 delete:
-  summary: Delete a developer by ID
-  description: deleteDeveloper
-  operationId: deleteDeveloper
+  summary: Delete a coupon by ID
+  description: deleteCoupon
+  operationId: deleteCoupon
   tags:
-    - developer
+    - coupon
   parameters:
     - $ref: "../params/{id}.yaml"
   responses:

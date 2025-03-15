@@ -1,0 +1,7 @@
+type: object
+properties:
+  description:
+    type: string
+    example: "Some description"
+required:
+  - description

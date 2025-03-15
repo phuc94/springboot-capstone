@@ -1,7 +1,7 @@
 type: object
 properties:
-  name:
+  no_player:
     type: string
-    example: "Ninetendo"
+    example: "Single(1)"
 required:
-  - name
+  - no_player

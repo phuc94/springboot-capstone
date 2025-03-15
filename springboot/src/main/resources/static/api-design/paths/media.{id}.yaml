@@ -1,9 +1,9 @@
 get:
-  summary: Get a developer by ID
-  description: getDeveloperById
-  operationId: getDeveloperById
+  summary: Get a media by ID
+  description: getMediaById
+  operationId: getMediaById
   tags:
-    - developer
+    - media
   parameters:
     - $ref: "../params/{id}.yaml"
   responses:
@@ -21,18 +21,18 @@ get:
                 type: string
                 example: "ok"
               data:
-                $ref: "../schemas/Developer.yaml"
+                $ref: "../schemas/Media.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"
 
 post:
-  summary: Update a developer by ID
-  description: updateDeveloper
-  operationId: updateDeveloper
+  summary: Update a media by ID
+  description: updateMedia
+  operationId: updateMedia
   tags:
-    - developer
+    - media
   parameters:
     - $ref: "../params/{id}.yaml"
   requestBody:
@@ -40,7 +40,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: "../schemas/DeveloperCreate.yaml"
+          $ref: "../schemas/MediaCreate.yaml"
   responses:
     "200":
       description: successful operation
@@ -56,18 +56,18 @@ post:
                 type: string
                 example: "updated"
               data:
-                $ref: "../schemas/Developer.yaml"
+                $ref: "../schemas/Media.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"
 
 delete:
-  summary: Delete a developer by ID
-  description: deleteDeveloper
-  operationId: deleteDeveloper
+  summary: Delete a media by ID
+  description: deleteMedia
+  operationId: deleteMedia
   tags:
-    - developer
+    - media
   parameters:
     - $ref: "../params/{id}.yaml"
   responses:

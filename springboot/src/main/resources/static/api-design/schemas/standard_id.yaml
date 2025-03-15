@@ -1,4 +1,3 @@
-id:
-  type: integer
-  format: int64
-  example: 10
+type: integer
+format: int64
+example: 10

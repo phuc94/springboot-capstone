@@ -1,7 +1,7 @@
 type: object
 properties:
-  name:
+  language:
     type: string
-    example: "Ninetendo"
+    example: "English"
 required:
-  - name
+  - language

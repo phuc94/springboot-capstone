@@ -1,15 +1,15 @@
 post:
-  summary: Create a new developer
-  description: createDeveloper
-  operationId: createDeveloper
+  summary: Create a new media
+  description: createMedia
+  operationId: createMedia
   tags:
-    - developer
+    - media
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: "../schemas/DeveloperCreate.yaml"
+          $ref: "../schemas/MediaCreate.yaml"
   responses:
     "200":
       description: successful operation
@@ -25,18 +25,18 @@ post:
                 type: string
                 example: "created"
               data:
-                $ref: "../schemas/Developer.yaml"
+                $ref: "../schemas/Media.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"
 
 get:
-  summary: Get all developers
-  description: getAllDevelopers
-  operationId: getAllDevelopers
+  summary: Get all media
+  description: getAllMedia
+  operationId: getAllMedia
   tags:
-    - developer
+    - media
   responses:
     "200":
       description: successful operation
@@ -54,7 +54,7 @@ get:
               data:
                 type: array
                 items:
-                  $ref: "../schemas/Developer.yaml"
+                  $ref: "../schemas/Media.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":

@@ -1,14 +1,14 @@
 get:
-  summary: Get a developer by ID
-  description: getDeveloperById
-  operationId: getDeveloperById
+  summary: Get a publisher by ID
+  description: getPublisherById
+  operationId: getPublisherById
   tags:
-    - developer
+    - publisher
   parameters:
     - $ref: "../params/{id}.yaml"
   responses:
     "200":
-      description: successful operation
+      description: getPublisherById
       content:
         application/json:
           schema:
@@ -21,18 +21,18 @@ get:
                 type: string
                 example: "ok"
               data:
-                $ref: "../schemas/Developer.yaml"
+                $ref: "../schemas/Publisher.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"
 
 post:
-  summary: Update a developer by ID
-  description: updateDeveloper
-  operationId: updateDeveloper
+  summary: Update a publisher by ID
+  description: updatePublisher
+  operationId: updatePublisher
   tags:
-    - developer
+    - publisher
   parameters:
     - $ref: "../params/{id}.yaml"
   requestBody:
@@ -40,10 +40,10 @@ post:
     content:
       application/json:
         schema:
-          $ref: "../schemas/DeveloperCreate.yaml"
+          $ref: "../schemas/PublisherCreate.yaml"
   responses:
     "200":
-      description: successful operation
+      description: 'successful operation'
       content:
         application/json:
           schema:
@@ -56,18 +56,18 @@ post:
                 type: string
                 example: "updated"
               data:
-                $ref: "../schemas/Developer.yaml"
+                $ref: "../schemas/Publisher.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"
 
 delete:
-  summary: Delete a developer by ID
-  description: deleteDeveloper
-  operationId: deleteDeveloper
+  summary: Delete a publisher by ID
+  description: deletePublisher
+  operationId: deletePublisher
   tags:
-    - developer
+    - publisher
   parameters:
     - $ref: "../params/{id}.yaml"
   responses:

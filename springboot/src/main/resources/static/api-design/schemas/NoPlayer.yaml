@@ -2,6 +2,6 @@ type: object
 properties:
   id:
     $ref: './standard_id.yaml'
-  language:
+  no_player:
     type: string
     example: "Single(1)"

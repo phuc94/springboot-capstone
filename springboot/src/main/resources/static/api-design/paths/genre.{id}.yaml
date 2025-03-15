@@ -1,38 +1,34 @@
 get:
-  summary: Get a developer by ID
-  description: getDeveloperById
-  operationId: getDeveloperById
+  summary: Get a Genre by ID
+  operationId: getGenreById
   tags:
-    - developer
+    - genre
   parameters:
     - $ref: "../params/{id}.yaml"
   responses:
     "200":
-      description: successful operation
+      description: Genre details
       content:
         application/json:
           schema:
             type: object
             properties:
               code:
-                type: string
-                example: "200"
+                type: integer
+                example: 200
               message:
                 type: string
-                example: "ok"
+                example: 'ok'
               data:
-                $ref: "../schemas/Developer.yaml"
-    "400":
-      $ref: "../responses/400.yaml"
+                $ref: '../schemas/Genre.yaml'
     "404":
       $ref: "../responses/404.yaml"
 
 post:
-  summary: Update a developer by ID
-  description: updateDeveloper
-  operationId: updateDeveloper
+  summary: Update a Genre by ID
+  operationId: updateGenre
   tags:
-    - developer
+    - genre
   parameters:
     - $ref: "../params/{id}.yaml"
   requestBody:
@@ -40,34 +36,33 @@ post:
     content:
       application/json:
         schema:
-          $ref: "../schemas/DeveloperCreate.yaml"
+          $ref: "../schemas/GenreCreate.yaml"
   responses:
     "200":
-      description: successful operation
+      description: Genre updated successfully
       content:
         application/json:
           schema:
             type: object
             properties:
               code:
-                type: string
-                example: "200"
+                type: integer
+                example: 200
               message:
                 type: string
-                example: "updated"
+                example: 'ok'
               data:
-                $ref: "../schemas/Developer.yaml"
+                $ref: '../schemas/Genre.yaml'
     "400":
       $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"
 
 delete:
-  summary: Delete a developer by ID
-  description: deleteDeveloper
-  operationId: deleteDeveloper
+  summary: Delete a Genre by ID
+  operationId: deleteGenre
   tags:
-    - developer
+    - genre
   parameters:
     - $ref: "../params/{id}.yaml"
   responses:
@@ -79,15 +74,13 @@ delete:
             type: object
             properties:
               code:
-                type: string
-                example: "200"
+                type: integer
+                example: 200
               message:
                 type: string
-                example: "deleted"
+                example: 'deleted'
               data:
                 type: object
                 example: {}
-    "400":
-      $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"

@@ -1,20 +1,12 @@
 openapi: 3.0.3
 info:
   title: API design
-  description: 'Some short description'
+  description: Basic API design for Game ecommerce
   contact:
     email: trungphuc94@gmail.com
   version: 1.0.11
 servers:
   - url: http://localhost:8080/api
-tags:
-  - name: uer
-    description: User
-  - name: game
-    description: Game
-  - name: game_filter
-    description: Game filters
-  - name: game_description
 paths:
   /game:
     $ref: './paths/game.yaml'
@@ -23,8 +15,43 @@ paths:
   /game/filter:
     $ref: './paths/game.filter.yaml'
   /game-description:
-    $ref: './paths/game-description.yaml'
+    $ref: './paths/game_description.yaml'
+  /game-description/{id}:
+    $ref: './paths/game_description.{id}.yaml'
   /developer:
     $ref: './paths/developer.yaml'
   /developer/{id}:
     $ref: './paths/developer.{id}.yaml'
+  /genre:
+    $ref: './paths/genre.yaml'
+  /genre/{id}:
+    $ref: './paths/genre.{id}.yaml'
+  /publisher:
+    $ref: './paths/publisher.yaml'
+  /publisher/{id}:
+    $ref: './paths/publisher.{id}.yaml'
+  /no_player/:
+    $ref: './paths/no_player.yaml'
+  /no_player/{id}:
+    $ref: './paths/no_player.{id}.yaml'
+  /playmode/:
+    $ref: './paths/playmode.yaml'
+  /playmode/{id}:
+    $ref: './paths/playmode.{id}.yaml'
+  /support_language/:
+    $ref: './paths/support_language.yaml'
+  /support_language/{id}:
+    $ref: './paths/support_language.{id}.yaml'
+  /sale/:
+    $ref: './paths/sale.yaml'
+  /sale/{id}:
+    $ref: './paths/sale.{id}.yaml'
+  /media/:
+    $ref: './paths/media.yaml'
+  /media/{id}:
+    $ref: './paths/media.{id}.yaml'
+  /coupon/:
+    $ref: './paths/coupon.yaml'
+  /coupon/{id}:
+    $ref: './paths/coupon.{id}.yaml'
+

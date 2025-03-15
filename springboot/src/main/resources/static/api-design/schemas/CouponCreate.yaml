@@ -1,7 +1,5 @@
 type: object
 properties:
-  id:
-    $ref: './standard_id.yaml'
   code:
     type: string
     example: "SLKJVSD"
@@ -25,3 +23,12 @@ properties:
   type:
     type: string
     example: "direct"
+required:
+  - code
+  - discount_amount
+  - usage_limit
+  - used_count
+  - start_date
+  - end_date
+  - status
+  - type
