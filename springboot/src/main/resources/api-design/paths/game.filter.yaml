@@ -9,7 +9,7 @@ get:
       description: 'Game Genre'
       schema:
         type: string
-        example: 'adventure'
+        example: 'adventure,casual'
     - name: avail
       in: query
       description: 'Game Availability'
@@ -33,9 +33,11 @@ get:
       description: 'ESRB rating'
       schema:
         $ref: '../enums/esrb_rating.yaml'
-
-
-
+    - name: no_player
+      in: query
+      description: 'Number of players'
+      schema:
+        $ref: '../schemas/NoPlayer.yaml'
   responses:
     "200":
       description: successful operation
