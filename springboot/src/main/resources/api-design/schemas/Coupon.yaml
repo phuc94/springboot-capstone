@@ -21,8 +21,7 @@ properties:
     type: string
     format: date-time
   status:
-    type: string
-    enum: ["DISABLE", "ACTIVE", "EXPIRE"]
+    $ref: '../enums/coupon_status.yaml'
   type:
     type: string
     example: "direct"

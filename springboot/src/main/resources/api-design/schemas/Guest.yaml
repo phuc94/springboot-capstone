@@ -2,6 +2,6 @@ type: object
 properties:
   id:
     $ref: '/standard_id.yaml'
-  status:
+  session_id:
     type: string
-    enum: ["ACTIVE", "CHECKED_OUT", "EXPIRED", "ABANDONED"]
+

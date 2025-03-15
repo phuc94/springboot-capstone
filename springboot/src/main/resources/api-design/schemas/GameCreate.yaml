@@ -17,15 +17,13 @@ properties:
     type: string
     format: date-time
   esrb_rating:
-    type: string
-    enum: [EVERYONE, EVERYONE_10, TEEN, MATURE, ADULT, PENDING, PENDING_17]
+    $ref: '../enums/esrb_rating.yaml'
   is_deleted:
     type: boolean
   publisher_id:
     type: integer
   status:
-    type: string
-    enum: [DRAFT, VISIBLE, HIDDEN, ARCHIVED]
+    $ref: '../enums/game_status.yaml'
   description_id:
     type: integer
   developer_id:

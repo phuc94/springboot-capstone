@@ -8,15 +8,19 @@ info:
 servers:
   - url: http://localhost:8080/api/v1
 tags:
-  - name: User
+  - name: uer
     description: User
-  - name: Game
+  - name: game
     description: Game
-  - name: Game Description
+  - name: game_filter
+    description: Game filters
+  - name: game_description
 paths:
   /game:
     $ref: '/paths/game.yaml'
   /game/{game_id}:
     $ref: '/paths/game.{game_id}.yaml'
+  /game/filter:
+    $ref: '/paths/game.filter.yaml'
   /game-description:
     $ref: '/paths/game-description.yaml'

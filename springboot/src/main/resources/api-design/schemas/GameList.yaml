@@ -6,7 +6,7 @@ properties:
     type: string
   price:
     type: number
-  realease_date:
+  release_date:
     type: string
     format: date-time
   publisher:

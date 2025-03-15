@@ -5,14 +5,11 @@ properties:
   user:
     $ref: "#/components/schemas/User"
   order_status:
-    type: string
-    enum: ["PROCESSING", "PENDING", "CANCELLED", "FAILED"]
+    $ref: '../enums/order_status.yaml'
   payment_status:
-    type: string
-    enum: ["PENDING", "PAID", "FAIL"]
+    $ref: '../enums/payment_status.yaml'
   payment_method:
-    type: string
-    enum: ["STRAPI"]
+    $ref: '../enums/order_method.yaml'
   original_amount:
     type: number
     example: "822.6"

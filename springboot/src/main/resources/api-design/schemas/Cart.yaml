@@ -3,5 +3,4 @@ properties:
   id:
     $ref: '/standard_id.yaml'
   status:
-    type: string
-    enum: ["ACTIVE", "CHECKED_OUT", "EXPIRED", "ABANDONED"]
+    $ref: '../enums/cart_status.yaml'

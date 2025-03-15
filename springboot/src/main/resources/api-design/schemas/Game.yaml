@@ -11,19 +11,17 @@ properties:
     type: string
   price:
     type: number
-  realease_date:
+  release_date:
     type: string
     format: date-time
   esrb_rating:
-    type: string
-    enum: [EVERYONE, EVERYONE_10, TEEN, MATURE, ADULT, PENDING, PENDING_17]
+    $ref: '../enums/esrb_rating.yaml'
   is_deleted:
     type: boolean
   publisher:
     $ref: '/Publisher.yaml'
   status:
-    type: string
-    enum: [DRAFT, VISIBLE, HIDDEN, ARCHIVED]
+    $ref: '../enums/game_status.yaml'
   description:
     $ref: '/GameDescription.yaml'
   developer:

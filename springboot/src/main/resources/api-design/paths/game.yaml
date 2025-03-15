@@ -1,6 +1,6 @@
 get:
   tags:
-    - Game
+    - game
   summary: Get all games
   operationId: getAllGame
   responses:
@@ -27,7 +27,7 @@ get:
       $ref: '../responses/404.yaml'
 post:
   tags:
-    - Game
+    - game
   summary: Create new Game
   operationId: addGame
   requestBody:

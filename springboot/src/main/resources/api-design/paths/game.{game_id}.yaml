@@ -1,6 +1,6 @@
 get:
   tags:
-    - Game
+    - game
   summary: Get Game by Id
   operationId: getGameById
   parameters:
@@ -32,7 +32,7 @@ get:
       $ref: '../responses/404.yaml'
 post:
   tags:
-    - Game
+    - game
   summary: Update a Game
   operationId: updateGame
   parameters:
@@ -72,7 +72,7 @@ post:
       $ref: '../responses/404.yaml'
 delete:
   tags:
-    - Game
+    - game
   summary: Deletes a Game
   description: delete a game
   operationId: deleteGame

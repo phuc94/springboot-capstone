@@ -3,11 +3,10 @@ properties:
   id:
     $ref: '/standard_id.yaml'
   media_type:
-    type: string
-    enum: [IMAGE, VIDEO]
+    $ref: '../enums/media_type.yaml'
   url:
     type: string
-    example: http://example.com/image
+    example: https://example.com/image
   is_primary:
     type: boolean
     example: true

@@ -1,6 +1,6 @@
 get:
   tags:
-    - Game Description
+    - game_description
   summary: Get all Game Description
   operationId: getAllGameDescription
   responses:

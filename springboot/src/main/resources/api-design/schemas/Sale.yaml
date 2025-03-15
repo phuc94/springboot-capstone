@@ -12,5 +12,4 @@ properties:
     type: number
     example: 728
   status:
-    type: string
-    enum: ["DISABLE", "ACTIVE", "EXPIRE"]
+    $ref: '../enums/sale_status.yaml'
