@@ -1,7 +1,7 @@
 type: object
 properties:
   id:
-    $ref: '/standard_id.yaml'
+    $ref: './standard_id.yaml'
   language:
     type: string
     example: "English"

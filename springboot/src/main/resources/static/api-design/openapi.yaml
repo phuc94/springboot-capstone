@@ -6,7 +6,7 @@ info:
     email: trungphuc94@gmail.com
   version: 1.0.11
 servers:
-  - url: http://localhost:8080/api/v1
+  - url: http://localhost:8080/api
 tags:
   - name: uer
     description: User
@@ -17,10 +17,10 @@ tags:
   - name: game_description
 paths:
   /game:
-    $ref: '/paths/game.yaml'
+    $ref: './paths/game.yaml'
   /game/{game_id}:
-    $ref: '/paths/game.{game_id}.yaml'
+    $ref: './paths/game.{game_id}.yaml'
   /game/filter:
-    $ref: '/paths/game.filter.yaml'
+    $ref: './paths/game.filter.yaml'
   /game-description:
-    $ref: '/paths/game-description.yaml'
+    $ref: './paths/game-description.yaml'

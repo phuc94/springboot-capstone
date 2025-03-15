@@ -1,7 +1,7 @@
 type: object
 properties:
   id:
-    $ref: '/standard_id.yaml'
+    $ref: './standard_id.yaml'
   media_type:
     $ref: '../enums/media_type.yaml'
   url:

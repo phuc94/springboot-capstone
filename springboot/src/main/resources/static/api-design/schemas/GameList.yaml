@@ -1,7 +1,7 @@
 type: object
 properties:
   id:
-    $ref: '/standard_id.yaml'
+    $ref: './standard_id.yaml'
   title:
     type: string
   price:
@@ -10,4 +10,4 @@ properties:
     type: string
     format: date-time
   publisher:
-    $ref: '/Publisher.yaml'
+    $ref: './Publisher.yaml'

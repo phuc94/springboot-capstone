@@ -1,7 +1,7 @@
 type: object
 properties:
   id:
-    $ref: '/standard_id.yaml'
+    $ref: './standard_id.yaml'
   is_dlc:
     type: boolean
     example: false
@@ -19,10 +19,10 @@ properties:
   is_deleted:
     type: boolean
   publisher:
-    $ref: '/Publisher.yaml'
+    $ref: './Publisher.yaml'
   status:
     $ref: '../enums/game_status.yaml'
   description:
-    $ref: '/GameDescription.yaml'
+    $ref: './GameDescription.yaml'
   developer:
-    $ref: '/Developer.yaml'
+    $ref: './Developer.yaml'

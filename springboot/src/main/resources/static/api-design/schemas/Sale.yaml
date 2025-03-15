@@ -1,7 +1,7 @@
 type: object
 properties:
   id:
-    $ref: '/standard_id.yaml'
+    $ref: './standard_id.yaml'
   start_date:
     type: string
     format: date-time
