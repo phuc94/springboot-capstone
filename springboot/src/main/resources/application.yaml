@@ -11,3 +11,9 @@ logging:
     org:
       hibernate:
         stat: debug
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs.yaml
+  swagger-ui:
+    url: /api-design/openapi.yaml

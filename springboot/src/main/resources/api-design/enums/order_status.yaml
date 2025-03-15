@@ -1,0 +1,2 @@
+type: string
+enum: ["PROCESSING", "PENDING", "CANCELLED", "FAILED"]

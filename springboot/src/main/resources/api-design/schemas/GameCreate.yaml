@@ -1,0 +1,30 @@
+type: object
+required:
+  - title
+  - is_dlc
+  - status
+properties:
+  is_dlc:
+    type: boolean
+    example: false
+  game_dlc_id:
+    type: integer
+  title:
+    type: string
+  price:
+    type: number
+  realease_date:
+    type: string
+    format: date-time
+  esrb_rating:
+    $ref: '../enums/esrb_rating.yaml'
+  is_deleted:
+    type: boolean
+  publisher_id:
+    type: integer
+  status:
+    $ref: '../enums/game_status.yaml'
+  description_id:
+    type: integer
+  developer_id:
+    type: integer

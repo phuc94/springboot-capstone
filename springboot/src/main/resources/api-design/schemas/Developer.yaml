@@ -1,0 +1,7 @@
+type: object
+properties:
+  id:
+    $ref: '/standard_id.yaml'
+  name:
+    type: string
+    example: "Ninetendo"

@@ -1,0 +1,15 @@
+type: object
+properties:
+  id:
+    $ref: '/standard_id.yaml'
+  start_date:
+    type: string
+    format: date-time
+  end_date:
+    type: string
+    format: date-time
+  amount:
+    type: number
+    example: 728
+  status:
+    $ref: '../enums/sale_status.yaml'
