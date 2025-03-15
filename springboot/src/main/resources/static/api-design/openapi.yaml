@@ -19,8 +19,12 @@ paths:
   /game:
     $ref: './paths/game.yaml'
   /game/{game_id}:
-    $ref: './paths/game.{game_id}.yaml'
+    $ref: './paths/game.{id}.yaml'
   /game/filter:
     $ref: './paths/game.filter.yaml'
   /game-description:
     $ref: './paths/game-description.yaml'
+  /developer:
+    $ref: './paths/developer.yaml'
+  /developer/{id}:
+    $ref: './paths/developer.{id}.yaml'

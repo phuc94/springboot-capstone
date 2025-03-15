@@ -3,6 +3,10 @@ get:
     - game_description
   summary: Get all Game Description
   operationId: getAllGameDescription
+  parameters:
+    - $ref: '../params/page.yaml'
+    - $ref: '../params/size.yaml'
+    - $ref: '../params/sort.yaml'
   responses:
     "200":
       description: successful operation

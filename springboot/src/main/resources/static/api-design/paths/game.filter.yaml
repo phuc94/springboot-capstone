@@ -3,6 +3,7 @@ get:
     - game_filter
   summary: Dynamic filter for game
   operationId: filterGames
+  description: filterGames
   parameters:
     - name: genre
       in: query

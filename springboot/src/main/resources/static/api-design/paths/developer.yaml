@@ -1,9 +1,9 @@
 get:
   tags:
-    - game
-  summary: Get all games
-  description: getAllGame
-  operationId: getAllGame
+    - developer
+  summary: Get all developers
+  operationId: getAllDevelopers
+  description: getAllDevelopers
   parameters:
     - $ref: '../params/page.yaml'
     - $ref: '../params/size.yaml'
@@ -25,23 +25,23 @@ get:
               data:
                 type: array
                 items:
-                  $ref: '../schemas/GameList.yaml'
+                  $ref: '../schemas/Developer.yaml'
     "400":
       $ref: '../responses/400.yaml'
     "404":
       $ref: '../responses/404.yaml'
 post:
   tags:
-    - game
-  summary: Create new Game
-  operationId: addGame
-  description: addGame
+    - developer
+  summary: Create new Developer
+  operationId: addDeveloper
+  description: addDeveloper
   requestBody:
-    description: Create a new Game
+    description: Create a new Developer
     content:
       application/json:
         schema:
-          $ref: '../schemas/GameCreate.yaml'
+          $ref: '../schemas/DeveloperCreate.yaml'
     required: true
   responses:
     "200":
@@ -60,7 +60,7 @@ post:
               data:
                 type: array
                 items:
-                  $ref: '../schemas/Game.yaml'
+                  $ref: '../schemas/Developer.yaml'
     "400":
       $ref: '../responses/400.yaml'
     "404":

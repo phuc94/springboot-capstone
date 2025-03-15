@@ -1,13 +1,11 @@
 get:
   tags:
-    - game
-  summary: Get all games
-  description: getAllGame
-  operationId: getAllGame
+    - developer
+  summary: Get developer by ID
+  operationId: getDeveloperById
+  description: getDeveloperById
   parameters:
-    - $ref: '../params/page.yaml'
-    - $ref: '../params/size.yaml'
-    - $ref: '../params/sort.yaml'
+    - $ref: '../params/{id}.yaml'
   responses:
     "200":
       description: successful operation
@@ -25,27 +23,22 @@ get:
               data:
                 type: array
                 items:
-                  $ref: '../schemas/GameList.yaml'
+                  $ref: '../schemas/Developer.yaml'
     "400":
       $ref: '../responses/400.yaml'
     "404":
       $ref: '../responses/404.yaml'
-post:
+delete:
   tags:
-    - game
-  summary: Create new Game
-  operationId: addGame
-  description: addGame
-  requestBody:
-    description: Create a new Game
-    content:
-      application/json:
-        schema:
-          $ref: '../schemas/GameCreate.yaml'
-    required: true
+    - developer
+  summary: Deletes a Developer
+  description: deleteDeveloper
+  operationId: deleteDeveloper
+  parameters:
+    - $ref: '../params/{id}.yaml'
   responses:
     "200":
-      description: Successful
+      description: successful operation
       content:
         application/json:
           schema:
@@ -56,11 +49,10 @@ post:
                 example: 200
               message:
                 type: string
-                example: 'ok'
+                example: 'deleted'
               data:
-                type: array
-                items:
-                  $ref: '../schemas/Game.yaml'
+                type: object
+                example: {}
     "400":
       $ref: '../responses/400.yaml'
     "404":

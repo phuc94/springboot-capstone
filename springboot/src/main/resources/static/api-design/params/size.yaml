@@ -1,0 +1,6 @@
+name: size
+in: query
+schema:
+  type: integer
+  description: Page size
+  example: 1

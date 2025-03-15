@@ -1,0 +1,6 @@
+name: sort
+in: query
+schema:
+  type: string
+  description: 'Basic sorting of jpa: property,[asc,desc]'
+  example: 'name,desc'
