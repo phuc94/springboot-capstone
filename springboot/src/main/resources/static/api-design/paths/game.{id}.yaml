@@ -85,13 +85,13 @@ delete:
             properties:
               code:
                 type: integer
-                example: 200
+                example: 204
               message:
                 type: string
-                example: 'deleted'
+                example: 'No Content'
               data:
                 type: object
-                example: {}
+                example: null
     "400":
       $ref: '../responses/400.yaml'
     "404":

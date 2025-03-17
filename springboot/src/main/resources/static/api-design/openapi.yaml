@@ -30,27 +30,27 @@ paths:
     $ref: './paths/publisher.yaml'
   /publisher/{id}:
     $ref: './paths/publisher.{id}.yaml'
-  /no_player/:
+  /no_player:
     $ref: './paths/no_player.yaml'
   /no_player/{id}:
     $ref: './paths/no_player.{id}.yaml'
-  /playmode/:
+  /playmode:
     $ref: './paths/playmode.yaml'
   /playmode/{id}:
     $ref: './paths/playmode.{id}.yaml'
-  /support_language/:
+  /support_language:
     $ref: './paths/support_language.yaml'
   /support_language/{id}:
     $ref: './paths/support_language.{id}.yaml'
-  /sale/:
+  /sale:
     $ref: './paths/sale.yaml'
   /sale/{id}:
     $ref: './paths/sale.{id}.yaml'
-  /media/:
+  /media:
     $ref: './paths/media.yaml'
   /media/{id}:
     $ref: './paths/media.{id}.yaml'
-  /coupon/:
+  /coupon:
     $ref: './paths/coupon.yaml'
   /coupon/{id}:
     $ref: './paths/coupon.{id}.yaml'

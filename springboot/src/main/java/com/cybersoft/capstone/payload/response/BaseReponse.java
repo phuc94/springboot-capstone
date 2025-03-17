@@ -1,8 +1,12 @@
 package com.cybersoft.capstone.payload.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BaseReponse {
     private int code;
     private String message;

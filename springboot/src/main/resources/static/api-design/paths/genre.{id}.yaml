@@ -78,7 +78,7 @@ delete:
                 example: 200
               message:
                 type: string
-                example: 'deleted'
+                example: 'No Content'
               data:
                 type: object
                 example: {}
