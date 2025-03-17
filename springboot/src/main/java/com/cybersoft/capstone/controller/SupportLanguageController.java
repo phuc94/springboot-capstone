@@ -2,7 +2,7 @@ package com.cybersoft.capstone.controller;
 
 import com.cybersoft.capstone.entity.SupportLanguages;
 import com.cybersoft.capstone.payload.response.BaseReponse;
-import com.cybersoft.capstone.service.SupportLanguageService;
+import com.cybersoft.capstone.service.implement.SupportLanguageServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/support_language")
 public class SupportLanguageController {
-    private final SupportLanguageService supportLanguageService;
+    private final SupportLanguageServiceImpl supportLanguageService;
 
     @Autowired
-    public SupportLanguageController(SupportLanguageService supportLanguageService) {
+    public SupportLanguageController(SupportLanguageServiceImpl supportLanguageService) {
         this.supportLanguageService = supportLanguageService;
     }
 
