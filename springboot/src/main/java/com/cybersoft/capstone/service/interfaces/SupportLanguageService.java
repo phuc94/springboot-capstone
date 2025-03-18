@@ -1,18 +1,19 @@
 package com.cybersoft.capstone.service.interfaces;
 
 import com.cybersoft.capstone.entity.SupportLanguages;
+import com.cybersoft.capstone.payload.response.BaseResponse;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface SupportLanguageService {
-    public List<SupportLanguages> getAllSupportLanguages();
+    public BaseResponse<List<SupportLanguages>> getAllSupportLanguages();
 
-    public Optional<SupportLanguages> getSupportLanguageById(int id);
+    public BaseResponse<SupportLanguages> getSupportLanguageById(int id);
 
-    public SupportLanguages createSupportLanguage(SupportLanguages supportLanguage);
+    public BaseResponse<SupportLanguages> createSupportLanguage(SupportLanguages supportLanguage);
 
-    public Optional<SupportLanguages> updateSupportLanguage(int id, SupportLanguages supportLanguage);
+    public BaseResponse<SupportLanguages> updateSupportLanguage(int id, SupportLanguages supportLanguage);
 
-    public boolean deleteSupportLanguage(int id);
+    public BaseResponse<Void> deleteSupportLanguage(int id);
 }

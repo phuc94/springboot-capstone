@@ -1,18 +1,18 @@
 package com.cybersoft.capstone.service.interfaces;
 
 import com.cybersoft.capstone.entity.NoPlayers;
+import com.cybersoft.capstone.payload.response.BaseResponse;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface NoPlayerService {
-    public List<NoPlayers> getAllNoPlayers();
+    public BaseResponse<List<NoPlayers>> getAllNoPlayers();
 
-    public Optional<NoPlayers> getNoPlayerById(int id);
+    public BaseResponse<NoPlayers> getNoPlayerById(int id);
 
-    public NoPlayers createNoPlayer(NoPlayers noPlayer);
+    public BaseResponse<NoPlayers> createNoPlayer(NoPlayers noPlayer);
 
-    public Optional<NoPlayers> updateNoPlayer(int id, NoPlayers noPlayer);
+    public BaseResponse<NoPlayers> updateNoPlayer(int id, NoPlayers noPlayer);
 
-    public boolean deleteNoPlayerById(int id);
+    public BaseResponse<Void> deleteNoPlayerById(int id);
 }
