@@ -12,4 +12,8 @@ content:
           example: 'Not found.'
         data:
           type: object
-          example: null
+          properties:
+            message:
+              type: string
+              example: 'No static resource api/item.'
+

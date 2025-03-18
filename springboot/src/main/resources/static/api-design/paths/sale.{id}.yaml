@@ -83,7 +83,7 @@ delete:
                 example: 204
               message:
                 type: string
-                example: "No Content"
+                example: "Accepted"
               data:
                 type: object
                 example: null

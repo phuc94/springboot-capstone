@@ -51,4 +51,7 @@ public class Games implements Serializable {
 
     @OneToMany(mappedBy = "game")
     private List<Reviews> reviews;
+
+    @OneToMany(mappedBy = "game")
+    private List<Medias> medias;
 }

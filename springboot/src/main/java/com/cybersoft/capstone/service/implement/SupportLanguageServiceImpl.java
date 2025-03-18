@@ -1,8 +1,14 @@
 package com.cybersoft.capstone.service.implement;
 
 import com.cybersoft.capstone.entity.SupportLanguages;
+import com.cybersoft.capstone.exception.NotFoundException;
+import com.cybersoft.capstone.payload.response.AcceptedResponse;
+import com.cybersoft.capstone.payload.response.BaseResponse;
+import com.cybersoft.capstone.payload.response.NotFoundResponse;
+import com.cybersoft.capstone.payload.response.OkResponse;
 import com.cybersoft.capstone.repository.SupportLanguageRepository;
 import com.cybersoft.capstone.service.interfaces.SupportLanguageService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,34 +23,35 @@ public class SupportLanguageServiceImpl implements SupportLanguageService {
     }
 
     @Override
-    public List<SupportLanguages> getAllSupportLanguages() {
-        return supportLanguageRepository.findAll();
+    public BaseResponse<List<SupportLanguages>> getAllSupportLanguages() {
+        return new OkResponse<>(supportLanguageRepository.findAll());
     }
 
     @Override
-    public Optional<SupportLanguages> getSupportLanguageById(int id) {
-        return supportLanguageRepository.findById(id);
+    public BaseResponse<SupportLanguages> getSupportLanguageById(int id) {
+        return supportLanguageRepository.findById(id)
+                .map(OkResponse::new)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
 
     @Override
-    public SupportLanguages createSupportLanguage(SupportLanguages supportLanguage) {
-        return supportLanguageRepository.save(supportLanguage);
+    public BaseResponse<SupportLanguages> createSupportLanguage(SupportLanguages supportLanguage) {
+        return new OkResponse<>(supportLanguageRepository.save(supportLanguage));
     }
 
     @Override
-    public Optional<SupportLanguages> updateSupportLanguage(int id, SupportLanguages supportLanguage) {
-        return supportLanguageRepository.findById(id).map(existingSupportLanguage -> {
-            existingSupportLanguage.setLanguage(supportLanguage.getLanguage());
-            return supportLanguageRepository.save(existingSupportLanguage);
-        });
+    public BaseResponse<SupportLanguages> updateSupportLanguage(int id, SupportLanguages supportLanguage) {
+        return supportLanguageRepository.findById(id)
+                .map(OkResponse::new)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
 
     @Override
-    public boolean deleteSupportLanguage(int id) {
-        if (!supportLanguageRepository.existsById(id)) {
-            return false;
+    public BaseResponse<Void> deleteSupportLanguage(int id) {
+        if (supportLanguageRepository.existsById(id)) {
+            supportLanguageRepository.deleteById(id);
+            return new AcceptedResponse<>();
         }
-        supportLanguageRepository.deleteById(id);
-        return true;
+        throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
     }
 }

@@ -1,12 +1,14 @@
 package com.cybersoft.capstone.controller;
 
 import com.cybersoft.capstone.entity.NoPlayers;
-import com.cybersoft.capstone.payload.response.BaseReponse;
+import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.service.interfaces.NoPlayerService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/no_player")
@@ -19,70 +21,27 @@ public class NoPlayerController {
     }
 
     @GetMapping
-    public BaseReponse getAllNoPlayers() {
-        return new BaseReponse(
-            HttpStatus.OK.value(),
-            HttpStatus.OK.getReasonPhrase(),
-            noPlayerService.getAllNoPlayers()
-        );
+    public BaseResponse<List<NoPlayers>> getAllNoPlayers() {
+        return noPlayerService.getAllNoPlayers();
     }
 
     @GetMapping("/{id}")
-    public BaseReponse getNoPlayerById(@Valid @PathVariable int id) {
-        return noPlayerService.getNoPlayerById(id)
-            .map(noPlayers ->
-                new BaseReponse(
-                    HttpStatus.OK.value(),
-                    HttpStatus.OK.getReasonPhrase(),
-                    noPlayers
-                    )
-            )
-            .orElseGet(() -> new BaseReponse(
-                HttpStatus.NOT_FOUND.value(),
-                HttpStatus.NOT_FOUND.getReasonPhrase(),
-                null
-            ));
+    public BaseResponse<NoPlayers> getNoPlayerById(@Valid @PathVariable int id) {
+        return noPlayerService.getNoPlayerById(id);
     }
 
     @PostMapping
-    public BaseReponse createNoPlayer(@Valid @RequestBody NoPlayers noPlayer) {
-        return new BaseReponse(
-            HttpStatus.OK.value(),
-            HttpStatus.OK.getReasonPhrase(),
-            noPlayerService.createNoPlayer(noPlayer)
-        );
+    public BaseResponse<NoPlayers> createNoPlayer(@Valid @RequestBody NoPlayers noPlayer) {
+        return noPlayerService.createNoPlayer(noPlayer);
     }
 
     @PostMapping("/{id}")
-    public BaseReponse updateNoPlayer(@Valid @PathVariable int id, @Valid @RequestBody NoPlayers noPlayer) {
-        return noPlayerService.updateNoPlayer(id, noPlayer)
-            .map(updatedNoPlayer ->
-                new BaseReponse(
-                    HttpStatus.OK.value(),
-                    HttpStatus.OK.getReasonPhrase(),
-                    updatedNoPlayer
-                )
-            )
-            .orElseGet(() -> new BaseReponse(
-                HttpStatus.NOT_FOUND.value(),
-                HttpStatus.NOT_FOUND.getReasonPhrase(),
-                null
-            ));
+    public BaseResponse<NoPlayers> updateNoPlayer(@Valid @PathVariable int id, @Valid @RequestBody NoPlayers noPlayer) {
+        return noPlayerService.updateNoPlayer(id, noPlayer);
     }
 
     @DeleteMapping("/{id}")
-    public BaseReponse deleteNoPlayer(@Valid @PathVariable int id) {
-        if (noPlayerService.deleteNoPlayerById(id)) {
-            return new BaseReponse(
-                    HttpStatus.ACCEPTED.value(),
-                    HttpStatus.ACCEPTED.getReasonPhrase(),
-                    null
-            );
-        }
-        return new BaseReponse(
-                HttpStatus.NOT_FOUND.value(),
-                HttpStatus.NOT_FOUND.getReasonPhrase(),
-                null
-        );
+    public BaseResponse<Void> deleteNoPlayer(@Valid @PathVariable int id) {
+        return noPlayerService.deleteNoPlayerById(id);
     }
 }
