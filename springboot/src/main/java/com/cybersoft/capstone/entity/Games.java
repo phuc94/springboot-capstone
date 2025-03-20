@@ -35,7 +35,8 @@ public class Games implements Serializable {
     @JoinColumn(name = "description_id", referencedColumnName = "id")
     private GameDescription gameDescription;
 
-    private GameSupportLanguage gameSupportLanguage;
+    @OneToMany(mappedBy = "game")
+    private List<GameSupportLanguage> gameSupportLanguages;
 
     @OneToMany(mappedBy = "games")
     private List<GameGenre> gameGenres;
