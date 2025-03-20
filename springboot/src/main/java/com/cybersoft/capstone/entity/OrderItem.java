@@ -1,9 +1,6 @@
 package com.cybersoft.capstone.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,4 +11,15 @@ public class OrderItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private int quantity;
+    private double price;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Orders order;
+
+    @ManyToOne
+    @JoinColumn(name = "game_id", referencedColumnName = "id")
+    private Games game;
 }
