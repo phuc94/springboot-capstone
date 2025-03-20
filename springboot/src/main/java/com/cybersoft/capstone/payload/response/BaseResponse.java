@@ -1,6 +1,7 @@
 package com.cybersoft.capstone.payload.response;
 
 
+import com.cybersoft.capstone.entity.GameDescription;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
