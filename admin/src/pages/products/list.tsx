@@ -36,7 +36,6 @@ export const ListProducts = () => {
 
   return (
     <List>
-      <h1>Products</h1>
       <Table {...tableProps} rowKey="id">
         <Table.Column
           dataIndex="id"

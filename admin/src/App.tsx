@@ -1,26 +1,20 @@
-import { Authenticated, GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
-import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
-import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
+import { Authenticated, Refine } from "@refinedev/core";
 
 import { ThemedLayoutV2, ThemedTitleV2, useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router";
 
-import routerBindings, {
-  DocumentTitleHandler,
-  UnsavedChangesNotifier,
-} from "@refinedev/react-router";
-import { dataProvider } from "./providers/dataProvider";
-import { BrowserRouter, Navigate, Outlet, redirect, Route, Routes } from "react-router";
+import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
+import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import { ColorModeContextProvider } from "./contexts/color-mode";
-import { ShowProduct } from "./pages/products/show";
-import { EditProduct } from "./pages/products/edit";
-import { ListProducts } from "./pages/products/list";
-import { CreateProduct } from "./pages/products/create";
+
+import { dataProvider } from "./providers/dataProvider";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import { authProvider } from "./providers/authProvider";
 import { Login } from "./pages/login";
-import { Header } from "./components";
 import { ConfigProvider, App as AntdApp } from "antd";
+import { CreateProduct, EditProduct, ListProducts, ShowProduct } from "./pages/products";
+import { CreateDescription, EditDescription, ListDescription, ShowDescription } from "./pages/description";
 
 function App() {
   return (
@@ -33,13 +27,21 @@ function App() {
             routerProvider={routerProvider}
             notificationProvider={useNotificationProvider}
             resources={[
+              // {
+              //   name: "protected-products",
+              //   list: "/products",
+              //   show: "/products/:id",
+              //   edit: "/products/:id/edit",
+              //   create: "/products/create",
+              //   meta: { label: "Products" },
+              // },
               {
-                name: "protected-products",
-                list: "/products",
-                show: "/products/:id",
-                edit: "/products/:id/edit",
-                create: "/products/create",
-                meta: { label: "Products" },
+                name: "game_description",
+                list: "/description",
+                show: "/description/:id",
+                edit: "/description/:id/edit",
+                create: "/description/create",
+                meta: { label: "Game Description" },
               },
             ]}
           >
@@ -49,7 +51,7 @@ function App() {
                   <Authenticated key="authenticated-routes" redirectOnFail="/login" >
                     <ThemedLayoutV2
                       Title={(props) =>(
-                        <ThemedTitleV2 {...props} text="Awesome Project" />
+                        <ThemedTitleV2 {...props} text="Springboot Capstone" />
                       )}
                     >
                       <Outlet />
@@ -58,16 +60,20 @@ function App() {
                 }
               >
                 <Route
-                  // We're also replacing the <Navigate /> component with the <NavigateToResource /> component.
-                  // It's tailored version of the <Navigate /> component that will redirect to the resource's list route.
                   index
                   element={<NavigateToResource resource="protected-products" />}
                 />
-                <Route path="/products">
+                {/* <Route path="/products">
                   <Route index element={<ListProducts />} />
                   <Route path=":id" element={<ShowProduct />} />
                   <Route path=":id/edit" element={<EditProduct />} />
                   <Route path="create" element={<CreateProduct />} />
+                </Route> */}
+                <Route path="/description">
+                  <Route index element={<ListDescription />} />
+                  <Route path=":id" element={<ShowDescription/>} />
+                  <Route path=":id/edit" element={<EditDescription/>} />
+                  <Route path="create" element={<CreateDescription/>} />
                 </Route>
               </Route>
               <Route
@@ -86,11 +92,6 @@ function App() {
     </BrowserRouter>
   );
 }
-                // <Header />
-                // {/* <ShowProduct /> */}
-                // {/* <EditProduct /> */}
-                // <ListProducts />
-                // {/* <CreateProduct /> */}
 
 export default App;
 
