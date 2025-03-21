@@ -12,6 +12,7 @@ public class Genres {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
     private String genre;
 
     @OneToMany(mappedBy = "genres")

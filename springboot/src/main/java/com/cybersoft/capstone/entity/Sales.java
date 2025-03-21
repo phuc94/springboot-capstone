@@ -16,8 +16,11 @@ public class Sales implements Serializable {
     private int id;
     private Timestamp startDate;
     private Timestamp endDate;
+
+    @Column(nullable = false)
     private double amount;
 
+    @Column(nullable = false)
     private SaleStatus status;
 
     @OneToMany(mappedBy = "sales")

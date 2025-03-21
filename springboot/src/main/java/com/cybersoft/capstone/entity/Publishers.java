@@ -12,6 +12,8 @@ public class Publishers implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "publishers")
