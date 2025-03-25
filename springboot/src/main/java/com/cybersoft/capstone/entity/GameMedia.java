@@ -12,7 +12,7 @@ public class GameMedia implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "game_id", referencedColumnName = "id")
     private Games game;
     private String mediaType;

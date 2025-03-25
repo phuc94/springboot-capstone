@@ -21,5 +21,5 @@ public class GameGenre implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "game_id", referencedColumnName = "id")
-    private Games games;
+    private Games game;
 }

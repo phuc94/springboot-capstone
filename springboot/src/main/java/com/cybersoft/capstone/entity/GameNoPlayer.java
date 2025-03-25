@@ -11,9 +11,12 @@ public class GameNoPlayer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String gameName;
+
+    @ManyToOne
+    @JoinColumn(name="game_id", referencedColumnName = "id")
+    private Games game;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "no_player_id")
+    @JoinColumn(name = "no_player_id", referencedColumnName = "id")
     private NoPlayers noPlayers;
 } 
