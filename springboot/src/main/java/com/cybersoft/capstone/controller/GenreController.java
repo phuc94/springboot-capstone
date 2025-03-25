@@ -39,7 +39,7 @@ public class GenreController {
     }
 
     @DeleteMapping("/{id}")
-    public BaseResponse<Void> deleteGenreById(@PathVariable int id) {
+    public BaseResponse<Void> deleteGenre(@PathVariable int id) {
         return genreService.deleteGenreById(id);
     }
 

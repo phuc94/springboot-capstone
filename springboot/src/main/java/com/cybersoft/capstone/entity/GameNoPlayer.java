@@ -7,11 +7,13 @@ import java.io.Serializable;
 
 @Entity
 @Data
-public class Developers implements Serializable {
+public class GameNoPlayer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String gameName;
 
-    @Column(nullable = false)
-    private String name;
-}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "no_player_id")
+    private NoPlayers noPlayers;
+} 
