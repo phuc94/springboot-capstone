@@ -28,27 +28,30 @@ public class Games implements Serializable {
     private Availability availability;
 
     // Entities mapping
-    private Games gameDlcId;
-    private GamePlayMode gamePlayMode;
-
     @OneToOne
     @JoinColumn(name = "description_id", referencedColumnName = "id")
     private GameDescription gameDescription;
+    @ManyToOne
+    @JoinColumn(name = "publisher_id", referencedColumnName = "id")
+    private Publishers publisher;
+    @ManyToOne
+    @JoinColumn(name="developer_id", referencedColumnName = "id")
+    private Developers developer;
+
+    @OneToMany(mappedBy = "game")
+    private List<GamePlayMode> gamePlayMode;
 
     @OneToMany(mappedBy = "game")
     private List<GameSupportLanguage> gameSupportLanguages;
 
-    @OneToMany(mappedBy = "games")
+    @OneToMany(mappedBy = "game")
     private List<GameGenre> gameGenres;
 
-    @ManyToOne
-    @JoinColumn(name = "publisher_id", referencedColumnName = "id")
-    private Publishers publisher;
-    private Developers developer;
-    private NoPlayers noPlayer;
+    @OneToMany(mappedBy = "game")
+    private List<GameNoPlayer> noPlayer;
 
-    @OneToOne(mappedBy = "game")
-    private GameMedia gameMedia;
+    @OneToMany(mappedBy = "game")
+    private List<GameMedia> gameMedia;
 
     @OneToMany(mappedBy = "game")
     private List<Reviews> reviews;
