@@ -8,7 +8,7 @@ import {
 import { Space, Table } from 'antd';
 
 
-export const ListDescription = () => {
+export const ListGame = () => {
   const {
     tableProps,
     sorters,

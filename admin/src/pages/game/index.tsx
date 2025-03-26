@@ -1,11 +1,11 @@
-import { CreateDescription } from './create'
-import { ShowDescription } from './show'
-import { ListDescription } from './list'
-import { EditDescription } from './edit'
+import { CreateGame } from './create'
+import { ShowGame } from './show'
+import { ListGame } from './list'
+import { EditGame }  from './edit'
 
 export {
-  CreateDescription,
-  ShowDescription,
-  ListDescription,
-  EditDescription,
+  CreateGame,
+  ShowGame,
+  ListGame,
+  EditGame,
 }

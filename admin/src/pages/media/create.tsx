@@ -10,6 +10,9 @@ export const CreateMedia= () => {
   return (
     <Create saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
+        <Form.Item label="Title" name="title">
+          <Input />
+        </Form.Item>
         <Form.Item label="Url" name="url">
           <Input />
         </Form.Item>

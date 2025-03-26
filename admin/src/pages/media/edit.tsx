@@ -13,6 +13,9 @@ export const EditMedia= () => {
         <Form.Item label="Url" name="url">
           <Input />
         </Form.Item>
+        <Form.Item label="Title" name="title">
+          <Input />
+        </Form.Item>
         <Form.Item label="Media Type" name="media_type">
           <Select options={
               Object.keys(MediaType).map(key => {return {value: key, label: key}})

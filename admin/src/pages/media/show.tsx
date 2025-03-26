@@ -16,6 +16,9 @@ export const ShowMedia = () => {
       <Typography.Title level={5}>Url</Typography.Title>
       <TextField value={data?.data?.url} />
 
+      <Typography.Title level={5}>Title</Typography.Title>
+      <TextField value={data?.data?.title} />
+
       <Typography.Title level={5}>Media Type</Typography.Title>
       <TextField value={data?.data?.media_type} />
 

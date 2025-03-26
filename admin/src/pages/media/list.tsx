@@ -27,6 +27,7 @@ export const ListMedia = () => {
           defaultSortOrder={getDefaultSortOrder("id", sorters)}
         />
         <Table.Column dataIndex="url" title="Url" />
+        <Table.Column dataIndex="title" title="title" />
         <Table.Column dataIndex="media_type" title="Media Type" />
         <Table.Column dataIndex="is_primary" title="Is Primary" />
         <Table.Column title="Is Primary"

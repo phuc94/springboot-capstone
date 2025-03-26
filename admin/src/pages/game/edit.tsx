@@ -2,7 +2,7 @@ import { useForm, Edit } from "@refinedev/antd";
 
 import { Form, Input, } from "antd";
 
-export const EditDescription= () => {
+export const EditGame= () => {
   const { formProps, saveButtonProps } = useForm({
     redirect: "show",
   });

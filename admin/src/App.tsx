@@ -24,6 +24,7 @@ import { CreateSale, EditSale, ListSale, ShowSale } from "./pages/sale";
 import { CreateMedia, EditMedia, ListMedia, ShowMedia } from "./pages/media";
 import { CreateCoupon, EditCoupon, ListCoupon, ShowCoupon } from "./pages/coupon";
 import { CreateCouponType, EditCouponType, ListCouponType, ShowCouponType } from "./pages/coupon_type";
+import { CreateGame, EditGame, ListGame, ShowGame } from "./pages/game";
 
 function App() {
   return (
@@ -223,6 +224,12 @@ function App() {
                   <Route path=":id" element={<ShowCouponType />} />
                   <Route path=":id/edit" element={<EditCouponType />} />
                   <Route path="create" element={<CreateCouponType />} />
+                </Route>
+                <Route path="/game">
+                  <Route index element={<ListGame />} />
+                  <Route path=":id" element={<ShowGame />} />
+                  <Route path=":id/edit" element={<EditGame />} />
+                  <Route path="create" element={<CreateGame />} />
                 </Route>
               </Route>
               <Route

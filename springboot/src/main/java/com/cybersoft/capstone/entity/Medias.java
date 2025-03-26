@@ -17,6 +17,7 @@ public class Medias {
     private boolean primary = false;
     @Column(name = "media_type", nullable = false)
     private MediaType media_type;
+    private String title;
 
     @ManyToOne
     @JoinColumn(name = "game_id", referencedColumnName = "id")
