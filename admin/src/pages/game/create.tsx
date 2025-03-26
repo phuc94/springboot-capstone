@@ -2,8 +2,9 @@ import { useForm, Create, useSelect } from "@refinedev/antd";
 
 import { DatePicker, Form, Image, Input, Select, Switch } from "antd";
 import { useWatch } from "antd/es/form/Form";
-import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from "react";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 
 export const CreateGame = () => {
   const { formProps, saveButtonProps, form } = useForm({
@@ -38,14 +39,8 @@ export const CreateGame = () => {
   const [selectedMedias, setMedias] = useState<any>([]);
 
   useEffect(() => {
-    // console.log(mediaProps.options?.filter(item => {
-    //   console.log(item)
-    // }))
     setMedias(mediaProps.options?.filter(item => media?.id?.includes(item.value)))
   }, [media])
-  useEffect(()=>{
-    console.log(selectedMedias)
-  }, [selectedMedias])
 
   return (
     <Create saveButtonProps={saveButtonProps}>
@@ -57,29 +52,30 @@ export const CreateGame = () => {
           <Input />
         </Form.Item>
         <Form.Item label="Description" name="description">
-          <TextArea />
+          <ReactQuill theme="snow" />
         </Form.Item>
         <Form.Item label="Release date" name="release_date">
           <DatePicker />
         </Form.Item>
         <Form.Item label="ESRB rating" name={["esrb_rating", "id"]}>
-          <Select {...esrbProps} />
+          <Select {...esrbProps} showSearch={false} />
         </Form.Item>
         <Form.Item label="Developer" name={["developer", "id"]}>
-          <Select {...developerProps} />
+          <Select {...developerProps} showSearch={false} />
         </Form.Item>
         <Form.Item label="Publisher" name={["publisher", "id"]}>
-          <Select {...publisherProps} />
+          <Select {...publisherProps} showSearch={false} />
         </Form.Item>
         <Form.Item label="Status" name="status">
           <Select
+            showSearch={false}
             options={
               Object.keys(GameStatus).map(key => {return {value: key, label: key}})
             }
           />
         </Form.Item>
         <Form.Item label="Medias" name={["media", "id"]}>
-          <Select mode="multiple" {...mediaProps} />
+          <Select mode="multiple" {...mediaProps} showSearch={false} />
         </Form.Item>
         { selectedMedias?.map((el: any) => (
             <Image
