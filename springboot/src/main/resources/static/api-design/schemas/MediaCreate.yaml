@@ -5,10 +5,10 @@ properties:
   url:
     type: string
     example: https://example.com/image
-  is_primary:
+  primary:
     type: boolean
     example: true
 required:
   - media_type
   - url
-  - is_primary
+  - primary

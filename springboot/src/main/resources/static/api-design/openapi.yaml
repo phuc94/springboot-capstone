@@ -54,4 +54,30 @@ paths:
     $ref: './paths/coupon.yaml'
   /coupon/{id}:
     $ref: './paths/coupon.{id}.yaml'
+components:
+  schemas:
+    Cart:
+      $ref: './schemas/Cart.yaml'
+    Coupon:
+      $ref: './schemas/Coupon.yaml'
+    Developer:
+      $ref: './schemas/Developer.yaml'
+    Game:
+      $ref: './schemas/Game.yaml'
+    Genre:
+      $ref: './schemas/Genre.yaml'
+    Media:
+      $ref: './schemas/Media.yaml'
+    NoPlayer:
+      $ref: './schemas/NoPlayer.yaml'
+    Order:
+      $ref: './schemas/Order.yaml'
+    PlayMode:
+      $ref: './schemas/PlayMode.yaml'
+    Publisher:
+      $ref: './schemas/Publisher.yaml'
+    Sale:
+      $ref: './schemas/Sale.yaml'
+    SupportLanguage:
+      $ref: './schemas/SupportLanguage.yaml'
 

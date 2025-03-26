@@ -14,7 +14,7 @@ public class GamePlayMode implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="play_mode_id", referencedColumnName = "id", nullable = false)
-    private PlayModes playmode;
+    private PlayModes playMode;
 
     @ManyToOne
     @JoinColumn(name="game_id", referencedColumnName = "id", nullable = false)

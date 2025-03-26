@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/no_player")
+@RequestMapping("/api/playmode")
 public class PlayModeController {
     private final PlayModeService playModeService;
 

@@ -45,7 +45,8 @@ public class MediaServiceImpl implements MediaService {
                 .map(foundMedia -> {
                     foundMedia.setMedia_type(media.getMedia_type());
                     foundMedia.setUrl(media.getUrl());
-                    foundMedia.set_primary(media.is_primary());
+                    foundMedia.setPrimary(media.isPrimary());
+                    foundMedia.setTitle(media.getTitle());
                     return new OkResponse<>(mediaRepository.save(foundMedia));
                 })
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));

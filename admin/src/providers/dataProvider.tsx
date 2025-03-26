@@ -1,4 +1,4 @@
-import type { DataProvider } from "@refinedev/core";
+import type { BaseKey, DataProvider } from "@refinedev/core";
 
 const API_URL = "http://localhost:8080/api";
 
@@ -7,7 +7,7 @@ const fetcher = async (url: string, options?: RequestInit) => {
     ...options,
     headers: {
       ...options?.headers,
-      Authorization: localStorage.getItem("my_access_token"),
+      Authorization: localStorage.getItem("my_access_token") as string,
     },
   });
 };
@@ -24,7 +24,7 @@ export const dataProvider: DataProvider = {
   },
   update: async ({resource, id, variables}) => {
     const res = await fetcher(`${API_URL}/${resource}/${id}`,{
-      method: "PATCH",
+      method: "POST",
       body: JSON.stringify(variables),
       headers: {
         "Content-Type" : "application/json"
@@ -98,7 +98,7 @@ export const dataProvider: DataProvider = {
   getMany: async ({ resource, ids }) => {
     const params = new URLSearchParams();
     if (ids) {
-      ids.forEach((id: string) => params.append("id", id));
+      ids.forEach((id) => params.append("id", id as string));
     }
 
     const res = await fetcher(`${API_URL}/${resource}?${params.toString()}`);

@@ -4,7 +4,7 @@ import { Form, Input } from "antd";
 
 export const CreateDescription= () => {
   const { formProps, saveButtonProps } = useForm({
-    redirect: "edit",
+    redirect: "show",
   });
 
   return (
