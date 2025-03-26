@@ -3,11 +3,12 @@ package com.cybersoft.capstone.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity(name = "roles")
 @Data
-public class Roles {
+public class Roles implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
