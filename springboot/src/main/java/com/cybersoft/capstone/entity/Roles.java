@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity(name = "roles")
+@Table(name = "roles", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name"})
+})
 @Data
 public class Roles implements Serializable {
 
@@ -14,7 +17,9 @@ public class Roles implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
     private String name;
+
     private String description;
 
     @OneToMany(mappedBy = "role")
