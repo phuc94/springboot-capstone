@@ -23,6 +23,6 @@ public class Sales implements Serializable {
     @Column(nullable = false)
     private SaleStatus status;
 
-    @OneToMany(mappedBy = "sales")
-    private List<PublisherSale> publisherSale;
+    @OneToMany(mappedBy = "sale")
+    private List<PlatformSale> platformSales;
 }

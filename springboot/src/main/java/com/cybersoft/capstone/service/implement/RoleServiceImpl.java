@@ -42,7 +42,7 @@ public class RoleServiceImpl implements RoleService {
     public BaseResponse<Roles> updateRole(int id, Roles role) {
         return roleRepository.findById(id)
                 .map(foundRole -> {
-                    foundRole.setName(role.getName());
+                    foundRole.setTitle(role.getTitle());
                     foundRole.setDescription(role.getDescription());
                     return new OkResponse<>(roleRepository.save(foundRole));
                 })
