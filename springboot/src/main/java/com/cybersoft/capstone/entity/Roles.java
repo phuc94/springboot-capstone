@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity(name = "roles")
 @Table(name = "roles", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"name"})
+        @UniqueConstraint(columnNames = {"title"})
 })
 @Data
 public class Roles implements Serializable {
@@ -18,7 +18,7 @@ public class Roles implements Serializable {
     private int id;
 
     @Column(nullable = false)
-    private String name;
+    private String title;
 
     private String description;
 

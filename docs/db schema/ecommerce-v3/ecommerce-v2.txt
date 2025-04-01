@@ -1,0 +1,226 @@
+enum media_type {
+    IMAGE //default
+    VIDEO
+  }
+  enum order_status {
+    PROCESSING //default
+    PENDING
+    CANCELLED
+    FAILED
+  }
+  enum payment_status {
+    PENDING
+    PAID
+    FAIL
+  }
+  enum coupon_status {
+    DISABLE //default
+    ACTIVE
+    EXPIRE
+  }
+  enum sale_status {
+    DISABLE //default
+    ACTIVE
+    EXPIRE
+  }
+  enum cart_status {
+    ACTIVE //default
+    CHECKED_OUT
+    EXPIRED
+    ABANDONED
+  }
+
+  Table games {
+    id integer pk
+    is_dlc boolean  [not null, default: false]
+    description_id integer
+    title varchar [not null]
+    price double [not null]
+    stock integer [not null, default: 0]
+    is_deleted bool
+    platform_id interger [not null]
+    sale double [not null, default: 0]
+  }
+
+  Table medias {
+    id integer pk
+    game_id integer [not null]
+    media_type media_type [not null]
+    url varchar [not null]
+    is_primary bool [not null, default: false]
+  }
+
+  Table game_description {
+    id integer pk
+    descrition varchar [not null]
+  }
+
+  Table platform_sale {
+    id integer pk
+    sale_id integer  [not null]
+    platform_id integer  [not null]
+    indexes {
+      (sale_id, platform_id) [unique]
+    }
+  }
+
+  Table users {
+    id integer pk
+    email varchar [not null]
+    password varchar [not null]
+    name varchar
+    address varchar
+    phone varchar
+  }
+
+  Table guests {
+    id integer pk
+    session_id varchar [not null]
+  } 
+
+  Table orders {
+    id integer pk
+    payment_method_id integer [not null]
+    order_status order_status [not null]
+    payment_status payment_status [not null]
+    original_amount double
+    discount_amount double
+    total_amount double [not null]
+    user_id integer [not null]
+  }
+
+  Table order_item {
+    id integer pk
+    game_id integer [not null]
+    order_id integer [not null]
+    indexes {
+      (game_id, order_id) [unique]
+    }
+  }
+
+  Table sales {
+    id integer pk
+    start_date timestamp
+    end_date timestamp
+    amount double [not null] // percentage
+    status sale_status [not null]
+  }
+
+  Table coupons {
+    id integer pk
+    type_id integer [not null]
+    code varchar [not null]
+    discount_amount integer
+    usage_limit integer
+    used_count integer
+    start_date timestamp
+    end_date timestamp
+    status coupon_status [not null]
+  }
+  Table coupon_types {
+    id integer pk
+    type varchar [not null]
+  }
+
+  Table order_coupon {
+    id integer pk
+    coupon_id integer [not null]
+    order_id integer [not null]
+    indexes {
+      (coupon_id, order_id) [unique]
+    }
+  }
+
+  Table carts {
+    user_id integer
+    id integer pk
+    status cart_status [not null]
+    session_id integer
+  }
+
+  Table cart_items {
+    id integer pk
+    game_id integer [not null]
+    cart_id integer [not null]
+    indexes {
+      (cart_id, game_id) [unique]
+    }
+  }
+
+  Table wishlist_item {
+    id integer pk
+    game_id integer [not null]
+    user_id integer [not null]
+    indexes {
+      (user_id, game_id) [unique]
+    }
+  }
+  Table reviews {
+    id integer pk
+    game_id integer [not null]
+    user_id integer [not null]
+    rating integer [not null, default: 5]
+    recommend boolean [not null, default: true]
+    comment varchar [not null]
+    indexes {
+      (game_id, user_id) [unique]
+    }
+  }
+  Table payment_method {
+    id integer pk
+    title varchar [not null]
+  }
+
+  Table platforms {
+    id integer pk
+    title varchar [not null]
+    buy_guide varchar
+    activate_guide varchar
+  }
+
+  Table admins {
+    id integer pk
+    role_id integer
+    fullname varchar
+    email varchar [not null]
+    password varchar [not null]
+  }
+
+  Table roles {
+    id integer pk
+    title varchar [not null]
+    descriptions varchar
+  }
+
+  Table game_key {
+    id integer pk
+    game_id integer [not null]
+    key varchar [not null]
+    sold boolean [not null, default: false]
+  }
+
+
+  Ref: games.id < game_key.game_id
+  Ref: roles.id < admins.role_id
+  Ref: games.description_id - game_description.id
+  Ref: order_item.order_id > orders.id 
+  Ref: order_item.game_id > games.id
+  Ref: order_coupon.coupon_id > coupons.id
+  Ref: order_coupon.order_id > orders.id
+  Ref: carts.user_id - users.id
+  Ref: platform_sale.platform_id > platforms.id
+  Ref: platform_sale.sale_id > sales.id
+  Ref: medias.game_id > games.id
+  Ref: orders.user_id > users.id
+  Ref: cart_items.cart_id > carts.id
+  Ref: cart_items.game_id > games.id
+  Ref: wishlist_item.game_id > games.id
+  Ref: coupons.type_id - coupon_types.id
+  Ref: wishlist_item.user_id > users.id
+  Ref: reviews.game_id > games.id
+  Ref: reviews.user_id > users.id
+  Ref: carts.session_id - guests.session_id
+  Ref: orders.payment_method_id > payment_method.id
+  Ref: platforms.id < games.platform_id
+
+

@@ -24,10 +24,6 @@ public class Admins implements Serializable {
     @Column(nullable = false)
     private String password;
 
-    private String phone;
-
-    private String address;
-
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Roles role;
