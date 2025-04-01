@@ -31,4 +31,8 @@ public class Orders implements Serializable {
     @ManyToOne
     @JoinColumn(name = "coupon_type_id", referencedColumnName = "id")
     private CouponTypes couponType;
+
+    @ManyToOne
+    @JoinColumn(name="payment_method_id", referencedColumnName = "id")
+    private PaymentMethod paymentMethod;
 }
