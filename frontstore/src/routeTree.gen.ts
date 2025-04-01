@@ -11,10 +11,31 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as WishListImport } from './routes/wish-list'
+import { Route as CartImport } from './routes/cart'
 import { Route as IndexImport } from './routes/index'
 import { Route as TestIndexImport } from './routes/test/index'
+import { Route as MyAccountIndexImport } from './routes/my-account/index'
+import { Route as MyAccountProfileImport } from './routes/my-account/profile'
+import { Route as MyAccountOrdersImport } from './routes/my-account/orders'
+import { Route as MyAccountFundsImport } from './routes/my-account/funds'
+import { Route as MyAccountAddressImport } from './routes/my-account/address'
+import { Route as CheckoutPaymentImport } from './routes/_checkout/payment'
+import { Route as CheckoutCheckoutImport } from './routes/_checkout/checkout'
 
 // Create/Update Routes
+
+const WishListRoute = WishListImport.update({
+  id: '/wish-list',
+  path: '/wish-list',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CartRoute = CartImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -28,6 +49,48 @@ const TestIndexRoute = TestIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const MyAccountIndexRoute = MyAccountIndexImport.update({
+  id: '/my-account/',
+  path: '/my-account/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MyAccountProfileRoute = MyAccountProfileImport.update({
+  id: '/my-account/profile',
+  path: '/my-account/profile',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MyAccountOrdersRoute = MyAccountOrdersImport.update({
+  id: '/my-account/orders',
+  path: '/my-account/orders',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MyAccountFundsRoute = MyAccountFundsImport.update({
+  id: '/my-account/funds',
+  path: '/my-account/funds',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MyAccountAddressRoute = MyAccountAddressImport.update({
+  id: '/my-account/address',
+  path: '/my-account/address',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CheckoutPaymentRoute = CheckoutPaymentImport.update({
+  id: '/_checkout/payment',
+  path: '/payment',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const CheckoutCheckoutRoute = CheckoutCheckoutImport.update({
+  id: '/_checkout/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -37,6 +100,69 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartImport
+      parentRoute: typeof rootRoute
+    }
+    '/wish-list': {
+      id: '/wish-list'
+      path: '/wish-list'
+      fullPath: '/wish-list'
+      preLoaderRoute: typeof WishListImport
+      parentRoute: typeof rootRoute
+    }
+    '/_checkout/checkout': {
+      id: '/_checkout/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutCheckoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/_checkout/payment': {
+      id: '/_checkout/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof CheckoutPaymentImport
+      parentRoute: typeof rootRoute
+    }
+    '/my-account/address': {
+      id: '/my-account/address'
+      path: '/my-account/address'
+      fullPath: '/my-account/address'
+      preLoaderRoute: typeof MyAccountAddressImport
+      parentRoute: typeof rootRoute
+    }
+    '/my-account/funds': {
+      id: '/my-account/funds'
+      path: '/my-account/funds'
+      fullPath: '/my-account/funds'
+      preLoaderRoute: typeof MyAccountFundsImport
+      parentRoute: typeof rootRoute
+    }
+    '/my-account/orders': {
+      id: '/my-account/orders'
+      path: '/my-account/orders'
+      fullPath: '/my-account/orders'
+      preLoaderRoute: typeof MyAccountOrdersImport
+      parentRoute: typeof rootRoute
+    }
+    '/my-account/profile': {
+      id: '/my-account/profile'
+      path: '/my-account/profile'
+      fullPath: '/my-account/profile'
+      preLoaderRoute: typeof MyAccountProfileImport
+      parentRoute: typeof rootRoute
+    }
+    '/my-account/': {
+      id: '/my-account/'
+      path: '/my-account'
+      fullPath: '/my-account'
+      preLoaderRoute: typeof MyAccountIndexImport
       parentRoute: typeof rootRoute
     }
     '/test/': {
@@ -53,36 +179,115 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/wish-list': typeof WishListRoute
+  '/checkout': typeof CheckoutCheckoutRoute
+  '/payment': typeof CheckoutPaymentRoute
+  '/my-account/address': typeof MyAccountAddressRoute
+  '/my-account/funds': typeof MyAccountFundsRoute
+  '/my-account/orders': typeof MyAccountOrdersRoute
+  '/my-account/profile': typeof MyAccountProfileRoute
+  '/my-account': typeof MyAccountIndexRoute
   '/test': typeof TestIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/wish-list': typeof WishListRoute
+  '/checkout': typeof CheckoutCheckoutRoute
+  '/payment': typeof CheckoutPaymentRoute
+  '/my-account/address': typeof MyAccountAddressRoute
+  '/my-account/funds': typeof MyAccountFundsRoute
+  '/my-account/orders': typeof MyAccountOrdersRoute
+  '/my-account/profile': typeof MyAccountProfileRoute
+  '/my-account': typeof MyAccountIndexRoute
   '/test': typeof TestIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/cart': typeof CartRoute
+  '/wish-list': typeof WishListRoute
+  '/_checkout/checkout': typeof CheckoutCheckoutRoute
+  '/_checkout/payment': typeof CheckoutPaymentRoute
+  '/my-account/address': typeof MyAccountAddressRoute
+  '/my-account/funds': typeof MyAccountFundsRoute
+  '/my-account/orders': typeof MyAccountOrdersRoute
+  '/my-account/profile': typeof MyAccountProfileRoute
+  '/my-account/': typeof MyAccountIndexRoute
   '/test/': typeof TestIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/test'
+  fullPaths:
+    | '/'
+    | '/cart'
+    | '/wish-list'
+    | '/checkout'
+    | '/payment'
+    | '/my-account/address'
+    | '/my-account/funds'
+    | '/my-account/orders'
+    | '/my-account/profile'
+    | '/my-account'
+    | '/test'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/test'
-  id: '__root__' | '/' | '/test/'
+  to:
+    | '/'
+    | '/cart'
+    | '/wish-list'
+    | '/checkout'
+    | '/payment'
+    | '/my-account/address'
+    | '/my-account/funds'
+    | '/my-account/orders'
+    | '/my-account/profile'
+    | '/my-account'
+    | '/test'
+  id:
+    | '__root__'
+    | '/'
+    | '/cart'
+    | '/wish-list'
+    | '/_checkout/checkout'
+    | '/_checkout/payment'
+    | '/my-account/address'
+    | '/my-account/funds'
+    | '/my-account/orders'
+    | '/my-account/profile'
+    | '/my-account/'
+    | '/test/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CartRoute: typeof CartRoute
+  WishListRoute: typeof WishListRoute
+  CheckoutCheckoutRoute: typeof CheckoutCheckoutRoute
+  CheckoutPaymentRoute: typeof CheckoutPaymentRoute
+  MyAccountAddressRoute: typeof MyAccountAddressRoute
+  MyAccountFundsRoute: typeof MyAccountFundsRoute
+  MyAccountOrdersRoute: typeof MyAccountOrdersRoute
+  MyAccountProfileRoute: typeof MyAccountProfileRoute
+  MyAccountIndexRoute: typeof MyAccountIndexRoute
   TestIndexRoute: typeof TestIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CartRoute: CartRoute,
+  WishListRoute: WishListRoute,
+  CheckoutCheckoutRoute: CheckoutCheckoutRoute,
+  CheckoutPaymentRoute: CheckoutPaymentRoute,
+  MyAccountAddressRoute: MyAccountAddressRoute,
+  MyAccountFundsRoute: MyAccountFundsRoute,
+  MyAccountOrdersRoute: MyAccountOrdersRoute,
+  MyAccountProfileRoute: MyAccountProfileRoute,
+  MyAccountIndexRoute: MyAccountIndexRoute,
   TestIndexRoute: TestIndexRoute,
 }
 
@@ -97,11 +302,47 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/cart",
+        "/wish-list",
+        "/_checkout/checkout",
+        "/_checkout/payment",
+        "/my-account/address",
+        "/my-account/funds",
+        "/my-account/orders",
+        "/my-account/profile",
+        "/my-account/",
         "/test/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/cart": {
+      "filePath": "cart.tsx"
+    },
+    "/wish-list": {
+      "filePath": "wish-list.tsx"
+    },
+    "/_checkout/checkout": {
+      "filePath": "_checkout/checkout.tsx"
+    },
+    "/_checkout/payment": {
+      "filePath": "_checkout/payment.tsx"
+    },
+    "/my-account/address": {
+      "filePath": "my-account/address.tsx"
+    },
+    "/my-account/funds": {
+      "filePath": "my-account/funds.tsx"
+    },
+    "/my-account/orders": {
+      "filePath": "my-account/orders.tsx"
+    },
+    "/my-account/profile": {
+      "filePath": "my-account/profile.tsx"
+    },
+    "/my-account/": {
+      "filePath": "my-account/index.tsx"
     },
     "/test/": {
       "filePath": "test/index.tsx"
