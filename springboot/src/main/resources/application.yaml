@@ -16,7 +16,8 @@ springdoc:
   api-docs:
     path: /v3/api-docs.yaml
   swagger-ui:
-    url: /api-design/openapi.yaml
+    url: /api-design/api.yaml
 
 jwt:
   secret: CPwfOlWH30eToMJLYuWoF4ArPXIcByN4LqiWmPBokSo=
+

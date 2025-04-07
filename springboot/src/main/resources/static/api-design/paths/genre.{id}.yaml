@@ -4,7 +4,12 @@ get:
   tags:
     - genre
   parameters:
-    - $ref: "../params/{id}.yaml"
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
   responses:
     "200":
       description: Genre details
@@ -30,7 +35,12 @@ post:
   tags:
     - genre
   parameters:
-    - $ref: "../params/{id}.yaml"
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
   requestBody:
     required: true
     content:
@@ -64,7 +74,12 @@ delete:
   tags:
     - genre
   parameters:
-    - $ref: "../params/{id}.yaml"
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
   responses:
     "200":
       description: successful operation

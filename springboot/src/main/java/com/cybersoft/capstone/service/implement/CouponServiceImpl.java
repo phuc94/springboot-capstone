@@ -8,6 +8,7 @@ import com.cybersoft.capstone.payload.response.OkResponse;
 import com.cybersoft.capstone.repository.CouponRepository;
 import com.cybersoft.capstone.service.interfaces.CouponService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,7 +1,8 @@
 type: object
 properties:
   id:
-    $ref: './standard_id.yaml'
+    type: integer
+    example: 0
   session_id:
     type: string
 

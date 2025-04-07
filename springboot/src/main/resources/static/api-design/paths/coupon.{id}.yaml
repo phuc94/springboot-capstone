@@ -1,27 +1,25 @@
 get:
   summary: Get a coupon by ID
-  description: getCouponById
+  description: getCoupon
   operationId: getCouponById
   tags:
     - coupon
   parameters:
-    - $ref: "../params/{id}.yaml"
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
   responses:
     "200":
       description: successful operation
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                example: "200"
-              message:
-                type: string
-                example: "ok"
-              data:
-                $ref: "../schemas/Coupon.yaml"
+            type: array
+            items:
+              $ref: "../schemas/CouponCreate.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
@@ -29,34 +27,55 @@ get:
 
 post:
   summary: Update a coupon by ID
-  description: updateCoupon
+  description: update
   operationId: updateCoupon
   tags:
     - coupon
   parameters:
-    - $ref: "../params/{id}.yaml"
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: "../schemas/CouponCreate.yaml"
+          type: object
+          properties:
+            code:
+              type: string
+              example: "SLKJVSD"
+            discount_amount:
+              type: number
+              example: 30.5
+            usage_limit:
+              type: integer
+              example: 300
+            used_count:
+              type: integer
+              example: 221
+            start_date:
+              type: string
+              format: date-time
+            end_date:
+              type: string
+              format: date-time
+            status:
+              type: string
+              enum: ["DISABLE", "ACTIVE", "EXPIRE"]
+            type:
+              type: string
+              example: "direct"
   responses:
     "200":
       description: successful operation
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                example: "200"
-              message:
-                type: string
-                example: "updated"
-              data:
-                $ref: "../schemas/Coupon.yaml"
+            $ref: "../schemas/Coupon.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
@@ -64,12 +83,17 @@ post:
 
 delete:
   summary: Delete a coupon by ID
-  description: deleteCoupon
+  description: delete
   operationId: deleteCoupon
   tags:
     - coupon
   parameters:
-    - $ref: "../params/{id}.yaml"
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
   responses:
     "200":
       description: successful operation
@@ -77,16 +101,7 @@ delete:
         application/json:
           schema:
             type: object
-            properties:
-              code:
-                type: integer
-                example: "204"
-              message:
-                type: string
-                example: "Accepted"
-              data:
-                type: object
-                example: null
+            example: null
     "400":
       $ref: "../responses/400.yaml"
     "404":

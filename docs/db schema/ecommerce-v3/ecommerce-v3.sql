@@ -158,12 +158,16 @@ CREATE TABLE "reviews" (
 
 CREATE TABLE "payment_method" (
   "id" integer PRIMARY KEY,
-  "title" varchar NOT NULL
+  "title" varchar NOT NULL,
+  "name" varchar NOT NULL,
+  "description" varchar NOT NULL,
+  "account" varchar NOT NULL,
+  "image" varchar NOT NULL
 );
 
 CREATE TABLE "platforms" (
   "id" integer PRIMARY KEY,
-  "title" varchar NOT NULL,
+  "name" varchar NOT NULL,
   "buy_guide" varchar,
   "activate_guide" varchar
 );
@@ -186,7 +190,7 @@ CREATE TABLE "game_key" (
   "id" integer PRIMARY KEY,
   "game_id" integer NOT NULL,
   "key" varchar NOT NULL,
-  "sold" boolean NOT NULL DEFAULT false
+  "active" boolean NOT NULL DEFAULT false
 );
 
 CREATE UNIQUE INDEX ON "platform_sale" ("sale_id", "platform_id");
