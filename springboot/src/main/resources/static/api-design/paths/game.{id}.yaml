@@ -5,7 +5,12 @@ get:
   operationId: getGameById
   description: getGameById
   parameters:
-    - $ref: '../params/{id}.yaml'
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
   responses:
     "200":
       description: successful operation
@@ -33,7 +38,12 @@ post:
   operationId: updateGame
   description: updateGame
   parameters:
-    - $ref: '../params/{id}.yaml'
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
   requestBody:
     description: Update a Game
     content:
@@ -68,7 +78,7 @@ delete:
   description: deleteGame
   operationId: deleteGame
   parameters:
-    - name: game_id
+    - name: id
       in: path
       description: 'Game id to be delete'
       required: true

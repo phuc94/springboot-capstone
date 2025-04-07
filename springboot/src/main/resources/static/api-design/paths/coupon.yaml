@@ -1,6 +1,6 @@
 post:
   summary: Create a new coupon
-  description: createCoupon
+  description: create
   operationId: createCoupon
   tags:
     - coupon
@@ -16,24 +16,11 @@ post:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                example: "200"
-              message:
-                type: string
-                example: "created"
-              data:
-                $ref: "../schemas/Coupon.yaml"
-    "400":
-      $ref: "../responses/400.yaml"
-    "404":
-      $ref: "../responses/404.yaml"
+            $ref: "../schemas/Coupon.yaml"
 
 get:
   summary: Get all coupons
-  description: getAllCoupons
+  description: getAll
   operationId: getAllCoupons
   tags:
     - coupon
@@ -43,19 +30,6 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                example: "200"
-              message:
-                type: string
-                example: "ok"
-              data:
-                type: array
-                items:
-                  $ref: "../schemas/Coupon.yaml"
-    "400":
-      $ref: "../responses/400.yaml"
-    "404":
-      $ref: "../responses/404.yaml"
+            type: array
+            items:
+              $ref: "../schemas/Coupon.yaml"

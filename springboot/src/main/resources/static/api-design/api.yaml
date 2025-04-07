@@ -10,7 +10,7 @@ servers:
 paths:
   /game:
     $ref: './paths/game.yaml'
-  /game/{game_id}:
+  /game/{id}:
     $ref: './paths/game.{id}.yaml'
   /game/filter:
     $ref: './paths/game.filter.yaml'

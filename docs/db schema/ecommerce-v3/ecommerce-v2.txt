@@ -1,4 +1,4 @@
-enum media_type {
+  enum media_type {
     IMAGE //default
     VIDEO
   }
@@ -169,11 +169,15 @@ enum media_type {
   Table payment_method {
     id integer pk
     title varchar [not null]
+    name varchar [not null]
+    description varchar [not null]
+    account varchar [not null]
+    image varchar [not null]
   }
 
   Table platforms {
     id integer pk
-    title varchar [not null]
+    name varchar [not null]
     buy_guide varchar
     activate_guide varchar
   }
@@ -196,7 +200,7 @@ enum media_type {
     id integer pk
     game_id integer [not null]
     key varchar [not null]
-    sold boolean [not null, default: false]
+    active boolean [not null, default: false]
   }
 
 

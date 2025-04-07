@@ -1,6 +1,7 @@
-name: id
-in: path
-schema:
-  type: integer
-  description: id of item
-  example: 0
+  parameters:
+      name: id
+      in: path
+      schema:
+        type: integer
+        description: id of item
+        example: 0
