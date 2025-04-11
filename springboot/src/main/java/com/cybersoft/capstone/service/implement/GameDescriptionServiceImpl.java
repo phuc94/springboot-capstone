@@ -9,6 +9,7 @@ import com.cybersoft.capstone.repository.GameDescriptionRepository;
 import com.cybersoft.capstone.service.interfaces.GameDescriptionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +36,7 @@ public class GameDescriptionServiceImpl implements GameDescriptionService {
     }
 
     @Override
+    @Transactional
     public BaseResponse<GameDescription> createGameDescription(GameDescription gameDescription) {
         return new OkResponse<>(gameDescriptionRepository.save(gameDescription));
     }
