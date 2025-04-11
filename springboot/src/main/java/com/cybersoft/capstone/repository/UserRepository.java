@@ -1,6 +1,13 @@
 package com.cybersoft.capstone.repository;
 
 import com.cybersoft.capstone.entity.Users;
-import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends ListCrudRepository<Users, Integer> {}
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<Users, Integer> {
+    Optional<Users> findByEmail(String email);
+    boolean existsByEmail(String email);
+}
