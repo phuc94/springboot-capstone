@@ -24,4 +24,18 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationResponse);
     }
 
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(
+            @RequestParam String email,
+            @RequestParam String oldPassword,
+            @RequestParam String newPassword) {
+
+        boolean success = authenticationService.changePassword(email, oldPassword, newPassword);
+
+        if (success) {
+            return ResponseEntity.ok("Password changed successfully");
+        } else {
+            return ResponseEntity.badRequest().body("Failed to change password. Please check your credentials.");
+        }
+    }
 }
