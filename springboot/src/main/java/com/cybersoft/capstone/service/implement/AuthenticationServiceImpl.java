@@ -36,4 +36,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return token;
     }
 
+    @Override
+    public boolean changePassword(String email, String oldPassword, String newPassword) {
+        Optional<Admins> adminsOptional = adminRepository.findByEmail(email);
+
+        if (adminsOptional.isPresent()) {
+            Admins admin = adminsOptional.get();
+
+            // Verify old password
+            if (passwordEncoder.matches(oldPassword, admin.getPassword())) {
+                // Encode and set new password
+                admin.setPassword(passwordEncoder.encode(newPassword));
+                adminRepository.save(admin);
+                return true;
+            }
+        }
+        return false;
+    }
 }
