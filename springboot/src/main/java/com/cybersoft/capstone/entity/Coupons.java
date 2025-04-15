@@ -12,14 +12,14 @@ import java.sql.Timestamp;
 public class Coupons implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(nullable = false)
     private String code;
-    private double discount_amount;
-    private int usage_limit;
-    private int used_count;
-    private Timestamp start_date;
-    private Timestamp end_date;
+    private Double discountAmount;
+    private Integer usageLimit;
+    private Integer usedCount;
+    private Timestamp startDate;
+    private Timestamp endDate;
     @Column(nullable = false)
     private CouponStatus status;
 

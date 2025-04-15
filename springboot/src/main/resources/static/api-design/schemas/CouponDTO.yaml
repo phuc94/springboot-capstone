@@ -5,7 +5,7 @@ properties:
     example: "SLKJVSD"
   discount_amount:
     type: number
-    example: 30.5
+    format: double
   usage_limit:
     type: integer
     example: 300
@@ -13,16 +13,11 @@ properties:
     type: integer
     example: 221
   start_date:
-    type: string
-    format: date-time
+    $ref: "./types/timestamp.yaml"
   end_date:
-    type: string
-    format: date-time
+    $ref: "./types/timestamp.yaml"
   status:
     $ref: '../enums/coupon_status.yaml'
-  type:
-    type: string
-    example: "direct"
 #required:
 #  - code
 #  - discount_amount

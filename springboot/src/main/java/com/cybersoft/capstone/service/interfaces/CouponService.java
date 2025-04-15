@@ -1,15 +1,14 @@
 package com.cybersoft.capstone.service.interfaces;
 
-import com.cybersoft.capstone.entity.Coupons;
-import com.cybersoft.capstone.payload.response.BaseResponse;
-import org.springframework.http.ResponseEntity;
+import com.cybersoft.capstone.dto.CouponDTO;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
 public interface CouponService {
-    public BaseResponse<List<Coupons>> getAllCoupons();
-    public BaseResponse<Coupons> getCouponById(int id);
-    public BaseResponse<Coupons> createCoupon(Coupons coupon);
-    public BaseResponse<Coupons> updateCoupon(int id,Coupons coupon);
-    public BaseResponse<Void> deleteCouponById(int id);
+    public List<CouponDTO> getAllCoupons();
+    public CouponDTO getCouponById(int id);
+    public CouponDTO createCoupon(@Valid CouponDTO couponDTO);
+    public CouponDTO updateCoupon(int id,CouponDTO couponDTO);
+    public void deleteCouponById(int id);
 }

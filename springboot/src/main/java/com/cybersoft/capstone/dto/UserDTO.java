@@ -1,4 +1,4 @@
-package com.cybersoft.capstone.DTO;
+package com.cybersoft.capstone.dto;
 
 public record UserDTO (
         String email,
