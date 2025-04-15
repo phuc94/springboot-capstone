@@ -1,0 +1,7 @@
+typeMappings:
+  timestamp: Timestamp
+importMappings:
+  BaseResponse: com.cybersoft.capstone.payload.response.BaseResponse
+  Coupon: com.cybersoft.capstone.dto.CouponDTO
+  CouponStatus: com.cybersoft.capstone.entity.enums.CouponStatus
+  Timestamp: java.sql.Timestamp

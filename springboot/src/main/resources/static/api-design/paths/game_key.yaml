@@ -1,29 +1,29 @@
 post:
-  summary: Create a new coupon
-  description: create
-  operationId: createAdminCoupon
+  summary: Create a new Key
+  description: create new Key
+  operationId: createAdminKey
   tags:
-    - adminCoupon
+    - adminGameKey
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: "../schemas/CouponDTO.yaml"
+          $ref: "../schemas/GameKeyDTO.yaml"
   responses:
     "200":
       description: successful operation
       content:
         application/json:
           schema:
-            $ref: "../schemas/CouponDTO.yaml"
+            $ref: "../schemas/GameKeyDTO.yaml"
 
 get:
-  summary: Get all coupons
+  summary: Get all gameKeys
   description: getAll
-  operationId: getAllAdminCoupons
+  operationId: getAllAdminKeys
   tags:
-    - adminCoupon
+    - adminGameKey
   responses:
     "200":
       description: successful operation
@@ -32,4 +32,4 @@ get:
           schema:
             type: array
             items:
-              $ref: "../schemas/CouponDTO.yaml"
+              $ref: "../schemas/GameKeyDTO.yaml"
