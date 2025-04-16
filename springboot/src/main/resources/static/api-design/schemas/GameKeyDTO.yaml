@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 2
+  key:
+    type: string
+    example: "DFKLS"
+  active:
+    type: boolean
+    example: true
+  game_id:
+    type: integer
+    example: 5

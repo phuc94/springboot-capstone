@@ -1,9 +1,9 @@
 get:
-  summary: Get a coupon by ID
-  description: getCoupon
-  operationId: getAdminCouponById
+  summary: Get a gameKey by ID
+  description: getGameKey
+  operationId: getAdminGameKeyById
   tags:
-    - adminCoupon
+    - adminGameKey
   parameters:
     - name: id
       in: path
@@ -17,18 +17,18 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../schemas/CouponDTO.yaml"
+            $ref: "../schemas/GameKeyDTO.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"
 
 post:
-  summary: Update a coupon by ID
+  summary: Update a gameKey by ID
   description: update
-  operationId: updateAdminCoupon
+  operationId: updateAdminGameKey
   tags:
-    - adminCoupon
+    - adminGameKey
   parameters:
     - name: id
       in: path
@@ -41,25 +41,25 @@ post:
     content:
       application/json:
         schema:
-          $ref: "../schemas/CouponDTO.yaml"
+          $ref: "../schemas/GameKeyDTO.yaml"
   responses:
     "200":
       description: successful operation
       content:
         application/json:
           schema:
-            $ref: "../schemas/CouponDTO.yaml"
+            $ref: "../schemas/GameKeyDTO.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
       $ref: "../responses/404.yaml"
 
 delete:
-  summary: Delete a coupon by ID
+  summary: Delete a gameKey by ID
   description: delete
-  operationId: deleteAdminCoupon
+  operationId: deleteAdminGameKey
   tags:
-    - adminCoupon
+    - adminGameKey
   parameters:
     - name: id
       in: path

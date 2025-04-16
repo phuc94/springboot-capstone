@@ -3,13 +3,13 @@ post:
   description: createGameDescription
   operationId: createGameDescription
   tags:
-    - game_description
+    - adminGameDescription
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          $ref: "../schemas/GameDescriptionCreate.yaml"
+          $ref: "../schemas/GameDescriptionDTO.yaml"
   responses:
     "200":
       description: successful operation
@@ -25,7 +25,7 @@ post:
                 type: string
                 example: "created"
               data:
-                $ref: "../schemas/GameDescription.yaml"
+                $ref: "../schemas/GameDescriptionDTO.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
@@ -36,7 +36,7 @@ get:
   description: getAllGameDescriptions
   operationId: getAllGameDescriptions
   tags:
-    - game_description
+    - adminGameDescription
   responses:
     "200":
       description: successful operation
@@ -54,7 +54,7 @@ get:
               data:
                 type: array
                 items:
-                  $ref: "../schemas/GameDescription.yaml"
+                  $ref: "../schemas/GameDescriptionDTO.yaml"
     "400":
       $ref: "../responses/400.yaml"
     "404":
