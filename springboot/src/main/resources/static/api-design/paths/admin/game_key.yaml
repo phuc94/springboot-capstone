@@ -1,0 +1,34 @@
+post:
+  summary: Create a new Game Key
+  description: create new Game Key
+  operationId: createAdminGameKey
+  tags:
+    - adminGameKey
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/AdminGameKeyDTO.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/AdminGameKeyDTO.yaml"
+get:
+  summary: Get all game Keys
+  description: getAllAdminGameKeys
+  operationId: getAllAdminGameKeys
+  tags:
+    - adminGameKey
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../../schemas/AdminGameKeyDTO.yaml"

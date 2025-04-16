@@ -1,7 +1,0 @@
-type: object
-properties:
-  no_player:
-    type: string
-    example: "Single(1)"
-required:
-  - no_player

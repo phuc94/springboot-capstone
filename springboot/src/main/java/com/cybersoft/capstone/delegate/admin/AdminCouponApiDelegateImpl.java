@@ -1,7 +1,7 @@
 package com.cybersoft.capstone.delegate.admin;
 
 import com.cybersoft.capstone.api.AdminCouponApiDelegate;
-import com.cybersoft.capstone.dto.CouponDTO;
+import com.cybersoft.capstone.dto.AdminCouponDTO;
 import com.cybersoft.capstone.payload.response.AcceptedResponse;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.OkResponse;
@@ -20,7 +20,7 @@ public class AdminCouponApiDelegateImpl implements AdminCouponApiDelegate {
     }
 
     @Override
-    public BaseResponse<CouponDTO> createAdminCoupon(CouponDTO couponDTO) {
+    public BaseResponse<AdminCouponDTO> createAdminCoupon(AdminCouponDTO couponDTO) {
         return new OkResponse<>(couponService.createCoupon(couponDTO));
     }
 
@@ -31,17 +31,17 @@ public class AdminCouponApiDelegateImpl implements AdminCouponApiDelegate {
     }
 
     @Override
-    public BaseResponse<List<CouponDTO>> getAllAdminCoupons() {
+    public BaseResponse<List<AdminCouponDTO>> getAllAdminCoupons() {
         return new OkResponse<>(couponService.getAllCoupons());
     }
 
     @Override
-    public BaseResponse<CouponDTO> getAdminCouponById(Integer id) {
+    public BaseResponse<AdminCouponDTO> getAdminCouponById(Integer id) {
         return new OkResponse<>(couponService.getCouponById(id));
     }
 
     @Override
-    public BaseResponse<CouponDTO> updateAdminCoupon(Integer id, CouponDTO couponDTO) {
+    public BaseResponse<AdminCouponDTO> updateAdminCoupon(Integer id, AdminCouponDTO couponDTO) {
         return new OkResponse<>(couponService.updateCoupon(id, couponDTO));
     }
 }

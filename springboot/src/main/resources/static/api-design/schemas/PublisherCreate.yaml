@@ -1,7 +1,0 @@
-type: object
-properties:
-  name:
-    type: string
-    example: "Nintendo"
-required:
-  - name

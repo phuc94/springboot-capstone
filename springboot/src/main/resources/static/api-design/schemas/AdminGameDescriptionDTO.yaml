@@ -1,0 +1,10 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 2
+  description:
+    type: string
+    example: "Some description"
+required:
+  - description

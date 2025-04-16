@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 1
+  start_date:
+    $ref: "./types/timestamp.yaml"
+  end_date:
+    $ref: "./types/timestamp.yaml"
+  amount:
+    type: integer
+    example: 50
+  game_id:
+    type: integer
+    example: 8
+  status:
+    $ref: '../enums/sale_status.yaml'
