@@ -6,78 +6,82 @@ info:
     email: trungphuc94@gmail.com
   version: 1.0.11
 servers:
-  - url: http://localhost:8080/api
+  - url: http://localhost:8080
 paths:
-  /game:
+  /admin/game:
     $ref: './paths/game.yaml'
-  /game/{id}:
+  /admin/game/{id}:
     $ref: './paths/game.{id}.yaml'
   /game/filter:
     $ref: './paths/game.filter.yaml'
-  /game_description:
+  /admin/game_description:
     $ref: './paths/game_description.yaml'
-  /game_description/{id}:
+  /admin/game_description/{id}:
     $ref: './paths/game_description.{id}.yaml'
-  /developer:
-    $ref: './paths/developer.yaml'
-  /developer/{id}:
-    $ref: './paths/developer.{id}.yaml'
-  /genre:
-    $ref: './paths/genre.yaml'
-  /genre/{id}:
-    $ref: './paths/genre.{id}.yaml'
-  /publisher:
-    $ref: './paths/publisher.yaml'
-  /publisher/{id}:
-    $ref: './paths/publisher.{id}.yaml'
-  /no_player:
-    $ref: './paths/no_player.yaml'
-  /no_player/{id}:
-    $ref: './paths/no_player.{id}.yaml'
-  /playmode:
-    $ref: './paths/playmode.yaml'
-  /playmode/{id}:
-    $ref: './paths/playmode.{id}.yaml'
-  /support_language:
-    $ref: './paths/support_language.yaml'
-  /support_language/{id}:
-    $ref: './paths/support_language.{id}.yaml'
-  /sale:
+#  /developer:
+#    $ref: './paths/developer.yaml'
+#  /developer/{id}:
+#    $ref: './paths/developer.{id}.yaml'
+#  /genre:
+#    $ref: './paths/genre.yaml'
+#  /genre/{id}:
+#    $ref: './paths/genre.{id}.yaml'
+#  /publisher:
+#    $ref: './paths/publisher.yaml'
+#  /publisher/{id}:
+#    $ref: './paths/publisher.{id}.yaml'
+#  /no_player:
+#    $ref: './paths/no_player.yaml'
+#  /no_player/{id}:
+#    $ref: './paths/no_player.{id}.yaml'
+#  /playmode:
+#    $ref: './paths/playmode.yaml'
+#  /playmode/{id}:
+#    $ref: './paths/playmode.{id}.yaml'
+#  /support_language:
+#    $ref: './paths/support_language.yaml'
+#  /support_language/{id}:
+#    $ref: './paths/support_language.{id}.yaml'
+  /admin/sale:
     $ref: './paths/sale.yaml'
-  /sale/{id}:
+  /admin/sale/{id}:
     $ref: './paths/sale.{id}.yaml'
-  /media:
+  /admin/media:
     $ref: './paths/media.yaml'
-  /media/{id}:
+  /admin/media/{id}:
     $ref: './paths/media.{id}.yaml'
-  /coupon:
+  /admin/coupon:
     $ref: './paths/coupon.yaml'
-  /coupon/{id}:
+  /admin/coupon/{id}:
     $ref: './paths/coupon.{id}.yaml'
-components:
-  schemas:
-    Cart:
-      $ref: './schemas/Cart.yaml'
-    Coupon:
-      $ref: './schemas/Coupon.yaml'
-    Developer:
-      $ref: './schemas/Developer.yaml'
-    Game:
-      $ref: './schemas/Game.yaml'
-    Genre:
-      $ref: './schemas/Genre.yaml'
-    Media:
-      $ref: './schemas/Media.yaml'
-    NoPlayer:
-      $ref: './schemas/NoPlayer.yaml'
-    Order:
-      $ref: './schemas/Order.yaml'
-    PlayMode:
-      $ref: './schemas/PlayMode.yaml'
-    Publisher:
-      $ref: './schemas/Publisher.yaml'
-    Sale:
-      $ref: './schemas/Sale.yaml'
-    SupportLanguage:
-      $ref: './schemas/SupportLanguage.yaml'
+  /admin/game_key:
+    $ref: './paths/game_key.yaml'
+  /admin/game_key/{id}:
+    $ref: './paths/game_key.{id}.yaml'
+#components:
+#  schemas:
+#    Cart:
+#      $ref: './schemas/Cart.yaml'
+#    Coupon:
+#      $ref: './schemas/Coupons.yaml'
+#    Developer:
+#      $ref: './schemas/Developer.yaml'
+#    Game:
+#      $ref: './schemas/Game.yaml'
+#    Genre:
+#      $ref: './schemas/Genre.yaml'
+#    Media:
+#      $ref: './schemas/Media.yaml'
+#    NoPlayer:
+#      $ref: './schemas/NoPlayer.yaml'
+#    Order:
+#      $ref: './schemas/Order.yaml'
+#    PlayMode:
+#      $ref: './schemas/PlayMode.yaml'
+#    Publisher:
+#      $ref: './schemas/Publisher.yaml'
+#    Sale:
+#      $ref: './schemas/Sale.yaml'
+#    SupportLanguage:
+#      $ref: './schemas/SupportLanguage.yaml'
 
