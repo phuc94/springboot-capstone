@@ -1,7 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
-import { Welcome } from '../components/Welcome/Welcome';
+import AppCarousel from '@/components/Carousel';
+import Platform from '@/components/Platform';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
@@ -10,8 +9,11 @@ export const Route = createFileRoute('/')({
 export function RouteComponent() {
   return (
     <>
-      <Welcome />
-      <ColorSchemeToggle />
+      <AppCarousel />
+      <Platform />
+      <Platform />
+      <Platform />
+      <Platform />
     </>
   );
 }
