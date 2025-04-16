@@ -14,7 +14,6 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as WishListImport } from './routes/wish-list'
 import { Route as CartImport } from './routes/cart'
 import { Route as IndexImport } from './routes/index'
-import { Route as TestIndexImport } from './routes/test/index'
 import { Route as MyAccountIndexImport } from './routes/my-account/index'
 import { Route as MyAccountProfileImport } from './routes/my-account/profile'
 import { Route as MyAccountOrdersImport } from './routes/my-account/orders'
@@ -40,12 +39,6 @@ const CartRoute = CartImport.update({
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const TestIndexRoute = TestIndexImport.update({
-  id: '/test/',
-  path: '/test/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -165,13 +158,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyAccountIndexImport
       parentRoute: typeof rootRoute
     }
-    '/test/': {
-      id: '/test/'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof TestIndexImport
-      parentRoute: typeof rootRoute
-    }
   }
 }
 
@@ -188,7 +174,6 @@ export interface FileRoutesByFullPath {
   '/my-account/orders': typeof MyAccountOrdersRoute
   '/my-account/profile': typeof MyAccountProfileRoute
   '/my-account': typeof MyAccountIndexRoute
-  '/test': typeof TestIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -202,7 +187,6 @@ export interface FileRoutesByTo {
   '/my-account/orders': typeof MyAccountOrdersRoute
   '/my-account/profile': typeof MyAccountProfileRoute
   '/my-account': typeof MyAccountIndexRoute
-  '/test': typeof TestIndexRoute
 }
 
 export interface FileRoutesById {
@@ -217,7 +201,6 @@ export interface FileRoutesById {
   '/my-account/orders': typeof MyAccountOrdersRoute
   '/my-account/profile': typeof MyAccountProfileRoute
   '/my-account/': typeof MyAccountIndexRoute
-  '/test/': typeof TestIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -233,7 +216,6 @@ export interface FileRouteTypes {
     | '/my-account/orders'
     | '/my-account/profile'
     | '/my-account'
-    | '/test'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -246,7 +228,6 @@ export interface FileRouteTypes {
     | '/my-account/orders'
     | '/my-account/profile'
     | '/my-account'
-    | '/test'
   id:
     | '__root__'
     | '/'
@@ -259,7 +240,6 @@ export interface FileRouteTypes {
     | '/my-account/orders'
     | '/my-account/profile'
     | '/my-account/'
-    | '/test/'
   fileRoutesById: FileRoutesById
 }
 
@@ -274,7 +254,6 @@ export interface RootRouteChildren {
   MyAccountOrdersRoute: typeof MyAccountOrdersRoute
   MyAccountProfileRoute: typeof MyAccountProfileRoute
   MyAccountIndexRoute: typeof MyAccountIndexRoute
-  TestIndexRoute: typeof TestIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -288,7 +267,6 @@ const rootRouteChildren: RootRouteChildren = {
   MyAccountOrdersRoute: MyAccountOrdersRoute,
   MyAccountProfileRoute: MyAccountProfileRoute,
   MyAccountIndexRoute: MyAccountIndexRoute,
-  TestIndexRoute: TestIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -310,8 +288,7 @@ export const routeTree = rootRoute
         "/my-account/funds",
         "/my-account/orders",
         "/my-account/profile",
-        "/my-account/",
-        "/test/"
+        "/my-account/"
       ]
     },
     "/": {
@@ -343,9 +320,6 @@ export const routeTree = rootRoute
     },
     "/my-account/": {
       "filePath": "my-account/index.tsx"
-    },
-    "/test/": {
-      "filePath": "test/index.tsx"
     }
   }
 }
