@@ -1,0 +1,33 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 0
+  is_dlc:
+    type: boolean
+    example: false
+  game_dlc_id:
+    type: integer
+  title:
+    type: string
+  price:
+    type: number
+  release_date:
+    type: string
+    format: date-time
+  avg_rating:
+    type: number
+    format: double
+    example: 4.8
+  review_count:
+    type: integer
+    example: 200
+  is_deleted:
+    type: boolean
+  status:
+    $ref: '../enums/game_status.yaml'
+  description:
+    $ref: './AdminGameDescriptionDTO.yaml'
+  key_count:
+    type: integer
+    example: 200

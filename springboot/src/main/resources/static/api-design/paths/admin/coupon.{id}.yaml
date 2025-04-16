@@ -1,0 +1,81 @@
+get:
+  summary: Get a coupon by ID
+  description: getCoupon
+  operationId: getAdminCouponById
+  tags:
+    - adminCoupon
+  parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/AdminCouponDTO.yaml"
+    "400":
+      $ref: "../../responses/400.yaml"
+    "404":
+      $ref: "../../responses/404.yaml"
+
+post:
+  summary: Update a coupon by ID
+  description: update
+  operationId: updateAdminCoupon
+  tags:
+    - adminCoupon
+  parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/AdminCouponDTO.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/AdminCouponDTO.yaml"
+    "400":
+      $ref: "../../responses/400.yaml"
+    "404":
+      $ref: "../../responses/404.yaml"
+
+delete:
+  summary: Delete a coupon by ID
+  description: delete
+  operationId: deleteAdminCoupon
+  tags:
+    - adminCoupon
+  parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
+  responses:
+    "202":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            example: null
+    "400":
+      $ref: "../../responses/400.yaml"
+    "404":
+      $ref: "../../responses/404.yaml"

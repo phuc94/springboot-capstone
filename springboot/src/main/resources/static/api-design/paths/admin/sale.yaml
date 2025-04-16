@@ -1,0 +1,61 @@
+post:
+  summary: Create a new sale
+  description: createAdminSale
+  operationId: createAdminSale
+  tags:
+    - adminSale
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/AdminSaleDTO.yaml"
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: "200"
+              message:
+                type: string
+                example: "created"
+              data:
+                $ref: "../../schemas/AdminSaleDTO.yaml"
+    "400":
+      $ref: "../../responses/400.yaml"
+    "404":
+      $ref: "../../responses/404.yaml"
+
+get:
+  summary: Get all sales
+  description: getAdminAllSales
+  operationId: getAdminAllSales
+  tags:
+    - sale
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: "200"
+              message:
+                type: string
+                example: "ok"
+              data:
+                type: array
+                items:
+                  $ref: "../../schemas/AdminSaleDTO.yaml"
+    "400":
+      $ref: "../../responses/400.yaml"
+    "404":
+      $ref: "../../responses/404.yaml"

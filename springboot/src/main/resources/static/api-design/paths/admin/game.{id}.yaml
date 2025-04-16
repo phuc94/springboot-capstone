@@ -1,0 +1,99 @@
+get:
+  tags:
+    - game
+  summary: Get Game by Id
+  operationId: getAdminGameById
+  description: getAdminGameById
+  parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'ok'
+              data:
+                $ref: '../../schemas/AdminGameDTO.yaml'
+    "400":
+      $ref: '../../responses/400.yaml'
+    "404":
+      $ref: '../../responses/404.yaml'
+post:
+  tags:
+    - game
+  summary: Update a Game
+  operationId: updateAdminGame
+  description: updateAdminGame
+  parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+        example: 0
+      required: true
+  requestBody:
+    description: Update a Game
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/AdminGameDTO.yaml'
+    required: true
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'ok'
+              data:
+                $ref: '../../schemas/AdminGameDTO.yaml'
+    "400":
+      $ref: '../../responses/400.yaml'
+    "404":
+      $ref: '../../responses/404.yaml'
+delete:
+  tags:
+    - game
+  summary: Deletes a Game
+  description: deleteAdminGame
+  operationId: deleteAdminGame
+  parameters:
+    - name: id
+      in: path
+      description: 'Game id to be delete'
+      required: true
+      schema:
+        type: integer
+        format: int64
+  responses:
+    "202":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            example: null
+    "400":
+      $ref: '../../responses/400.yaml'
+    "404":
+      $ref: '../../responses/404.yaml'

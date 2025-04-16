@@ -1,0 +1,63 @@
+get:
+  tags:
+    - game_filter
+  summary: Dynamic filter for game
+  operationId: filterClientGames
+  description: filterClientGames
+  parameters:
+    - name: genre
+      in: query
+      description: 'Game Genre'
+      schema:
+        type: string
+        example: 'adventure,casual'
+    - name: avail
+      in: query
+      description: 'Game Availability'
+      schema:
+        type: string
+        example: 'Coming soon'
+    - name: minPrice
+      in: query
+      description: 'Minimum price'
+      schema:
+        type: integer
+        example: 0
+    - name: maxPrice
+      in: query
+      description: 'Maximum price'
+      schema:
+        type: integer
+        example: 9.99
+    - name: esrb
+      in: query
+      description: 'ESRB rating'
+      schema:
+        $ref: '../../enums/esrb_rating.yaml'
+    - name: no_player
+      in: query
+      description: 'Number of players'
+      schema:
+        $ref: '../../schemas/NoPlayer.yaml'
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'ok'
+              data:
+                type: array
+                items:
+                  $ref: '../../schemas/AdminGameListItemDTO.yaml'
+    "400":
+      $ref: '../../responses/400.yaml'
+    "404":
+      $ref: '../../responses/404.yaml'

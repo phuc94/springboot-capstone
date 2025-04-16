@@ -1,6 +1,6 @@
 package com.cybersoft.capstone.service.implement;
 
-import com.cybersoft.capstone.dto.CouponDTO;
+import com.cybersoft.capstone.dto.AdminCouponDTO;
 import com.cybersoft.capstone.dto.mapper.CouponMapper;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.repository.CouponRepository;
@@ -23,25 +23,25 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public List<CouponDTO> getAllCoupons() {
+    public List<AdminCouponDTO> getAllCoupons() {
         return couponRepository.findAll()
-                .stream().map(couponMapper::toCouponDTO).collect(Collectors.toList());
+                .stream().map(couponMapper::toAdminCouponDTO).collect(Collectors.toList());
     }
 
     @Override
-    public CouponDTO getCouponById(int id) {
+    public AdminCouponDTO getCouponById(int id) {
         return couponRepository.findById(id)
-                .map(couponMapper::toCouponDTO)
+                .map(couponMapper::toAdminCouponDTO)
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
 
     @Override
-    public CouponDTO createCoupon(CouponDTO couponDTO) {
-        return couponMapper.toCouponDTO(couponRepository.save(couponMapper.toCoupons(couponDTO)));
+    public AdminCouponDTO createCoupon(AdminCouponDTO couponDTO) {
+        return couponMapper.toAdminCouponDTO(couponRepository.save(couponMapper.toCoupons(couponDTO)));
     }
 
     @Override
-    public CouponDTO updateCoupon(int id, CouponDTO couponDTO) {
+    public AdminCouponDTO updateCoupon(int id, AdminCouponDTO couponDTO) {
         return couponRepository.findById(id)
                 .map(foundCoupon -> {
 //                    foundCoupon.setCouponType(couponDTO.getCouponType());
@@ -52,7 +52,7 @@ public class CouponServiceImpl implements CouponService {
                     foundCoupon.setUsageLimit(couponDTO.getUsageLimit());
                     foundCoupon.setUsedCount(couponDTO.getUsedCount());
 //                    foundCoupon.setDiscountAmount(couponDTO.getUsageLimit());
-                    return couponMapper.toCouponDTO(couponRepository.save(foundCoupon));
+                    return couponMapper.toAdminCouponDTO(couponRepository.save(foundCoupon));
                 })
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }

@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Data
@@ -18,11 +17,11 @@ public class Sales implements Serializable {
     private Timestamp endDate;
 
     @Column(nullable = false)
-    private double amount;
+    private Integer amount;
 
     @Column(nullable = false)
     private SaleStatus status;
 
-    @OneToMany(mappedBy = "sale")
-    private List<PlatformSale> platformSales;
+//    @OneToMany(mappedBy = "sale")
+//    private List<PlatformSale> platformSales;
 }

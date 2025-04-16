@@ -1,0 +1,61 @@
+post:
+  tags:
+    - game
+  summary: Create new Game
+  operationId: addAdminGame
+  description: addAdminGame
+  requestBody:
+    description: Create a new Game
+    content:
+      application/json:
+        schema:
+          $ref: '../../schemas/AdminGameCreateDTO.yaml'
+    required: true
+  responses:
+    "200":
+      description: Successful
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'ok'
+              data:
+                $ref: '../../schemas/AdminGameDTO.yaml'
+    "400":
+      $ref: '../../responses/400.yaml'
+    "404":
+      $ref: '../../responses/404.yaml'
+get:
+  tags:
+    - game
+  summary: Get all games
+  description: getAllAdminGame
+  operationId: getAllAdminGame
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'ok'
+              data:
+                type: array
+                items:
+                  $ref: '../../schemas/AdminGameDTO.yaml'
+    "400":
+      $ref: '../../responses/400.yaml'
+    "404":
+      $ref: '../../responses/404.yaml'

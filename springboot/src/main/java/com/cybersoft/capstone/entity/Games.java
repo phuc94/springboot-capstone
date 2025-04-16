@@ -16,7 +16,7 @@ public class Games implements Serializable {
     private String title;
     private Integer price;
     private boolean isDlc;
-    // private int size;
+    private int keyCount;
     private Timestamp releaseDate;
 
     // Entities mapping
@@ -26,9 +26,6 @@ public class Games implements Serializable {
 
     @OneToMany(mappedBy = "game")
     private List<GameKey> gameKeys;
-
-    @OneToMany(mappedBy = "game")
-    private List<GameMedia> gameMedia;
 
     @OneToMany(mappedBy = "game")
     private List<Reviews> reviews;
