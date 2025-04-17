@@ -5,6 +5,7 @@ import { useRef } from "react";
 
 const AppCarousel = () => {
   const autoplay = useRef(Autoplay({ delay: 5000 }))
+
   return (
     <Carousel
       withIndicators

@@ -1,4 +1,6 @@
 import { Center, Group, Menu, UnstyledButton } from "@mantine/core"
+import { Link } from "@tanstack/react-router";
+import styles from './Layout.module.scss'
 
 const Navbar = () => {
   return (
@@ -7,7 +9,7 @@ const Navbar = () => {
       
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <UnstyledButton>STEAM</UnstyledButton>
+            <Link className={styles.navLink} to="/platform">STEAM</Link>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -21,7 +23,7 @@ const Navbar = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <UnstyledButton>ORIGIN</UnstyledButton>
+            <Link className={styles.navLink} to="/platform">ORIGIN</Link>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -35,7 +37,7 @@ const Navbar = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <UnstyledButton>UPLAY</UnstyledButton>
+            <Link className={styles.navLink} to="/platform">UPLAY</Link>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -55,7 +57,7 @@ const Navbar = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <UnstyledButton>PLAYSTATION</UnstyledButton>
+            <Link className={styles.navLink} to="/platform">PLAYSTATION</Link>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -65,7 +67,7 @@ const Navbar = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <UnstyledButton>NINTENDO</UnstyledButton>
+            <Link className={styles.navLink} to="/platform">NINTENDO</Link>
           </Menu.Target>
 
           <Menu.Dropdown>
