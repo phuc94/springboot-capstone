@@ -12,6 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as WishListImport } from './routes/wish-list'
+import { Route as PlatformImport } from './routes/platform'
+import { Route as GamedetailImport } from './routes/game_detail'
 import { Route as CartImport } from './routes/cart'
 import { Route as IndexImport } from './routes/index'
 import { Route as MyAccountIndexImport } from './routes/my-account/index'
@@ -27,6 +29,18 @@ import { Route as CheckoutCheckoutImport } from './routes/_checkout/checkout'
 const WishListRoute = WishListImport.update({
   id: '/wish-list',
   path: '/wish-list',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PlatformRoute = PlatformImport.update({
+  id: '/platform',
+  path: '/platform',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const GamedetailRoute = GamedetailImport.update({
+  id: '/game_detail',
+  path: '/game_detail',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -102,6 +116,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CartImport
       parentRoute: typeof rootRoute
     }
+    '/game_detail': {
+      id: '/game_detail'
+      path: '/game_detail'
+      fullPath: '/game_detail'
+      preLoaderRoute: typeof GamedetailImport
+      parentRoute: typeof rootRoute
+    }
+    '/platform': {
+      id: '/platform'
+      path: '/platform'
+      fullPath: '/platform'
+      preLoaderRoute: typeof PlatformImport
+      parentRoute: typeof rootRoute
+    }
     '/wish-list': {
       id: '/wish-list'
       path: '/wish-list'
@@ -166,6 +194,8 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
+  '/game_detail': typeof GamedetailRoute
+  '/platform': typeof PlatformRoute
   '/wish-list': typeof WishListRoute
   '/checkout': typeof CheckoutCheckoutRoute
   '/payment': typeof CheckoutPaymentRoute
@@ -179,6 +209,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
+  '/game_detail': typeof GamedetailRoute
+  '/platform': typeof PlatformRoute
   '/wish-list': typeof WishListRoute
   '/checkout': typeof CheckoutCheckoutRoute
   '/payment': typeof CheckoutPaymentRoute
@@ -193,6 +225,8 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/cart': typeof CartRoute
+  '/game_detail': typeof GamedetailRoute
+  '/platform': typeof PlatformRoute
   '/wish-list': typeof WishListRoute
   '/_checkout/checkout': typeof CheckoutCheckoutRoute
   '/_checkout/payment': typeof CheckoutPaymentRoute
@@ -208,6 +242,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/cart'
+    | '/game_detail'
+    | '/platform'
     | '/wish-list'
     | '/checkout'
     | '/payment'
@@ -220,6 +256,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/cart'
+    | '/game_detail'
+    | '/platform'
     | '/wish-list'
     | '/checkout'
     | '/payment'
@@ -232,6 +270,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/cart'
+    | '/game_detail'
+    | '/platform'
     | '/wish-list'
     | '/_checkout/checkout'
     | '/_checkout/payment'
@@ -246,6 +286,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CartRoute: typeof CartRoute
+  GamedetailRoute: typeof GamedetailRoute
+  PlatformRoute: typeof PlatformRoute
   WishListRoute: typeof WishListRoute
   CheckoutCheckoutRoute: typeof CheckoutCheckoutRoute
   CheckoutPaymentRoute: typeof CheckoutPaymentRoute
@@ -259,6 +301,8 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CartRoute: CartRoute,
+  GamedetailRoute: GamedetailRoute,
+  PlatformRoute: PlatformRoute,
   WishListRoute: WishListRoute,
   CheckoutCheckoutRoute: CheckoutCheckoutRoute,
   CheckoutPaymentRoute: CheckoutPaymentRoute,
@@ -281,6 +325,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/cart",
+        "/game_detail",
+        "/platform",
         "/wish-list",
         "/_checkout/checkout",
         "/_checkout/payment",
@@ -296,6 +342,12 @@ export const routeTree = rootRoute
     },
     "/cart": {
       "filePath": "cart.tsx"
+    },
+    "/game_detail": {
+      "filePath": "game_detail.tsx"
+    },
+    "/platform": {
+      "filePath": "platform.tsx"
     },
     "/wish-list": {
       "filePath": "wish-list.tsx"

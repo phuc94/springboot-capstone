@@ -15,9 +15,7 @@ function Layout({children}: {children: React.ReactNode}) {
 
       <AppShell.Main>{children}</AppShell.Main>
 
-      <AppShell.Footer>
-        <Footer />
-      </AppShell.Footer>
+      <Footer />
 
     </AppShell>
   )
