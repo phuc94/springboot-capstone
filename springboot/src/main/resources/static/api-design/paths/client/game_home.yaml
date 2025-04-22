@@ -1,0 +1,35 @@
+get:
+  tags:
+    - game
+  summary: Get all games for home page
+  description: getClientAllGameHome
+  operationId: getClientAllGameHome
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'ok'
+              data:
+                type: object
+                properties:
+                  steam:
+                    $ref: '../../schemas/client/ClientGameHomeDTO.yaml'
+                  origin:
+                    $ref: '../../schemas/client/ClientGameHomeDTO.yaml'
+                  nintendo:
+                    $ref: '../../schemas/client/ClientGameHomeDTO.yaml'
+                  playstation:
+                    $ref: '../../schemas/client/ClientGameHomeDTO.yaml'
+    "400":
+      $ref: '../../responses/400.yaml'
+    "404":
+      $ref: '../../responses/404.yaml'

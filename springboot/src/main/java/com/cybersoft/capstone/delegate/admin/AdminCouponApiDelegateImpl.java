@@ -1,7 +1,7 @@
 package com.cybersoft.capstone.delegate.admin;
 
-import com.cybersoft.capstone.api.AdminCouponApiDelegate;
 import com.cybersoft.capstone.dto.AdminCouponDTO;
+import com.cybersoft.capstone.api.AdminCouponApiDelegate;
 import com.cybersoft.capstone.payload.response.AcceptedResponse;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.OkResponse;
