@@ -30,5 +30,7 @@ paths:
   /admin/game_key/{id}:
     $ref: './paths/admin/game_key.{id}.yaml'
   # CLIENT
-  /client/game:
-    $ref: './paths/client/game.yaml'
+  /client/game/{platform}:
+    $ref: './paths/client/game.{platform}.yaml'
+  /client/game_home:
+    $ref: './paths/client/game_home.yaml'

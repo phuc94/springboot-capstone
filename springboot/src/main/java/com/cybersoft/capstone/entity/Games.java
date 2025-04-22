@@ -24,12 +24,17 @@ public class Games implements Serializable {
     @JoinColumn(name = "description_id", referencedColumnName = "id")
     private GameDescription gameDescription;
 
+    @OneToOne
+    @JoinColumn(name="platform_id", referencedColumnName = "id", nullable = false)
+    private Platforms platform;
+
     @OneToMany(mappedBy = "game")
     private List<GameKey> gameKeys;
 
     @OneToMany(mappedBy = "game")
     private List<Reviews> reviews;
 
-    @OneToMany(mappedBy = "game")
-    private List<Medias> medias;
+//    @OneToMany(mappedBy = "game")
+//    private List<Medias> medias;
+
 }

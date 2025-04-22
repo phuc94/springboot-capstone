@@ -1,0 +1,19 @@
+type: object
+properties:
+  id:
+    type: integer
+    example: 0
+  title:
+    type: string
+  price:
+    type: number
+  avg_rating:
+    type: number
+    format: double
+    example: 4.8
+  review_count:
+    type: integer
+    example: 200
+  key_count:
+    type: integer
+    example: 200

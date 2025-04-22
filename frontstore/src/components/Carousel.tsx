@@ -9,17 +9,17 @@ const AppCarousel = () => {
   return (
     <Carousel
       withIndicators
-      height={400}
+      height={450}
       plugins={[autoplay.current]}
       onMouseEnter={autoplay.current.stop}
       onMouseLeave={autoplay.current.reset}
       loop
     >
       <Carousel.Slide>
-        <Image height="400" src="https://muaga.me/wp-content/uploads/2022/03/ubisoft-plus_hero-1.jpeg.webp" />
+        <Image height="450" src="https://muaga.me/wp-content/uploads/2022/03/ubisoft-plus_hero-1.jpeg.webp" />
       </Carousel.Slide>
       <Carousel.Slide>
-        <Image height="400" src="https://muaga.me/wp-content/uploads/2022/03/kiem-tien-cung-muagame-pc2.png.webp" />
+        <Image height="450" src="https://muaga.me/wp-content/uploads/2022/03/kiem-tien-cung-muagame-pc2.png.webp" />
       </Carousel.Slide>
     </Carousel>
   )

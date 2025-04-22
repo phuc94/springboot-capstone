@@ -17,15 +17,15 @@ const Footer = () => {
           <Carousel
             style={{width: 640}}
             withIndicators={false}
-            withControls={false}
+            withControls={true}
             height={200}
             plugins={[autoplay.current]}
             onMouseEnter={autoplay.current.stop}
             onMouseLeave={autoplay.current.reset}
             loop
-            controlsOffset="sm"
+            align="start"
             slideSize="50%"
-            slidesToScroll={2}
+            slidesToScroll={1}
           >
             <Carousel.Slide>
               <ReviewCard />

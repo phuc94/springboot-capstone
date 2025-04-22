@@ -14,8 +14,13 @@ public class Platforms {
 
     @Column(nullable = false)
     private String name;
-    private String buy_guide;
-    private String activate_guide;
+
+    @Column(nullable = false)
+    private String title;
+
+    @OneToOne
+    @JoinColumn(name="parent_id", referencedColumnName = "id")
+    private Platforms platform;
 
     @OneToMany(mappedBy = "platform")
     private List<PlatformSale> platformSales;

@@ -7,7 +7,7 @@ function Layout({children}: {children: React.ReactNode}) {
 
   return (
     <AppShell
-      header={{ height: 110 }}
+      header={{ height: 125 }}
     >
       <AppShell.Header>
         <Header />

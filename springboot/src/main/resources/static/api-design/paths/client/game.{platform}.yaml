@@ -6,7 +6,7 @@ get:
   operationId: getClientAllGame
   parameters:
     - $ref: '../../params/page.yaml'
-    - $ref: '../../params/size.yaml'
+#    - $ref: '../../params/size.yaml' --- default as 20
     - $ref: '../../params/sort.yaml'
   responses:
     "200":
@@ -25,7 +25,7 @@ get:
               data:
                 type: array
                 items:
-                  $ref: '../../schemas/AdminGameDTO.yaml'
+                  $ref: '../../schemas/client/ClientGameHomeDTO.yaml'
     "400":
       $ref: '../../responses/400.yaml'
     "404":
