@@ -41,8 +41,6 @@ public class PlatformServiceImpl implements PlatformService {
     public BaseResponse<Platforms> updatePlatform(int id, Platforms platform) {
         return platformRepository.findById(id)
                 .map(foundPlatform-> {
-                    foundPlatform.setActivate_guide(platform.getActivate_guide());
-                    foundPlatform.setBuy_guide(platform.getBuy_guide());
                     foundPlatform.setName(platform.getName());
                     return new OkResponse<>(platformRepository.save(foundPlatform));
                 })
