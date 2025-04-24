@@ -25,6 +25,7 @@ import { CreateMedia, EditMedia, ListMedia, ShowMedia } from "./pages/media";
 import { CreateCoupon, EditCoupon, ListCoupon, ShowCoupon } from "./pages/coupon";
 import { CreateCouponType, EditCouponType, ListCouponType, ShowCouponType } from "./pages/coupon_type";
 import { CreateGame, EditGame, ListGame, ShowGame } from "./pages/game";
+import { CreatePlatform, EditPlatform, ListPlatform, ShowPlatform } from "./pages/platform";
 
 function App() {
   return (
@@ -133,6 +134,14 @@ function App() {
                 create: "/coupon_type/create",
                 meta: { label: "Coupon Type" },
               },
+              {
+                name: "platform",
+                list: "/platform",
+                show: "/platform/:id",
+                edit: "/platform/:id/edit",
+                create: "/platform/create",
+                meta: { label: "Platform" },
+              },
             ]}
           >
             <Routes>
@@ -230,6 +239,12 @@ function App() {
                   <Route path=":id" element={<ShowGame />} />
                   <Route path=":id/edit" element={<EditGame />} />
                   <Route path="create" element={<CreateGame />} />
+                </Route>
+                <Route path="/platform">
+                  <Route index element={<ListPlatform />} />
+                  <Route path=":id" element={<ShowPlatform />} />
+                  <Route path=":id/edit" element={<EditPlatform />} />
+                  <Route path="create" element={<CreatePlatform />} />
                 </Route>
               </Route>
               <Route
