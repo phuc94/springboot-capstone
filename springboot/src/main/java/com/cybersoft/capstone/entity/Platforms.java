@@ -3,6 +3,7 @@ package com.cybersoft.capstone.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,10 +19,13 @@ public class Platforms {
     @Column(nullable = false)
     private String title;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="parent_id", referencedColumnName = "id")
-    private Platforms platform;
+    private Platforms parent;
 
-    @OneToMany(mappedBy = "platform")
-    private List<PlatformSale> platformSales;
+//    @OneToMany(mappedBy = "parent_id")
+//    private List<Platforms> children = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "platform")
+//    private List<PlatformSale> platformSales;
 }

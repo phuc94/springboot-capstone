@@ -41,7 +41,7 @@ export const dataProvider: DataProvider = {
   getList: async ({
     resource,
     // pagination,
-    // filters,
+    filters,
     // sorters,
     // meta
   }) => {
@@ -58,13 +58,13 @@ export const dataProvider: DataProvider = {
     //   params.append("_order", sorters.map(sorter => sorter.order).join(","));
     // }
 
-    // if (filters && filters.length > 0) {
-    //   filters.forEach(filter => {
-    //     if ("field" in filter && filter.operator == "eq") {
-    //       params.append(filter.field, filter.value)
-    //     }
-    //   })
-    // }
+    if (filters && filters.length > 0) {
+      filters.forEach(filter => {
+        if ("field" in filter && filter.operator == "eq") {
+          params.append(filter.field, filter.value)
+        }
+      })
+    }
 
     const response = await fetcher(`${API_URL}/${resource}?${params.toString()}`);
 

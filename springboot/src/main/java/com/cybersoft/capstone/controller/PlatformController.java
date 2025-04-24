@@ -1,5 +1,6 @@
 package com.cybersoft.capstone.controller;
 
+import com.cybersoft.capstone.dto.PlatformCreateDTO;
 import com.cybersoft.capstone.entity.Platforms;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.service.interfaces.PlatformService;
@@ -18,13 +19,13 @@ public class PlatformController {
     }
 
     @PostMapping
-    public BaseResponse<Platforms> createPlatform(@Valid @RequestBody Platforms platform) {
-        return platformService.createPlatform(platform);
+    public BaseResponse<Platforms> createPlatform(@Valid @RequestBody PlatformCreateDTO platformDTO) {
+        return platformService.createPlatform(platformDTO);
     }
 
     @GetMapping
-    public BaseResponse<List<Platforms>> getAllPlatforms() {
-        return platformService.getAllPlatforms();
+    public BaseResponse<List<Platforms>> getAllPlatforms(@RequestParam(required = false) Boolean isOrphan) {
+        return platformService.getAllPlatforms(isOrphan);
     }
 
     @GetMapping("/{id}")
