@@ -1,17 +1,18 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.util.Optional;
+
 import com.cybersoft.capstone.entity.Admins;
 import com.cybersoft.capstone.repository.AdminRepository;
-import com.cybersoft.capstone.service.interfaces.AuthenticationService;
+import com.cybersoft.capstone.service.interfaces.ClientAuthenticationService;
 import com.cybersoft.capstone.utils.JwtHelper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class ClientAuthenticationServiceImpl implements ClientAuthenticationService {
 
     @Autowired
     private AdminRepository adminRepository;

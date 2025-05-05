@@ -1,22 +1,28 @@
-package com.cybersoft.capstone.controller;
+package com.cybersoft.capstone.controller.client;
 
 import com.cybersoft.capstone.entity.Users;
 import com.cybersoft.capstone.payload.request.SignInRequest;
 import com.cybersoft.capstone.payload.request.SignUpRequest;
 import com.cybersoft.capstone.payload.response.AuthenticationResponse;
-import com.cybersoft.capstone.service.interfaces.AuthenticationService;
+import com.cybersoft.capstone.service.interfaces.ClientAuthenticationService;
 import com.cybersoft.capstone.service.interfaces.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin
-public class AuthenticationController {
+public class ClientAuthenticationController {
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private ClientAuthenticationService authenticationService;
 
     @Autowired
     private UserService userService;

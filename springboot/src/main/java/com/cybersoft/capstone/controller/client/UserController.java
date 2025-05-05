@@ -1,10 +1,17 @@
-package com.cybersoft.capstone.controller;
+package com.cybersoft.capstone.controller.client;
+
+import jakarta.validation.Valid;
 
 import com.cybersoft.capstone.entity.Users;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.service.interfaces.UserService;
-import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/user")
