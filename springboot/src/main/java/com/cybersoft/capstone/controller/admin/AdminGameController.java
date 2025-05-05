@@ -1,4 +1,4 @@
-package com.cybersoft.capstone.controller;
+package com.cybersoft.capstone.controller.admin;
 
 //import com.cybersoft.capstone.payload.response.BaseResponse;
 //import io.swagger.v3.oas.annotations.Parameter;
