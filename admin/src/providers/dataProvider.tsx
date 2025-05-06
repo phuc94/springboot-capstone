@@ -1,6 +1,6 @@
-import type { BaseKey, DataProvider } from "@refinedev/core";
+import type { DataProvider } from "@refinedev/core";
 
-const API_URL = "http://localhost:8080/api";
+const API_URL = `http://${import.meta.env.VITE_API_SERVER_DOMAIN ?? 'localhost'}:8080/api`;
 
 const fetcher = async (url: string, options?: RequestInit) => {
   return fetch(url, {
