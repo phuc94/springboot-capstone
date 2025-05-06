@@ -19,4 +19,8 @@ public class Reviews implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private Users user;
+
+    private int rating;
+    private boolean recomment;
+    private String comment;
 }
