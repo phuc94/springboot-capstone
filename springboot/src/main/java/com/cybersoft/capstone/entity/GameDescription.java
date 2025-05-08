@@ -12,7 +12,7 @@ public class GameDescription implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @OneToOne(mappedBy = "gameDescription")

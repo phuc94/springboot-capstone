@@ -4,7 +4,7 @@ import fs from 'fs'
 const siteUrl = 'https://muaga.me/steam/'
 const elementQuerySelector = 'a.woocommerce-LoopProduct-link.woocommerce-loop-product__link';
 const dataFolderName = 'craw_data'
-const separator = ':,:'
+const separator = '\n'
 
 async function main() {
   let {browser, page} = await init(siteUrl)
@@ -19,7 +19,7 @@ async function main() {
       await Promise.all(urlArray.slice(i*5,(i+1)*5).map((url) => getGameDescription(browser, url)))
     }
 
-    // await getGameDescription(browser,urlArray[0])
+    await getGameDescription(browser, 'https://muaga.me/steam/steam-key/euro-truck-simulator-2-steam-key/')
   
     // page = await goNextPage(page)
   }
@@ -59,18 +59,23 @@ async function init(url) {
 async function getGameDescription(browser, url) {
   if (url === false) return
   const page = await browser.newPage();
-  await page.setViewport({width: 1080, height: 1024});
+  await page.setViewport({width: 1080, height: 2048});
   await page.goto(url);
+
+  await page.waitForSelector('img.entered.lazyloaded')
 
   const imgSrc = await getThumbImg(page);
   const price = await getPrice(page);
-  const textContent = await page?.evaluate(() =>{
+  let textContent = await page?.evaluate(() =>{
     return document.querySelector('#tab-description').innerHTML;
   })
+
   const textToWrite = imgSrc + separator +
     price.replace('₫', '') + separator +
-    textContent.trim().replace(/>\n/g,'>')
+    textContent.trim().replace(/"/g, '\\"').replace(/\n/g, '\\n')
+
   writeToFile(textToWrite, url)
+  console.log(url)
   await page.close()
 }
 
