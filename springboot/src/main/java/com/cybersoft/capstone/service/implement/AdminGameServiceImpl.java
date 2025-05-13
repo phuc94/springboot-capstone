@@ -48,32 +48,76 @@ public class AdminGameServiceImpl implements AdminGameService {
     @Transactional
     @Override
     public AdminGameDTO createAdminGame(AdminGameDTO adminGameDTO) {
-        GameDescription gameDescription = gameDescriptionRepository.findById(adminGameDTO.getDescriptionId()).orElse(null);
+        // Tìm platform dựa trên platformId từ DTO
         Platforms platform = platformRepository.findById(adminGameDTO.getPlatformId())
                 .orElseThrow(() -> new RuntimeException("Platform not found"));
-        Games games = gameMapper.toGames(adminGameDTO, platform, gameDescription);
-        return gameMapper.toAdminGameDTO(gameRepository.save(games));
-    }
 
-    @Transactional
-    @Override
-    public AdminGameDTO updateAdminGame(int id, AdminGameDTO adminGameDTO) {
-        Games game = gameRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Game not found"));
-        Platforms platform = platformRepository.findById(adminGameDTO.getPlatformId())
-                .orElseThrow(() -> new RuntimeException("Platform not found"));
-        GameDescription gameDescription = gameDescriptionRepository.findById(adminGameDTO.getDescriptionId())
-                .orElse(null);
+        // Tạo mới mô tả game (GameDescription)
+        GameDescription gameDescription = new GameDescription();
+        gameDescription.setDescription(adminGameDTO.getDescription()); // Set mô tả từ DTO
+        gameDescriptionRepository.save(gameDescription);
 
+        // Tạo mới game (Games)
+        Games game = new Games();
         game.setTitle(adminGameDTO.getTitle());
         game.setPrice(adminGameDTO.getPrice());
         game.setDlc(adminGameDTO.isDlc());
         game.setKeyCount(adminGameDTO.getKeyCount());
         game.setReleaseDate(adminGameDTO.getReleaseDate());
         game.setPlatform(platform);
-        game.setGameDescription(gameDescription);
+        game.setGameDescription(gameDescription); // Liên kết Game với GameDescription
 
-        return gameMapper.toAdminGameDTO(gameRepository.save(game));
+        // Lưu game vào DB (Game sẽ được lưu vào bảng `games`)
+        Games savedGame = gameRepository.save(game);
+
+        // Cập nhật ID của game và mô tả vào DTO trước khi trả về
+        adminGameDTO.setId(savedGame.getId());
+        adminGameDTO.setDescriptionId(gameDescription.getId());
+
+        // Trả về DTO đã được cập nhật thông tin
+        return adminGameDTO;
+    }
+
+    @Transactional
+    @Override
+    public AdminGameDTO updateAdminGame(int id, AdminGameDTO adminGameDTO) {
+        // Tìm game cần cập nhật
+        Games game = gameRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Game not found"));
+
+        // Tìm platform tương ứng
+        Platforms platform = platformRepository.findById(adminGameDTO.getPlatformId())
+                .orElseThrow(() -> new RuntimeException("Platform not found"));
+
+        // Cập nhật dữ liệu cơ bản
+        game.setTitle(adminGameDTO.getTitle());
+        game.setPrice(adminGameDTO.getPrice());
+        game.setDlc(adminGameDTO.isDlc());
+        game.setKeyCount(adminGameDTO.getKeyCount());
+        game.setReleaseDate(adminGameDTO.getReleaseDate());
+        game.setPlatform(platform);
+
+        // Cập nhật phần mô tả (GameDescription)
+        GameDescription description = game.getGameDescription();
+        if (description == null) {
+            // Nếu chưa có description, tạo mới
+            description = new GameDescription();
+            description.setDescription("Default or new description");
+            gameDescriptionRepository.save(description);
+            game.setGameDescription(description);
+        } else {
+            // Nếu có rồi, cập nhật mô tả hiện tại
+            description.setDescription("Updated description content");
+            gameDescriptionRepository.save(description);
+        }
+
+        // Lưu game đã cập nhật
+        Games updated = gameRepository.save(game);
+
+        // Trả kết quả
+        adminGameDTO.setId(updated.getId());
+        adminGameDTO.setDescriptionId(updated.getGameDescription().getId());
+        return adminGameDTO;
     }
 
     @Transactional
