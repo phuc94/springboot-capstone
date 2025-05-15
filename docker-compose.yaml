@@ -1,0 +1,39 @@
+services:
+
+  db:
+    image: postgres:16
+    container_name: postgres_container
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "capstone"
+    networks:
+      springboot-postgres:
+
+  springboot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    container_name: springboot_container
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_container:5432/capstone
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+      # SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    networks:
+      springboot-postgres:
+
+volumes:
+  pgdata:
+networks:
+  springboot-postgres:

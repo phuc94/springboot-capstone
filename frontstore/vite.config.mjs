@@ -24,6 +24,7 @@ export default defineConfig({
     setupFiles: './vitest.setup.mjs',
   },
   server: {
-    port: 3000
-  }
+    port: 3000,
+    allowedHosts: ['phucserver']
+  },
 });

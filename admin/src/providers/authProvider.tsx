@@ -5,11 +5,11 @@ export const authProvider: AuthProvider = {
     if (error?.status === 401) {
       return {
         logout: true,
-        error: { message: "Unauthorized" },
+        error: error
       };
     }
 
-    return {};
+    return {error};
   },
   check: async () => {
     // When logging in, we'll obtain an access token from our API and store it in the local storage.
@@ -52,7 +52,7 @@ export const authProvider: AuthProvider = {
   getIdentity: async () => {
     const response = await fetch("https://api.fake-rest.refine.dev/auth/me", {
       headers: {
-        Authorization: localStorage.getItem("my_access_token"),
+        Authorization: localStorage.getItem("my_access_token") || "",
       },
     });
 

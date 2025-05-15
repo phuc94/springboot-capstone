@@ -73,11 +73,12 @@ export const dataProvider: DataProvider = {
     const data = await response.json();
     console.log(data)
 
-    // const total = Number(response.headers.get("x-total-count"));
+    // TODO
+    const total = Number(response.headers.get("x-total-count"));
 
     return {
       data: data.data,
-      // total
+      total
     };
   },
   create: async ({ resource, variables }) => {
