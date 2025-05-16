@@ -1,38 +1,14 @@
-# TODO initiate database
-# spring:
-#   application:
-#     name: capstone
-#   datasource:
-#     url: ${SPRING_DATASOURCE_URL}
-#     username: ${SPRING_DATASOURCE_USERNAME}
-#     password: ${SPRING_DATASOURCE_PASSWORD}
-#   jpa:
-#     hibernate:
-#       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
-#     show-sql: true
-#
-# logging:
-#   level:
-#     org:
-#       hibernate:
-#         stat: debug
-#
-# springdoc:
-#   api-docs:
-#     path: /v3/api-docs.yaml
-#   swagger-ui:
-#     url: /api-design/api.yaml
-#
-# jwt:
-#   secret: CPwfOlWH30eToMJLYuWoF4ArPXIcByN4LqiWmPBokSo=
-
 spring:
   application:
     name: capstone
-
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    show-sql: true
 
 logging:
   level:

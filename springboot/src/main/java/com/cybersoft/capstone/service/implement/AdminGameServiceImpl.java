@@ -1,5 +1,10 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import jakarta.transaction.Transactional;
+
 import com.cybersoft.capstone.dto.AdminGameDTO;
 import com.cybersoft.capstone.dto.mapper.GameMapper;
 import com.cybersoft.capstone.entity.GameDescription;
@@ -10,12 +15,9 @@ import com.cybersoft.capstone.repository.GameDescriptionRepository;
 import com.cybersoft.capstone.repository.GameRepository;
 import com.cybersoft.capstone.repository.PlatformRepository;
 import com.cybersoft.capstone.service.interfaces.AdminGameService;
-import jakarta.transaction.Transactional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AdminGameServiceImpl implements AdminGameService {
@@ -61,9 +63,7 @@ public class AdminGameServiceImpl implements AdminGameService {
         Games game = new Games();
         game.setTitle(adminGameDTO.getTitle());
         game.setPrice(adminGameDTO.getPrice());
-        game.setDlc(adminGameDTO.isDlc());
-        game.setKeyCount(adminGameDTO.getKeyCount());
-        game.setReleaseDate(adminGameDTO.getReleaseDate());
+        game.setStock(adminGameDTO.getStock());
         game.setPlatform(platform);
         game.setGameDescription(gameDescription); // Liên kết Game với GameDescription
 
@@ -92,9 +92,7 @@ public class AdminGameServiceImpl implements AdminGameService {
         // Cập nhật dữ liệu cơ bản
         game.setTitle(adminGameDTO.getTitle());
         game.setPrice(adminGameDTO.getPrice());
-        game.setDlc(adminGameDTO.isDlc());
-        game.setKeyCount(adminGameDTO.getKeyCount());
-        game.setReleaseDate(adminGameDTO.getReleaseDate());
+        game.setStock(adminGameDTO.getStock());
         game.setPlatform(platform);
 
         // Cập nhật phần mô tả (GameDescription)

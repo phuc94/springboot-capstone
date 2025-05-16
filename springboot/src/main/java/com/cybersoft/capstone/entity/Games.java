@@ -1,7 +1,6 @@
 package com.cybersoft.capstone.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -22,9 +21,8 @@ public class Games implements Serializable {
     private int id;
     private String title;
     private Integer price;
-    private boolean isDlc;
-    private int keyCount;
-    private Timestamp releaseDate;
+    private int stock;
+    private boolean isDeleted;
 
     // Entities mapping
     @OneToOne
@@ -43,6 +41,10 @@ public class Games implements Serializable {
 
    @OneToMany(mappedBy = "game")
    private List<Medias> medias;
+
+   @OneToOne
+   @JoinColumn(name="sale_id", referencedColumnName = "id")
+   private Sales sale;
 
 }
 

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/sale")
+@RequestMapping("/admin/sale")
 public class SaleController {
 
     private final SaleService saleService;

@@ -1,11 +1,21 @@
 package com.cybersoft.capstone.entity;
 
-import com.cybersoft.capstone.entity.enums.CouponStatus;
-import jakarta.persistence.*;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.sql.Timestamp;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+import com.cybersoft.capstone.entity.enums.CouponStatus;
+
+import lombok.Data;
 
 @Entity
 @Data
@@ -21,9 +31,10 @@ public class Coupons implements Serializable {
     private Timestamp startDate;
     private Timestamp endDate;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private CouponStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "coupon_type_id", referencedColumnName = "id")
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
     private CouponTypes couponType;
 }

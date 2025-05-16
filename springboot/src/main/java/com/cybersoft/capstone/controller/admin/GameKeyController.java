@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/game_key")
+@RequestMapping("/admin/game_key")
 public class GameKeyController {
     private final GameKeyService gameKeyService;
 
