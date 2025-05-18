@@ -2,6 +2,8 @@ package com.cybersoft.capstone.controller.admin;
 
 import java.util.List;
 
+import com.cybersoft.capstone.dto.AdminSaleDTO;
+import com.cybersoft.capstone.dto.CartDTO;
 import jakarta.validation.Valid;
 
 import com.cybersoft.capstone.entity.Sales;
@@ -27,28 +29,41 @@ public class SaleController {
     }
 
     @GetMapping
-    public BaseResponse<List<Sales>> getAllSales() {
-        return saleService.getAllSales();
+    public BaseResponse<List<AdminSaleDTO>> getAllSales() {
+        List<AdminSaleDTO> saleDTOList = saleService.getAllSales();
+        BaseResponse<List<AdminSaleDTO>> response = new BaseResponse<>(200, "Lấy danh sách sale thành công");
+        response.setData(saleDTOList);
+        return response;
     }
 
     @GetMapping("/{id}")
-    public BaseResponse<Sales> getSaleById(@Valid @PathVariable int id) {
-        return saleService.getSalesById(id);
+    public BaseResponse<AdminSaleDTO> getSaleById(@Valid @PathVariable int id) {
+        AdminSaleDTO saleDTO = saleService.getSalesById(id);
+        BaseResponse<AdminSaleDTO> response = new BaseResponse<>(200, "Lấy sale theo ID thành công");
+        response.setData(saleDTO);
+        return response;
     }
 
     @PostMapping
-    public BaseResponse<Sales> createSale(@Valid @RequestBody Sales sale) {
-        return saleService.createSales(sale);
+    public BaseResponse<AdminSaleDTO> createSale(@Valid @RequestBody AdminSaleDTO adminSaleDTO) {
+        AdminSaleDTO createSale = saleService.createSales(adminSaleDTO);
+        BaseResponse<AdminSaleDTO> response = new BaseResponse<>(200, "Thêm mới sale thành công");
+        response.setData(createSale);
+        return response;
     }
 
     @PostMapping("/{id}")
-    public BaseResponse<Sales> updateSale(@Valid @PathVariable int id, @Valid @RequestBody Sales sale) {
-        return saleService.updateSales(id, sale);
+    public BaseResponse<AdminSaleDTO> updateSale(@Valid @PathVariable int id, @Valid @RequestBody AdminSaleDTO adminSaleDTO) {
+        AdminSaleDTO updateSale = saleService.updateSales(id, adminSaleDTO);
+        BaseResponse<AdminSaleDTO> response = new BaseResponse<>(200, "Update sale thành công");
+        response.setData(updateSale);
+        return response;
     }
 
     @DeleteMapping("/{id}")
-    public BaseResponse<Void> deleteSale(@Valid @PathVariable int id) {
-        return saleService.deleteSalesById(id);
+    public BaseResponse<Void> deleteSaleById(@Valid @PathVariable int id) {
+        saleService.deleteSalesById(id);
+        return new BaseResponse<>(200, "Xóa sale thành công");
     }
 
 }

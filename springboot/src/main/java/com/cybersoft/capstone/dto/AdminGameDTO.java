@@ -14,4 +14,5 @@ public class AdminGameDTO {
     private int platformId;
     private int descriptionId;
     private String description;
+    private int saleId;
 }

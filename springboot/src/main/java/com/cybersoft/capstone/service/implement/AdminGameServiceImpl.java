@@ -3,6 +3,8 @@ package com.cybersoft.capstone.service.implement;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cybersoft.capstone.entity.Sales;
+import com.cybersoft.capstone.repository.SaleRepository;
 import jakarta.transaction.Transactional;
 
 import com.cybersoft.capstone.dto.AdminGameDTO;
@@ -25,12 +27,14 @@ public class AdminGameServiceImpl implements AdminGameService {
     private final GameRepository gameRepository;
     private final GameDescriptionRepository gameDescriptionRepository;
     private final PlatformRepository platformRepository;
+    private final SaleRepository saleRepository;
     private final GameMapper gameMapper;
 
-    public AdminGameServiceImpl(GameRepository gameRepository, GameDescriptionRepository gameDescriptionRepository, PlatformRepository platformRepository, GameMapper gameMapper) {
+    public AdminGameServiceImpl(GameRepository gameRepository, GameDescriptionRepository gameDescriptionRepository, PlatformRepository platformRepository, SaleRepository saleRepository, GameMapper gameMapper) {
         this.gameRepository = gameRepository;
         this.gameDescriptionRepository = gameDescriptionRepository;
         this.platformRepository = platformRepository;
+        this.saleRepository = saleRepository;
         this.gameMapper = gameMapper;
     }
 
@@ -54,6 +58,10 @@ public class AdminGameServiceImpl implements AdminGameService {
         Platforms platform = platformRepository.findById(adminGameDTO.getPlatformId())
                 .orElseThrow(() -> new RuntimeException("Platform not found"));
 
+        // Tìm sale dựa trên saleId từ DTO
+        Sales sales = saleRepository.findById(adminGameDTO.getSaleId())
+                .orElseThrow(() -> new RuntimeException("Sale not found"));
+
         // Tạo mới mô tả game (GameDescription)
         GameDescription gameDescription = new GameDescription();
         gameDescription.setDescription(adminGameDTO.getDescription()); // Set mô tả từ DTO
@@ -66,6 +74,7 @@ public class AdminGameServiceImpl implements AdminGameService {
         game.setStock(adminGameDTO.getStock());
         game.setPlatform(platform);
         game.setGameDescription(gameDescription); // Liên kết Game với GameDescription
+        game.setSale(sales);
 
         // Lưu game vào DB (Game sẽ được lưu vào bảng `games`)
         Games savedGame = gameRepository.save(game);
@@ -89,11 +98,16 @@ public class AdminGameServiceImpl implements AdminGameService {
         Platforms platform = platformRepository.findById(adminGameDTO.getPlatformId())
                 .orElseThrow(() -> new RuntimeException("Platform not found"));
 
+        // Tìm sale dựa trên saleId từ DTO
+        Sales sales = saleRepository.findById(adminGameDTO.getSaleId())
+                .orElseThrow(() -> new RuntimeException("Sale not found"));
+
         // Cập nhật dữ liệu cơ bản
         game.setTitle(adminGameDTO.getTitle());
         game.setPrice(adminGameDTO.getPrice());
         game.setStock(adminGameDTO.getStock());
         game.setPlatform(platform);
+        game.setSale(sales);
 
         // Cập nhật phần mô tả (GameDescription)
         GameDescription description = game.getGameDescription();
