@@ -280,7 +280,7 @@ INSERT INTO games (description_id, title, price, stock, is_deleted, platform_id,
 (2, 'Call to Battle', 4999, 100, false, 1, 2),
 (3, 'City Architect', 2999, 30, false, 1, 1),
 (4, 'Speed Racers', 3999, 25, false, 6, 3),
-(5, 'Puzzle Quest', 1999, 15, false, 9, 1),
+(5, 'Puzzle Quest', 1999, 15, false, 9, 1);
 
 -- Insert data into game_key table
 INSERT INTO game_key (id, game_id, key, activated) VALUES
@@ -290,7 +290,7 @@ INSERT INTO game_key (id, game_id, key, activated) VALUES
 (4, 2, 'OPQR-STUV-WXYZ-1234', true),
 (5, 3, '5678-9ABC-DEFG-HIJK', false),
 (6, 4, 'LMNO-PQRS-TUVW-XYZ1', false),
-(7, 5, '2345-6789-ABCD-EFGH', false),
+(7, 5, '2345-6789-ABCD-EFGH', false);
 
 -- Insert data into medias table
 INSERT INTO medias (game_id, media_type, url, is_primary) VALUES

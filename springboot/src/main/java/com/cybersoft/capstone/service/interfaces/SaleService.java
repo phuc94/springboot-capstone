@@ -1,14 +1,14 @@
 package com.cybersoft.capstone.service.interfaces;
 
-import com.cybersoft.capstone.entity.Sales;
-import com.cybersoft.capstone.payload.response.BaseResponse;
+import com.cybersoft.capstone.dto.AdminSaleDTO;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
 public interface SaleService {
-    public BaseResponse<List<Sales>> getAllSales();
-    public BaseResponse<Sales> getSalesById(int id);
-    public BaseResponse<Sales> createSales(Sales sales);
-    public BaseResponse<Sales> updateSales(int id, Sales sales);
-    public BaseResponse<Void> deleteSalesById(int id);
+    public List<AdminSaleDTO> getAllSales();
+    public AdminSaleDTO getSalesById(int id);
+    public AdminSaleDTO createSales(@Valid AdminSaleDTO adminSaleDTO);
+    public AdminSaleDTO updateSales(int id, AdminSaleDTO adminSaleDTO);
+    public void deleteSalesById(int id);
 }
