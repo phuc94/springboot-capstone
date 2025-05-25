@@ -1,14 +1,16 @@
 package com.cybersoft.capstone.dto;
 
-import com.cybersoft.capstone.entity.enums.CouponStatus;
-import jakarta.persistence.Column;
-import lombok.Data;
-
 import java.sql.Timestamp;
+
+import com.cybersoft.capstone.entity.enums.CouponStatus;
+
+import lombok.Data;
 
 @Data
 public class AdminCouponDTO {
+    private Integer id;
     private String code;
+    private Integer couponType;
     private Double discountAmount;
     private Integer usageLimit;
     private Integer usedCount;
