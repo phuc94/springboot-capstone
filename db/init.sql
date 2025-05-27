@@ -43,9 +43,9 @@ CREATE TABLE IF NOT EXISTS games (
   title VARCHAR(255) NOT NULL,
   price INTEGER NOT NULL,
   stock INTEGER NOT NULL DEFAULT 0,
-  is_deleted bool,
   platform_id INTEGER NOT NULL,
   sale_id INTEGER NOT NULL DEFAULT 0,
+  deleted_on TIMESTAMP DEFAULT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -275,12 +275,12 @@ INSERT INTO game_description (description) VALUES
 ('Adventure game with puzzle-solving elements.');
 
 -- Insert data into games table
-INSERT INTO games (description_id, title, price, stock, is_deleted, platform_id, sale_id) VALUES
-(1, 'Epic Fantasy VII', 5999, 50, false, 5, 1),
-(2, 'Call to Battle', 4999, 100, false, 1, 2),
-(3, 'City Architect', 2999, 30, false, 1, 1),
-(4, 'Speed Racers', 3999, 25, false, 6, 3),
-(5, 'Puzzle Quest', 1999, 15, false, 9, 1);
+INSERT INTO games (description_id, title, price, stock, platform_id, sale_id) VALUES
+(1, 'Epic Fantasy VII', 5999, 50, 5, 1),
+(2, 'Call to Battle', 4999, 100, 1, 2),
+(3, 'City Architect', 2999, 30, 1, 1),
+(4, 'Speed Racers', 3999, 25, 6, 3),
+(5, 'Puzzle Quest', 1999, 15, 9, 1);
 
 -- Insert data into game_key table
 INSERT INTO game_key (id, game_id, key, activated) VALUES

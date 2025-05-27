@@ -1,9 +1,9 @@
 package com.cybersoft.capstone.service.interfaces;
 
+import java.util.List;
+
 import com.cybersoft.capstone.entity.Admins;
 import com.cybersoft.capstone.payload.response.BaseResponse;
-
-import java.util.List;
 
 public interface AdminService {
     public BaseResponse<List<Admins>> getAllAdmins();

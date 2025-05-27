@@ -78,7 +78,7 @@ public class AdminGameController {
     @DeleteMapping("/{id}")
     public BaseResponse<Void> deleteGameById(@PathVariable int id) {
         try {
-            adminGameService.deleteAdminGameById(id);
+            adminGameService.softDeleteAdminGameById(id);
             BaseResponse<Void> response = new BaseResponse<>(204, "Xóa game thành công");
             response.setData(null);  // Không trả dữ liệu trong trường hợp xóa thành công
             return response;

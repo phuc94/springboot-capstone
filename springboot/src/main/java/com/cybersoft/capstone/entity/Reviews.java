@@ -1,9 +1,15 @@
 package com.cybersoft.capstone.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
-
 import java.io.Serializable;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+import lombok.Data;
 
 @Entity
 @Data
@@ -21,6 +27,6 @@ public class Reviews implements Serializable {
     private Users user;
 
     private int rating;
-    private boolean recomment;
+    private boolean recommend;
     private String comment;
 }

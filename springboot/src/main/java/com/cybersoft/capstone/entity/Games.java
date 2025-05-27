@@ -1,8 +1,10 @@
 package com.cybersoft.capstone.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,7 +24,8 @@ public class Games implements Serializable {
     private String title;
     private Integer price;
     private int stock;
-    private boolean isDeleted;
+    @Column(name = "deleted_on")
+    private Timestamp deletedOn;
 
     // Entities mapping
     @OneToOne

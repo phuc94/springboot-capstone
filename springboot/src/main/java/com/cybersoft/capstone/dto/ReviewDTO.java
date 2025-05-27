@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ReviewDTO {
     private int rating;
-    private boolean recomment;
+    private boolean recommend;
     private String comment;
 }
