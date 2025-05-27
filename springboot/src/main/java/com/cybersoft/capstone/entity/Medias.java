@@ -32,8 +32,6 @@ public class Medias {
     @Enumerated(EnumType.STRING)
     private MediaType media_type;
 
-    private String title;
-
     @ManyToOne
     @JoinColumn(name = "game_id", referencedColumnName = "id")
     @JsonIgnore

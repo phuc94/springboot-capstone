@@ -1,15 +1,16 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.cybersoft.capstone.dto.ReviewDTO;
 import com.cybersoft.capstone.dto.mapper.ReviewMapper;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.repository.ReviewRepository;
 import com.cybersoft.capstone.service.interfaces.ReviewService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -47,7 +48,7 @@ public class ReviewServiceImpl implements ReviewService {
                     //foundReview.setGame(foundReview.getGame());
                     //foundReview.setUser(foundReview.getUser());
                     foundReview.setRating(reviewDTO.getRating());
-                    foundReview.setRecomment(reviewDTO.isRecomment());
+                    foundReview.setRecommend(reviewDTO.isRecommend());
                     foundReview.setComment(reviewDTO.getComment());
                     return reviewMapper.toReviewDTO(reviewRepository.save(foundReview));
                 })

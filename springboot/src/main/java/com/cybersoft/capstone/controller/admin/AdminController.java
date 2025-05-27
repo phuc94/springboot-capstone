@@ -1,4 +1,4 @@
-package com.cybersoft.capstone.controller.admin;
+package com.cybersoft.capstone.controller;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin/admin")
+@RequestMapping("/api/admin")
 public class AdminController {
 
     private final AdminService adminService;

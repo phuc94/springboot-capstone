@@ -1,10 +1,10 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.cybersoft.capstone.entity.Sales;
-import com.cybersoft.capstone.repository.SaleRepository;
 import jakarta.transaction.Transactional;
 
 import com.cybersoft.capstone.dto.AdminGameDTO;
@@ -12,10 +12,12 @@ import com.cybersoft.capstone.dto.mapper.GameMapper;
 import com.cybersoft.capstone.entity.GameDescription;
 import com.cybersoft.capstone.entity.Games;
 import com.cybersoft.capstone.entity.Platforms;
+import com.cybersoft.capstone.entity.Sales;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.repository.GameDescriptionRepository;
 import com.cybersoft.capstone.repository.GameRepository;
 import com.cybersoft.capstone.repository.PlatformRepository;
+import com.cybersoft.capstone.repository.SaleRepository;
 import com.cybersoft.capstone.service.interfaces.AdminGameService;
 
 import org.springframework.http.HttpStatus;
@@ -41,7 +43,7 @@ public class AdminGameServiceImpl implements AdminGameService {
     @Override
     public List<AdminGameDTO> getAllAdminGames() {
         return gameRepository.findAll()
-                .stream().map(gameMapper::toAdminGameDTO).collect(Collectors.toList());
+            .stream().map(gameMapper::toAdminGameDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -134,11 +136,10 @@ public class AdminGameServiceImpl implements AdminGameService {
 
     @Transactional
     @Override
-    public void deleteAdminGameById(int id) {
-        if(gameRepository.existsById(id)) {
-            gameRepository.deleteById(id);
-            return;
-        }
-        throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+    public void softDeleteAdminGameById(int id) {
+        gameRepository.findById(id)
+            .ifPresentOrElse(game -> {
+                game.setDeletedOn(Timestamp.valueOf(LocalDateTime.now()));
+            }, () -> {throw new RuntimeException("Game not found");});
     }
 }
