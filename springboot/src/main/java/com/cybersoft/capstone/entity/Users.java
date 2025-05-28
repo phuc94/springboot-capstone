@@ -33,4 +33,7 @@ public class Users {
 
     @OneToMany(mappedBy = "user")
     private List<WishlistItem> wishlistItems;
+
+    @OneToMany(mappedBy = "users")
+    private List<Orders> orders;
 }

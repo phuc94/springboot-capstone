@@ -17,6 +17,5 @@ public class CouponTypes implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(mappedBy = "couponType")
-    private List<Orders> orders;
+    private String type;
 }
