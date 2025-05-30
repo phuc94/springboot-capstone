@@ -3,9 +3,13 @@ import {
   useTable,
   List,
   ShowButton,
-  EditButton
+  EditButton,
+  DateField,
+  DeleteButton
 } from '@refinedev/antd'
+import { useMany } from '@refinedev/core';
 import { Space, Table } from 'antd';
+import dayjs from 'dayjs';
 
 
 export const ListCoupon = () => {
@@ -15,6 +19,11 @@ export const ListCoupon = () => {
   } = useTable({
     sorters: {initial: [{field: "id", order: "asc"}]},
     syncWithLocation: true,
+  })
+
+  const {data} = useMany({
+    resource: "coupon_type",
+    ids: tableProps?.dataSource?.map(coupon => coupon.coupon_type_id) ?? []
   })
 
   return (
@@ -27,19 +36,32 @@ export const ListCoupon = () => {
           defaultSortOrder={getDefaultSortOrder("id", sorters)}
         />
         <Table.Column dataIndex="code" title="Code" />
-        <Table.Column dataIndex="discount_amount" title="Discount Amount" />
-        <Table.Column dataIndex="usage_limit" title="Usage Limit" />
-        <Table.Column dataIndex="usage_count" title="Usage Count" />
-        <Table.Column dataIndex="start_date" title="Start Date" />
-        <Table.Column dataIndex="end_date" title="End Date" />
+        <Table.Column dataIndex="discountAmount" title="Discount Amount" />
+        <Table.Column dataIndex="usageLimit" title="Usage Limit" />
+        <Table.Column dataIndex="usedCount" title="Usage Count" />
+        <Table.Column
+          dataIndex="startDate"
+          title="Start Date"
+          render={(_, record)=>{
+            console.log(dayjs(record.startDate).toString())
+            return <DateField value={dayjs(record.startDate).toString()} />
+          }
+          }
+        />
+        <Table.Column dataIndex="endDate" title="End Date" />
         <Table.Column dataIndex="status" title="Status" />
-        <Table.Column dataIndex="type_id" title="Coupon Type" />
+        <Table.Column title="Coupon Type"
+          render={(_, record)=>(
+            <span>{data?.data?.find(type => type.id == record.couponTypeId)?.type ?? ""}</span>
+          )}
+        />
         <Table.Column
           title="Actions"
           render={(_, record) => (
             <Space>
               <ShowButton hideText size="small" recordItemId={record.id} />
               <EditButton hideText size="small" recordItemId={record.id} />
+              <DeleteButton hideText size="small" recordItemId={record.id} />
             </Space>
           )}
         />

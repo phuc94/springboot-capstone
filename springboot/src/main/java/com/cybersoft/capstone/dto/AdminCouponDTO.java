@@ -10,7 +10,7 @@ import lombok.Data;
 public class AdminCouponDTO {
     private Integer id;
     private String code;
-    private Integer couponType;
+    private Integer couponTypeId;
     private Double discountAmount;
     private Integer usageLimit;
     private Integer usedCount;

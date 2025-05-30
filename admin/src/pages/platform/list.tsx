@@ -5,24 +5,15 @@ import {
   ShowButton,
   EditButton
 } from '@refinedev/antd'
-import { useMany } from '@refinedev/core';
 import { Space, Table } from 'antd';
 
 export const ListPlatform = () => {
   const {
     tableProps,
-    tableQuery: {data},
     sorters,
   } = useTable({
     sorters: {initial: [{field: "id", order: "asc"}]},
     syncWithLocation: true,
-  })
-
-  const {
-    data: parentPlatform
-  } = useMany({
-    resource: "platform",
-    ids: data?.data?.map((platform: any) => platform.id) ?? []
   })
 
   return (

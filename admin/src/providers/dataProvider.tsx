@@ -1,8 +1,10 @@
-import type { DataProvider } from "@refinedev/core";
+import type { DataProvider, DeleteOneParams } from "@refinedev/core";
 
-const API_URL = `http://${import.meta.env.VITE_API_SERVER_DOMAIN ?? 'localhost'}:8080/api`;
+const API_URL = `http://${import.meta.env.VITE_API_SERVER_DOMAIN ?? 'localhost'}:8080/admin`;
 
 const fetcher = async (url: string, options?: RequestInit) => {
+  console.log(url)
+  console.log(options)
   return fetch(url, {
     ...options,
     headers: {
@@ -111,8 +113,18 @@ export const dataProvider: DataProvider = {
     return {data: data.data}
 
   },
-  deleteOne: () => {
-    throw new Error("Not implemented");
+  deleteOne: async ({ resource, id }) => {
+
+    const res = await fetcher(
+      `${API_URL}/${resource}/${id}`,
+      { method: "DELETE" }
+    );
+
+    // if (res.status < 200 || res.status > 299) throw res;
+
+    const data = await res.json();
+
+    return {data: data.data}
   },
   getApiUrl: () => API_URL,
   // Optional methods:

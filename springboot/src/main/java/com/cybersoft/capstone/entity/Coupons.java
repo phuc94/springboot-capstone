@@ -36,6 +36,7 @@ public class Coupons implements Serializable {
     private CouponStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    @JoinColumn(name = "coupon_type_id", referencedColumnName = "id")
     private CouponTypes couponType;
+
 }

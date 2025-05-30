@@ -9,7 +9,6 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import { authProvider } from "./providers/authProvider";
 import { Login } from "./pages/login";
 import { ConfigProvider, App as AntdApp } from "antd";
-import { CreateDescription, EditDescription, ListDescription, ShowDescription } from "./pages/description";
 import { CreateSale, EditSale, ListSale, ShowSale } from "./pages/sale";
 import { CreateCoupon, EditCoupon, ListCoupon, ShowCoupon } from "./pages/coupon";
 import { CreateCouponType, EditCouponType, ListCouponType, ShowCouponType } from "./pages/coupon_type";
@@ -27,14 +26,6 @@ function App() {
             routerProvider={routerProvider}
             notificationProvider={useNotificationProvider}
             resources={[
-              {
-                name: "game_description",
-                list: "/description",
-                show: "/description/:id",
-                edit: "/description/:id/edit",
-                create: "/description/create",
-                meta: { label: "Game Description" },
-              },
               {
                 name: "game",
                 list: "/game",
@@ -60,11 +51,11 @@ function App() {
                 meta: { label: "Coupon" },
               },
               {
-                name: "coupon-type",
-                list: "/coupon-type",
-                show: "/coupon-type/:id",
-                edit: "/coupon-type/:id/edit",
-                create: "/coupon-type/create",
+                name: "coupon_type",
+                list: "/coupon_type",
+                show: "/coupon_type/:id",
+                edit: "/coupon_type/:id/edit",
+                create: "/coupon_type/create",
                 meta: { label: "Coupon Type" },
               },
               {
@@ -95,12 +86,6 @@ function App() {
                   index
                   element={<NavigateToResource resource="protected-products" />}
                 />
-                <Route path="/description">
-                  <Route index element={<ListDescription />} />
-                  <Route path=":id" element={<ShowDescription/>} />
-                  <Route path=":id/edit" element={<EditDescription/>} />
-                  <Route path="create" element={<CreateDescription/>} />
-                </Route>
                 <Route path="/sale">
                   <Route index element={<ListSale />} />
                   <Route path=":id" element={<ShowSale/>} />
@@ -113,7 +98,7 @@ function App() {
                   <Route path=":id/edit" element={<EditCoupon/>} />
                   <Route path="create" element={<CreateCoupon/>} />
                 </Route>
-                <Route path="/coupon-type">
+                <Route path="/coupon_type">
                   <Route index element={<ListCouponType />} />
                   <Route path=":id" element={<ShowCouponType />} />
                   <Route path=":id/edit" element={<EditCouponType />} />
