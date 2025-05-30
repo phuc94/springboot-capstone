@@ -1,4 +1,4 @@
-package com.cybersoft.capstone.controller;
+package com.cybersoft.capstone.controller.admin;
 
 import java.util.List;
 
