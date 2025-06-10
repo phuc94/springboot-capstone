@@ -4,9 +4,11 @@ import java.util.List;
 
 import com.cybersoft.capstone.dto.AdminGameDTO;
 import com.cybersoft.capstone.exception.NotFoundException;
+import com.cybersoft.capstone.payload.request.SearchGameRequest;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.service.interfaces.AdminGameService;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +44,20 @@ public class AdminGameController {
             return response;
         } catch (NotFoundException ex) {
             BaseResponse<AdminGameDTO> response = new BaseResponse<>(404, "Game không tồn tại!");
+            response.setData(null);
+            return response;
+        }
+    }
+
+    @GetMapping("/search")
+    public BaseResponse<List<AdminGameDTO>> searchGames(@RequestBody SearchGameRequest request) {
+        try {
+            Page<AdminGameDTO> searchAdminGame = adminGameService.searchAdminGame(request);
+            BaseResponse<List<AdminGameDTO>> response = new BaseResponse<>(200, "Tìm kiếm game thành công!");
+            response.setData(searchAdminGame.getContent());
+            return response;
+        } catch (NotFoundException ex) {
+            BaseResponse<List<AdminGameDTO>> response = new BaseResponse<>(404, "Không tìm thấy game nào!");
             response.setData(null);
             return response;
         }
