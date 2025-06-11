@@ -6,7 +6,9 @@ import jakarta.validation.Valid;
 
 import com.cybersoft.capstone.dto.PlatformCreateDTO;
 import com.cybersoft.capstone.entity.Platforms;
+import com.cybersoft.capstone.payload.response.AcceptedResponse;
 import com.cybersoft.capstone.payload.response.BaseResponse;
+import com.cybersoft.capstone.payload.response.OkResponse;
 import com.cybersoft.capstone.service.interfaces.PlatformService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,27 +31,28 @@ public class PlatformController {
 
     @PostMapping
     public BaseResponse<Platforms> createPlatform(@Valid @RequestBody PlatformCreateDTO platformDTO) {
-        return platformService.createPlatform(platformDTO);
+        return new OkResponse<Platforms>(platformService.createPlatform(platformDTO));
     }
 
     @GetMapping
     public BaseResponse<List<Platforms>> getAllPlatforms(@RequestParam(required = false) Boolean isOrphan) {
-        return platformService.getAllPlatforms(isOrphan);
+        return new OkResponse<List<Platforms>>(platformService.getAllPlatforms(isOrphan));
     }
 
     @GetMapping("/{id}")
     public BaseResponse<Platforms> getPlatformById(@Valid @PathVariable int id) {
-        return platformService.getPlatformById(id);
+        return new OkResponse<Platforms>(platformService.getPlatformById(id));
     }
 
     @PostMapping("/{id}")
     public BaseResponse<Platforms> updatePlatform(@Valid @PathVariable int id,@Valid @RequestBody Platforms platform) {
-        return platformService.updatePlatform(id, platform);
+        return new OkResponse<Platforms>(platformService.updatePlatform(id, platform));
     }
 
     @DeleteMapping("/{id}")
     public BaseResponse<Void> deletePlatform(@Valid @PathVariable int id) {
-        return platformService.deletePlatform(id);
+        platformService.deletePlatform(id);
+        return new AcceptedResponse<>();
     }
 
 }

@@ -2,6 +2,7 @@ package com.cybersoft.capstone.dto.mapper;
 
 import com.cybersoft.capstone.dto.AdminGameDTO;
 import com.cybersoft.capstone.dto.ClientGameDTO;
+import com.cybersoft.capstone.dto.GameCardDTO;
 import com.cybersoft.capstone.entity.Games;
 
 import org.mapstruct.Mapper;
@@ -21,4 +22,7 @@ public interface GameMapper {
     @Mapping(source = "sale.id", target = "saleId")
     @Mapping(source = "platform.id", target = "platformId")
     ClientGameDTO toClientGameDTO(Games games);
+
+    @Mapping(source = "sale.amount", target = "sale")
+    GameCardDTO toGameCardDTO(Games games);
 }

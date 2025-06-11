@@ -28,6 +28,11 @@ public class ClientGameController {
         return new OkResponse<List<ClientGameDTO>>(clientGameService.getAllClientGames());
     }
 
+    @GetMapping("/home")
+    public BaseResponse<List<ClientGameDTO>> getHomePageClientGames() {
+        return new OkResponse<List<ClientGameDTO>>(clientGameService.getAllClientGames());
+    }
+
     @GetMapping("/{id}")
     public BaseResponse<ClientGameDTO> getClientGameById(@PathVariable int id) {
         try {

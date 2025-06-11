@@ -1,9 +1,10 @@
-import { Box, Button, Card, Flex, Image, Space, Text } from "@mantine/core"
+import { Badge, Box, Button, Card, Flex, Image, Space, Text } from "@mantine/core"
 import { IconStar, IconStarFilled } from "@tabler/icons-react"
 import styles from './style.module.scss'
 
-const GameCard = () => (
-  <Card shadow="sm" padding="lg" radius="md" withBorder
+const GameCard = ({data}: any) => {
+
+  return <Card shadow="sm" padding="lg" radius="md" withBorder
     className={styles.gameCard}
   >
     <Card.Section>
@@ -13,22 +14,37 @@ const GameCard = () => (
     </Card.Section>
 
     <Flex direction="column" justify="center" align="center">
-      <Text size="xl">NBA 2K23 Steam Key</Text>
+      <Text size="xl">{data.title}</Text>
       <Space h="xs" />
       <Box>
+        {/*TODO: data.avgRating*/}
         <IconStarFilled color="yellow"/>
         <IconStarFilled color="yellow"/>
         <IconStarFilled color="yellow"/>
         <IconStarFilled color="yellow"/>
         <IconStar color="yellow" />
       </Box>
-      <Text size="xl" c="dimmed" td="line-through">1.000.000đ</Text>
-      <Text size="xl" fw={700}>950.000đ</Text>
+      {data.sale !== 0 ?
+        <Box>
+          <Text size="xl" c="dimmed" td="line-through">{data.price}đ</Text>
+          <Text size="xl" fw={700}>{Math.round(data.price * (100 - data.sale) / 100)}đ</Text>
+        </Box>
+        :
+        <Text size="xl" fw={700}>{data.price}đ</Text>
+      }
       <Space h="md" />
       <Button color="red">MUA HÀNG</Button>
     </Flex>
-
+    {data.sale !== 0 && <SaleTag amount={data.sale} />}
   </Card>
-)
+}
 
 export default GameCard
+
+const SaleTag = ({amount}: any) => (
+  <Badge className={styles.gameCardTag} color="red" size="xl" radius="xs">
+    {amount}%
+  </Badge>
+)
+
+

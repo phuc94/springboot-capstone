@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.cybersoft.capstone.dto.ClientGameDTO;
+import com.cybersoft.capstone.dto.GameCardDTO;
 import com.cybersoft.capstone.dto.mapper.GameMapper;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.repository.GameRepository;
@@ -35,4 +36,9 @@ public class ClientGameServiceImpl implements ClientGameService {
             .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
 
+    @Override
+    public List<GameCardDTO> getCardGameByPlatform(int id) {
+        return gameRepository.findTop4ByOrderByCreatedAtDesc().stream()
+            .map(gameMapper::toGameCardDTO).collect(Collectors.toList());
+    }
 }
