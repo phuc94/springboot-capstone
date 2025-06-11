@@ -10,6 +10,7 @@ public class AdminGameDTO {
     private String title;
     private int price;
     private int stock;
+    private int avgRating;
     private int platformId;
     private Timestamp deleted_on;
     private int descriptionId;

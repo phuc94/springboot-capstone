@@ -24,8 +24,10 @@ public class Games implements Serializable {
     private String title;
     private Integer price;
     private int stock;
+    private int avgRating;
     @Column(name = "deleted_on")
     private Timestamp deletedOn;
+    private Timestamp createdAt;
 
     // Entities mapping
     @OneToOne

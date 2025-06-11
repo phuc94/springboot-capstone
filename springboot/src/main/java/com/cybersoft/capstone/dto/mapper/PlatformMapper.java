@@ -1,7 +1,9 @@
 package com.cybersoft.capstone.dto.mapper;
 
 import com.cybersoft.capstone.dto.PlatformCreateDTO;
+import com.cybersoft.capstone.dto.PlatformSummaryDTO;
 import com.cybersoft.capstone.entity.Platforms;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -12,4 +14,6 @@ public interface PlatformMapper {
 
     @Mapping(ignore = true, target = "parentId")
     PlatformCreateDTO toPlatformDTO(Platforms platform);
+
+    PlatformSummaryDTO toPlatformSummaryDTO(Platforms platform);
 }

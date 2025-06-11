@@ -1,4 +1,4 @@
-import { Center, Container, Divider, Flex, Grid, Pagination, Space, Stack, Text, Title } from "@mantine/core"
+import { Center, Container, Grid, Pagination, Space, Text } from "@mantine/core"
 import GameCard from "../GameCard"
 
 const GameList = () => {

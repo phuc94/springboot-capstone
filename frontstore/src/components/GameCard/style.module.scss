@@ -1,5 +1,12 @@
 .gameCard {
+  height: 100%;
+  position: relative;
   &:hover {
     cursor: pointer;
+  }
+  &Tag {
+    position: absolute;
+    top: 5%;
+    left: 0px;
   }
 }
