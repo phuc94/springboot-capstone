@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS roles (
 
 CREATE TABLE IF NOT EXISTS coupons (
   id SERIAL PRIMARY KEY,
-  type_id INTEGER NOT NULL,
+  coupon_type_id INTEGER NOT NULL,
   code VARCHAR(255) NOT NULL,
   discount_amount INTEGER,
   usage_limit INTEGER,
@@ -218,7 +218,7 @@ ALTER TABLE games ADD FOREIGN KEY (description_id) REFERENCES game_description (
 
 ALTER TABLE medias ADD FOREIGN KEY (game_id) REFERENCES games (id);
 
-ALTER TABLE coupons ADD FOREIGN KEY (type_id) REFERENCES coupon_types (id);
+ALTER TABLE coupons ADD FOREIGN KEY (coupon_type_id) REFERENCES coupon_types (id);
 
 ALTER TABLE games ADD FOREIGN KEY (platform_id) REFERENCES platforms (id);
 
@@ -310,7 +310,7 @@ INSERT INTO coupon_types (type) VALUES
 ('fixed');
 
 -- Insert data into coupons table
-INSERT INTO coupons (type_id, code, discount_amount, usage_limit, used_count, start_date, end_date, status) VALUES
+INSERT INTO coupons (coupon_type_id, code, discount_amount, usage_limit, used_count, start_date, end_date, status) VALUES
 (1, 'WELCOME10', 10, 100, 45, '2025-01-01', '2025-12-31', 'ACTIVE'),
 (2, 'SUMMER20', 2000, 50, 10, '2025-06-01', '2025-08-31', 'ACTIVE'),
 (1, 'EXPIRED25', 25, 200, 198, '2025-01-01', '2025-04-30', 'EXPIRE');

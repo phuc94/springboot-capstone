@@ -2,10 +2,14 @@ package com.cybersoft.capstone.service.implement;
 
 import com.cybersoft.capstone.dto.CouponTypeDTO;
 import com.cybersoft.capstone.dto.mapper.CouponTypeMapper;
+
+import jakarta.validation.Valid;
+
 import com.cybersoft.capstone.entity.CouponTypes;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.repository.CouponTypeRepository;
 import com.cybersoft.capstone.service.interfaces.CouponTypeService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -53,10 +57,11 @@ public class CouponTypeServiceImpl implements CouponTypeService {
 
     @Override
     public void deleteCouponTypeById(int id) {
-        if(couponTypeRepository.existsById(id)){
+        if (couponTypeRepository.existsById(id)) {
             couponTypeRepository.deleteById(id);
             return;
         }
         throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
-    }
+    }  
+
 }

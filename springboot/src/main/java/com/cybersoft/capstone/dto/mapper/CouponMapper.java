@@ -9,9 +9,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CouponMapper {
 
-    @Mapping(source = "couponType", target = "couponType.id")
+    @Mapping(source = "couponTypeId", target = "couponType.id")
     Coupons toCoupons(AdminCouponDTO couponDTO);
 
-    @Mapping(source = "couponType.id", target = "couponType")
+    @Mapping(source = "couponType.id", target = "couponTypeId")
     AdminCouponDTO toAdminCouponDTO(Coupons coupons);
 }

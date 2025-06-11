@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cybersoft.capstone.payload.request.SearchGameRequest;
+
 import jakarta.transaction.Transactional;
 
 import com.cybersoft.capstone.dto.AdminGameDTO;
@@ -20,6 +22,10 @@ import com.cybersoft.capstone.repository.PlatformRepository;
 import com.cybersoft.capstone.repository.SaleRepository;
 import com.cybersoft.capstone.service.interfaces.AdminGameService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -142,4 +148,18 @@ public class AdminGameServiceImpl implements AdminGameService {
                 game.setDeletedOn(Timestamp.valueOf(LocalDateTime.now()));
             }, () -> {throw new RuntimeException("Game not found");});
     }
+
+    @Override
+    public Page<AdminGameDTO> searchAdminGame(SearchGameRequest request) {
+        Specification<Games> specification = (root, query, criteriaBuilder) -> {
+            if (request.getTitle() != null && !request.getTitle().isEmpty()) {
+                return criteriaBuilder.like(root.get("title"), "%" + request.getTitle() + "%");
+            }
+            return criteriaBuilder.conjunction();
+        };
+        Pageable pageable = PageRequest.of(request.getNumPage(), request.getPageSize());
+        return gameRepository.findAll(specification, pageable)
+                .map(gameMapper::toAdminGameDTO);
+    }
+
 }

@@ -12,7 +12,6 @@ import java.util.List;
 import java.io.Serializable;
 import java.util.Date;
 
-
 @Entity
 @Data
 public class Orders implements Serializable {

@@ -26,7 +26,8 @@ export const ListGame = () => {
           sorter
           defaultSortOrder={getDefaultSortOrder("id", sorters)}
         />
-        <Table.Column dataIndex="description" title="Description" />
+        <Table.Column dataIndex="title" title="Title" />
+        <Table.Column dataIndex="price" title="Price" />
         <Table.Column
           title="Actions"
           render={(_, record) => (
