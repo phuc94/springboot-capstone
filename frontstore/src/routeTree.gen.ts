@@ -13,13 +13,13 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as WishListImport } from './routes/wish-list'
 import { Route as PlatformImport } from './routes/platform'
-import { Route as GamedetailImport } from './routes/game_detail'
 import { Route as IndexImport } from './routes/index'
 import { Route as MyAccountIndexImport } from './routes/my-account/index'
 import { Route as MyAccountProfileImport } from './routes/my-account/profile'
 import { Route as MyAccountOrdersImport } from './routes/my-account/orders'
 import { Route as MyAccountFundsImport } from './routes/my-account/funds'
 import { Route as MyAccountAddressImport } from './routes/my-account/address'
+import { Route as GameGameIdImport } from './routes/game.$gameId'
 import { Route as CheckoutPaymentImport } from './routes/_checkout/payment'
 import { Route as CheckoutCheckoutImport } from './routes/_checkout/checkout'
 import { Route as CheckoutCartImport } from './routes/_checkout/cart'
@@ -35,12 +35,6 @@ const WishListRoute = WishListImport.update({
 const PlatformRoute = PlatformImport.update({
   id: '/platform',
   path: '/platform',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const GamedetailRoute = GamedetailImport.update({
-  id: '/game_detail',
-  path: '/game_detail',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -80,6 +74,12 @@ const MyAccountAddressRoute = MyAccountAddressImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const GameGameIdRoute = GameGameIdImport.update({
+  id: '/game/$gameId',
+  path: '/game/$gameId',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const CheckoutPaymentRoute = CheckoutPaymentImport.update({
   id: '/_checkout/payment',
   path: '/payment',
@@ -107,13 +107,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/game_detail': {
-      id: '/game_detail'
-      path: '/game_detail'
-      fullPath: '/game_detail'
-      preLoaderRoute: typeof GamedetailImport
       parentRoute: typeof rootRoute
     }
     '/platform': {
@@ -149,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/payment'
       fullPath: '/payment'
       preLoaderRoute: typeof CheckoutPaymentImport
+      parentRoute: typeof rootRoute
+    }
+    '/game/$gameId': {
+      id: '/game/$gameId'
+      path: '/game/$gameId'
+      fullPath: '/game/$gameId'
+      preLoaderRoute: typeof GameGameIdImport
       parentRoute: typeof rootRoute
     }
     '/my-account/address': {
@@ -193,12 +193,12 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/game_detail': typeof GamedetailRoute
   '/platform': typeof PlatformRoute
   '/wish-list': typeof WishListRoute
   '/cart': typeof CheckoutCartRoute
   '/checkout': typeof CheckoutCheckoutRoute
   '/payment': typeof CheckoutPaymentRoute
+  '/game/$gameId': typeof GameGameIdRoute
   '/my-account/address': typeof MyAccountAddressRoute
   '/my-account/funds': typeof MyAccountFundsRoute
   '/my-account/orders': typeof MyAccountOrdersRoute
@@ -208,12 +208,12 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/game_detail': typeof GamedetailRoute
   '/platform': typeof PlatformRoute
   '/wish-list': typeof WishListRoute
   '/cart': typeof CheckoutCartRoute
   '/checkout': typeof CheckoutCheckoutRoute
   '/payment': typeof CheckoutPaymentRoute
+  '/game/$gameId': typeof GameGameIdRoute
   '/my-account/address': typeof MyAccountAddressRoute
   '/my-account/funds': typeof MyAccountFundsRoute
   '/my-account/orders': typeof MyAccountOrdersRoute
@@ -224,12 +224,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/game_detail': typeof GamedetailRoute
   '/platform': typeof PlatformRoute
   '/wish-list': typeof WishListRoute
   '/_checkout/cart': typeof CheckoutCartRoute
   '/_checkout/checkout': typeof CheckoutCheckoutRoute
   '/_checkout/payment': typeof CheckoutPaymentRoute
+  '/game/$gameId': typeof GameGameIdRoute
   '/my-account/address': typeof MyAccountAddressRoute
   '/my-account/funds': typeof MyAccountFundsRoute
   '/my-account/orders': typeof MyAccountOrdersRoute
@@ -241,12 +241,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/game_detail'
     | '/platform'
     | '/wish-list'
     | '/cart'
     | '/checkout'
     | '/payment'
+    | '/game/$gameId'
     | '/my-account/address'
     | '/my-account/funds'
     | '/my-account/orders'
@@ -255,12 +255,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/game_detail'
     | '/platform'
     | '/wish-list'
     | '/cart'
     | '/checkout'
     | '/payment'
+    | '/game/$gameId'
     | '/my-account/address'
     | '/my-account/funds'
     | '/my-account/orders'
@@ -269,12 +269,12 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/game_detail'
     | '/platform'
     | '/wish-list'
     | '/_checkout/cart'
     | '/_checkout/checkout'
     | '/_checkout/payment'
+    | '/game/$gameId'
     | '/my-account/address'
     | '/my-account/funds'
     | '/my-account/orders'
@@ -285,12 +285,12 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  GamedetailRoute: typeof GamedetailRoute
   PlatformRoute: typeof PlatformRoute
   WishListRoute: typeof WishListRoute
   CheckoutCartRoute: typeof CheckoutCartRoute
   CheckoutCheckoutRoute: typeof CheckoutCheckoutRoute
   CheckoutPaymentRoute: typeof CheckoutPaymentRoute
+  GameGameIdRoute: typeof GameGameIdRoute
   MyAccountAddressRoute: typeof MyAccountAddressRoute
   MyAccountFundsRoute: typeof MyAccountFundsRoute
   MyAccountOrdersRoute: typeof MyAccountOrdersRoute
@@ -300,12 +300,12 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  GamedetailRoute: GamedetailRoute,
   PlatformRoute: PlatformRoute,
   WishListRoute: WishListRoute,
   CheckoutCartRoute: CheckoutCartRoute,
   CheckoutCheckoutRoute: CheckoutCheckoutRoute,
   CheckoutPaymentRoute: CheckoutPaymentRoute,
+  GameGameIdRoute: GameGameIdRoute,
   MyAccountAddressRoute: MyAccountAddressRoute,
   MyAccountFundsRoute: MyAccountFundsRoute,
   MyAccountOrdersRoute: MyAccountOrdersRoute,
@@ -324,12 +324,12 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/game_detail",
         "/platform",
         "/wish-list",
         "/_checkout/cart",
         "/_checkout/checkout",
         "/_checkout/payment",
+        "/game/$gameId",
         "/my-account/address",
         "/my-account/funds",
         "/my-account/orders",
@@ -339,9 +339,6 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/game_detail": {
-      "filePath": "game_detail.tsx"
     },
     "/platform": {
       "filePath": "platform.tsx"
@@ -357,6 +354,9 @@ export const routeTree = rootRoute
     },
     "/_checkout/payment": {
       "filePath": "_checkout/payment.tsx"
+    },
+    "/game/$gameId": {
+      "filePath": "game.$gameId.tsx"
     },
     "/my-account/address": {
       "filePath": "my-account/address.tsx"

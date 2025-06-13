@@ -71,7 +71,7 @@ const Footer = () => {
 }
 export default Footer
 
-const ReviewCard = () => {
+export const ReviewCard = () => {
   return (
     <Card className={styles.reviewCard} padding="md" >
       <Group>
