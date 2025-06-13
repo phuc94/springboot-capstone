@@ -1,15 +1,10 @@
 import { Container } from "@mantine/core";
-import { useDescription } from "../../hooks/useDescription";
 import { useEffect } from "react";
 
-const Description = () => {
-  const {isSuccess, data} = useDescription()
+const Description = ({data}: {data: string}) => {
 
   useEffect(()=>{
-    if (document.querySelector('frame#frame-loaded')) {
-      console.log('loaded')
-      return
-    }
+    if (document.querySelector('frame#frame-loaded')) { return; }
     const divEl = document.querySelector('div.rll-youtube-player') as HTMLElement
     if (divEl) {
       const iframe = document.createElement("iframe")
@@ -24,13 +19,10 @@ const Description = () => {
     }
   }, [data])
 
-  if (isSuccess) {
-    return <Container>
-      <div dangerouslySetInnerHTML={{__html: data?.data[0].description}} />
+  return <Container>
+      <div dangerouslySetInnerHTML={{__html: data}} />
     </Container>
-  }
 
-  return null
 }
 export default Description;
 

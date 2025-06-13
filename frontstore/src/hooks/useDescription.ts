@@ -1,10 +1,10 @@
-import { fetchDescriptions } from "@/api/description";
+import { fetchDescriptionById } from "@/api/description";
 import { useQuery } from "@tanstack/react-query";
 
-export const useDescription = () => {
+export const useDescription = (id: number) => {
   return useQuery({
     queryKey: ["game_description"],
-    queryFn: fetchDescriptions,
+    queryFn: () => fetchDescriptionById(id),
   });
 };
 

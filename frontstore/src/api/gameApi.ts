@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/api/game";
+const API_URL = "http://phucserver:8080/api/game";
 
 export const fetchGames = async () => {
   const { data } = await axios.get(API_URL);
   return data;
 };
 
-export const fetchGameById = async (id: number) => {
+export const fetchGameDetail = async (id: number) => {
   const { data } = await axios.get(`${API_URL}/${id}`);
   return data;
 };
