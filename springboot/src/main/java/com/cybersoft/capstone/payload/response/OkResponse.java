@@ -1,7 +1,8 @@
 package com.cybersoft.capstone.payload.response;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
+
+import lombok.Getter;
 
 @Getter
 public class OkResponse<T> extends BaseResponse<T> {
