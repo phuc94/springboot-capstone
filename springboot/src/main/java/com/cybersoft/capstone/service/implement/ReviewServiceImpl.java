@@ -45,10 +45,7 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewDTO updateReview(int id, ReviewDTO reviewDTO) {
         return reviewRepository.findById(id)
                 .map(foundReview -> {
-                    //foundReview.setGame(foundReview.getGame());
-                    //foundReview.setUser(foundReview.getUser());
                     foundReview.setRating(reviewDTO.getRating());
-                    foundReview.setRecommend(reviewDTO.isRecommend());
                     foundReview.setComment(reviewDTO.getComment());
                     return reviewMapper.toReviewDTO(reviewRepository.save(foundReview));
                 })

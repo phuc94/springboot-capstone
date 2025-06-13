@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity(name = "game_description")
@@ -22,5 +24,6 @@ public class GameDescription implements Serializable {
     private String description;
 
     @OneToOne(mappedBy = "gameDescription")
+    @JsonIgnore
     private Games games;
 }

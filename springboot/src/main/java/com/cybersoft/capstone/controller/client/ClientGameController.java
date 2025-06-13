@@ -23,11 +23,6 @@ public class ClientGameController {
         this.clientGameService = clientGameService;
     }
 
-    @GetMapping
-    public BaseResponse<List<ClientGameDTO>> getAllClientGames() {
-        return new OkResponse<List<ClientGameDTO>>(clientGameService.getAllClientGames());
-    }
-
     @GetMapping("/home")
     public BaseResponse<List<ClientGameDTO>> getHomePageClientGames() {
         return new OkResponse<List<ClientGameDTO>>(clientGameService.getAllClientGames());

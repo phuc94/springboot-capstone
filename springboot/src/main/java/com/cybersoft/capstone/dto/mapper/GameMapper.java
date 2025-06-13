@@ -18,8 +18,7 @@ public interface GameMapper {
     @Mapping(source = "platform.id", target = "platformId")
     AdminGameDTO toAdminGameDTO(Games games);
 
-    @Mapping(source = "gameDescription.id", target = "descriptionId")
-    @Mapping(source = "sale.id", target = "saleId")
+    @Mapping(source = "sale.amount", target = "sale")
     @Mapping(source = "platform.id", target = "platformId")
     ClientGameDTO toClientGameDTO(Games games);
 
