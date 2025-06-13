@@ -1,23 +1,26 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.util.Optional;
+
+import com.cybersoft.capstone.dto.UserDTO;
+import com.cybersoft.capstone.dto.mapper.UserMapper;
 import com.cybersoft.capstone.entity.Users;
-import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.exception.BadRequestException;
-import com.cybersoft.capstone.payload.response.BaseResponse;
-import com.cybersoft.capstone.payload.response.OkResponse;
+import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.repository.UserRepository;
 import com.cybersoft.capstone.service.interfaces.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import com.cybersoft.capstone.utils.JwtHelper;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private UserRepository userRepository;
@@ -29,27 +32,27 @@ public class UserServiceImpl implements UserService {
     private JwtHelper jwtHelper;
   
     @Override
-    public BaseResponse<Users> updateUser(int id, Users user) {
+    public UserDTO updateUser(int id, UserDTO user) {
         return userRepository.findById(id)
                 .map(foundUser -> {
                     foundUser.setName(user.getName());
                     foundUser.setEmail(user.getEmail());
-                    foundUser.setAddress(user.getAddress());
-                    foundUser.setPhone(user.getPhone());
-                    return new OkResponse<>(userRepository.save(foundUser));
+                    return userMapper.toUserDTO(userRepository.save(foundUser));
                 })
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
 
     @Override
-    public BaseResponse<Users> getUserById(int id) {
+    public UserDTO getUserById(int id) {
         return userRepository.findById(id)
-                .map(OkResponse::new)
+                .map(user -> {
+                    return userMapper.toUserDTO(user);
+                })
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
 
     @Override
-    public BaseResponse<Users> signUp(Users user) {
+    public UserDTO signUp(Users user) {
         // Check if email already exists
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new BadRequestException("Email already exists");
@@ -60,24 +63,24 @@ public class UserServiceImpl implements UserService {
 
         // Save user
         Users savedUser = userRepository.save(user);
-        return new OkResponse<>(savedUser);
+        return userMapper.toUserDTO(savedUser);
     }
 
     @Override
-    public BaseResponse<String> signIn(String email, String password) {
-        Optional<Users> userOptional = userRepository.findByEmail(email);
+    public String signIn(Users user) {
+        Optional<Users> userOptional = userRepository.findByEmail(user.getEmail());
         
         if (userOptional.isEmpty()) {
             throw new BadRequestException("Invalid email or password");
         }
 
-        Users user = userOptional.get();
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        Users userDB = userOptional.get();
+        if (!passwordEncoder.matches(user.getPassword(), userDB.getPassword())) {
             throw new BadRequestException("Invalid email or password");
         }
 
         // Generate JWT token
         String token = jwtHelper.generateToken(user.getEmail());
-        return new OkResponse<>(token);
+        return token;
     }
 } 

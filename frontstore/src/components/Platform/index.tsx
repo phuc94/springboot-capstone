@@ -15,7 +15,7 @@ const Platform = ({data}: any) => {
         <Grid>
           {
             data?.games.map((game: any) => (
-              <Grid.Col span={3}><GameCard data={game} /></Grid.Col>
+              <Grid.Col span={3}><GameCard key={game.id} data={game} /></Grid.Col>
             ))
           }
         </Grid>

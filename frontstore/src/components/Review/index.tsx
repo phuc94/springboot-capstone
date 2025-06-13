@@ -1,4 +1,4 @@
-import { Avatar, Card, Divider, Flex, Group, Space, Stack, Text, Title } from "@mantine/core";
+import { Avatar, Card, Divider, Flex, Space, Text, Title } from "@mantine/core";
 import { IconStarFilled } from "@tabler/icons-react";
 import styles from './style.module.scss'
 

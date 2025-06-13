@@ -31,7 +31,7 @@ public class ClientAuthenticationServiceImpl implements ClientAuthenticationServ
         if(adminsOptional.isPresent()) {
             Admins admins = adminsOptional.get();
             if(passwordEncoder.matches(password, admins.getPassword())) {
-                token = jwtHelper.generateToken("Hello");
+                token = jwtHelper.generateToken("some-top-secret");
             }
         }
         return token;

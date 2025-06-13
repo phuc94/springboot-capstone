@@ -16,7 +16,7 @@ function Cart() {
                 <Table.Th>Tam tinh</Table.Th>
                </Table.Thead>
                <Table.Tbody>
-                {rows.map(row => <Row rowData={row} />)}
+                {rows.map((row, index) => <Row key={index} rowData={row} />)}
                </Table.Tbody>
             </Table>
             <OrderDetail />
