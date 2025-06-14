@@ -12,3 +12,10 @@
   text-decoration: none;
 }
 
+.userHover {
+  padding: 12px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+

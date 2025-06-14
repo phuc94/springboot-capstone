@@ -1,11 +1,12 @@
 package com.cybersoft.capstone.service.interfaces;
 
+import com.cybersoft.capstone.dto.UserDTO;
 import com.cybersoft.capstone.entity.Users;
-import com.cybersoft.capstone.payload.response.BaseResponse;
+import com.cybersoft.capstone.payload.response.AuthResponse;
 
 public interface UserService {
-    BaseResponse<Users> updateUser(int id, Users user);
-    BaseResponse<Users> getUserById(int id);
-    BaseResponse<Users> signUp(Users user);
-    BaseResponse<String> signIn(String email, String password);
+    UserDTO updateUser(int id, UserDTO user);
+    UserDTO getUserById(int id);
+    UserDTO signUp(Users user);
+    AuthResponse signIn(Users user);
 } 
