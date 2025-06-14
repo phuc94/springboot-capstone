@@ -1,8 +1,7 @@
-import axios from "axios";
-import { API_URL } from "./constant";
+import axiosInstance from "@/vendor/axios";
 
 export const fetchGameDetail = async (id: number) => {
-  const { data } = await axios.get(`${API_URL}/game/${id}`);
+  const { data } = await axiosInstance.get(`/game/${id}`);
   return data;
 };
 

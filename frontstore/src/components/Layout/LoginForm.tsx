@@ -1,17 +1,20 @@
-import { useLogin, useRegister } from '@/hooks/user';
+import { useLogin, useRegister } from '@/hooks/auth';
+import { useAuthStore } from '@/store/useAuthStore';
 import { Button, Divider, Flex, Group, Stack, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useEffect } from 'react';
 
-const LoginForm = () => (
-  <Flex gap={40}>
-    <SignInForm />
+const LoginForm = ({closeModal}: any) => (
+   <Flex gap={40}>
+    <SignInForm closeModal={closeModal}/>
       <Divider orientation="vertical" />
     <SignUpForm />
   </Flex>
 )
 
-const SignInForm = () => {
-  const {mutate: login} = useLogin();
+const SignInForm = ({closeModal}: any) => {
+  const {mutate: login, data, isSuccess} = useLogin();
+  const authLogin = useAuthStore(state => state.login);
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -23,6 +26,14 @@ const SignInForm = () => {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     },
   });
+
+  useEffect(()=>{
+    if (isSuccess) {
+      authLogin(data.data.user, data.data.token);
+      closeModal();
+    }
+  }, [isSuccess])
+
 
   return (
     <form onSubmit={form.onSubmit((values) => login(values))}>

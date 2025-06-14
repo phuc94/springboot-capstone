@@ -1,8 +1,7 @@
-import axios from "axios";
-import { API_URL } from "./constant";
+import axiosInstance from "@/vendor/axios";
 
 export const fetchPlatformGames = async () => {
-  const { data } = await axios.get(`${API_URL}/home`);
+  const { data } = await axiosInstance.get('/home');
   return data;
 };
 

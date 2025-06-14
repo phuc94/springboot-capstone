@@ -7,6 +7,7 @@ import com.cybersoft.capstone.dto.mapper.UserMapper;
 import com.cybersoft.capstone.entity.Users;
 import com.cybersoft.capstone.exception.BadRequestException;
 import com.cybersoft.capstone.exception.NotFoundException;
+import com.cybersoft.capstone.payload.response.AuthResponse;
 import com.cybersoft.capstone.repository.UserRepository;
 import com.cybersoft.capstone.service.interfaces.UserService;
 import com.cybersoft.capstone.utils.JwtHelper;
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String signIn(Users user) {
+    public AuthResponse signIn(Users user) {
         Optional<Users> userOptional = userRepository.findByEmail(user.getEmail());
         
         if (userOptional.isEmpty()) {
@@ -81,6 +82,13 @@ public class UserServiceImpl implements UserService {
 
         // Generate JWT token
         String token = jwtHelper.generateToken(user.getEmail());
-        return token;
+        AuthResponse authRes = new AuthResponse();
+        UserDTO userdto = new UserDTO();
+        userdto.setId(userDB.getId());
+        userdto.setEmail(userDB.getEmail());
+        userdto.setName(userDB.getName());
+        authRes.setToken(token);
+        authRes.setUser(userdto);
+        return authRes;
     }
 } 

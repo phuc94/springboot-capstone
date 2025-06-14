@@ -3,6 +3,7 @@ package com.cybersoft.capstone.controller.client;
 import com.cybersoft.capstone.entity.Users;
 import com.cybersoft.capstone.payload.request.SignInRequest;
 import com.cybersoft.capstone.payload.request.SignUpRequest;
+import com.cybersoft.capstone.payload.response.AuthResponse;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.OkResponse;
 import com.cybersoft.capstone.service.interfaces.ClientAuthenticationService;
@@ -52,7 +53,7 @@ public class ClientAuthenticationController {
     }
 
     @PostMapping("/login")
-    public BaseResponse<?> login(@RequestBody SignInRequest signInRequest) {
+    public BaseResponse<AuthResponse> login(@RequestBody SignInRequest signInRequest) {
         Users user = new Users();
         user.setPassword(signInRequest.getPassword());
         user.setEmail(signInRequest.getEmail());

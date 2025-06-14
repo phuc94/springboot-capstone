@@ -1,4 +1,4 @@
-import { useGameDetail } from "@/hooks/useGame"
+import { useGameDetail } from "@/hooks/useGameDetail"
 import { Box, Container, Divider, Flex, Group, Image, Space, Stack, Text, Title } from "@mantine/core"
 import { IconStarFilled } from "@tabler/icons-react"
 import Description from "../Description";

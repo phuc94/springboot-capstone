@@ -1,13 +1,12 @@
-import axios from "axios";
-import { API_URL } from "./constant";
+import axiosInstance from "@/vendor/axios";
 
 export const register = async (user: any) => {
-  const { data } = await axios.post(`${API_URL}/auth/register`, user);
+  const { data } = await axiosInstance.post('/auth/register', user);
   return data;
 };
 
 export const login = async (user: any) => {
-  const { data } = await axios.post(`${API_URL}/auth/login`, user);
+  const { data } = await axiosInstance.post('/auth/login', user);
   return data;
 };
 

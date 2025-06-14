@@ -2,9 +2,12 @@ import { Button, Modal } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "@tanstack/react-router";
 import LoginForm from "./LoginForm";
+import { useAuthStore } from "@/store/useAuthStore";
+import UserMenu from "./UserMenu";
 
 const CTA = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
 
   return (
     <>
@@ -13,7 +16,11 @@ const CTA = () => {
           Giỏ hàng
         </Link>
       </Button>
-      <Button onClick={open} variant="filled">Đăng nhập/Đăng ký</Button>
+      {isAuthenticated ? 
+        <UserMenu />
+        :
+        <Button onClick={open} variant="filled">Đăng nhập/Đăng ký</Button>
+      }
 
       <Modal
         opened={opened} onClose={close} centered
@@ -21,7 +28,7 @@ const CTA = () => {
         padding={30}
         size="auto"
       >
-        <LoginForm />
+        <LoginForm closeModal={close} />
       </Modal>
     </>
   )

@@ -25,18 +25,11 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println("**************************");
-        System.out.println("**************************");
-        System.out.println("**************************");
-        System.out.println("**************************");
-        System.out.println("**************************");
-        System.out.println("**************************");
         String authenHeader = request.getHeader("Authorization");
 
         if(authenHeader != null && authenHeader.startsWith("Bearer ")) {
             String token = authenHeader.substring(7);
             String data = jwtHelper.decodeToken(token);
-            System.out.println(data);
 
             if(data != null) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken("", "", List.of());
