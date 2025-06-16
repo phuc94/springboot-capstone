@@ -31,6 +31,4 @@ public class Sales implements Serializable {
     @Enumerated(EnumType.STRING)
     private SaleStatus status;
 
-//    @OneToMany(mappedBy = "sale")
-//    private List<PlatformSale> platformSales;
 }

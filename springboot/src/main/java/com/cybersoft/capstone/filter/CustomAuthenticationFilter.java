@@ -8,17 +8,26 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import com.cybersoft.capstone.dto.CustomUserDetails;
+import com.cybersoft.capstone.service.implement.UserDetailsServiceImpl;
+import com.cybersoft.capstone.service.interfaces.UserService;
 import com.cybersoft.capstone.utils.JwtHelper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Autowired
     private JwtHelper jwtHelper;
@@ -29,12 +38,14 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
         if(authenHeader != null && authenHeader.startsWith("Bearer ")) {
             String token = authenHeader.substring(7);
-            String data = jwtHelper.decodeToken(token);
+            String email = jwtHelper.decodeToken(token);
+            System.out.println(email);
+            CustomUserDetails user = userDetailsServiceImpl.loadUserByUsername(email);
 
-            if(data != null) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken("", "", List.of());
-                SecurityContext securityContext = SecurityContextHolder.getContext();
-                securityContext.setAuthentication(authenticationToken);
+            if(email != null) {
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, List.of());
+                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }
         filterChain.doFilter(request, response);

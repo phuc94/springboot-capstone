@@ -9,6 +9,7 @@ const UserMenu = () => {
 
   const onLogout = () => {
     logout();
+    localStorage.removeItem("token")
   }
 
   return (

@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity(name = "cart_items")
@@ -20,6 +22,7 @@ public class CartItem implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    @JsonIgnore
     private Carts carts;
 
     @ManyToOne

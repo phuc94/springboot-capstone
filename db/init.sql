@@ -64,8 +64,8 @@ CREATE TABLE IF NOT EXISTS sales (
   status sale_status NOT NULL,
   start_date TIMESTAMP,
   end_date TIMESTAMP,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS game_key (
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS medias (
 
 CREATE TABLE IF NOT EXISTS carts (
   id SERIAL PRIMARY KEY,
-  status cart_status NOT NULL,
+  status cart_status NOT NULL default 'ACTIVE',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -156,8 +156,6 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   name VARCHAR,
-  address VARCHAR,
-  phone VARCHAR,
   cart_id INTEGER,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -264,7 +262,7 @@ INSERT INTO platforms (parent_id, name, title) VALUES
 
 -- Insert data into sales table
 INSERT INTO sales (amount, status, start_date, end_date) VALUES
-(0, 'DISABLED', NULL, NULL), -- Default no sale
+(0, 'DISABLED', '2025-05-01', '2025-06-01'),
 (20, 'ACTIVE', '2025-05-01', '2025-06-01'),
 (50, 'ACTIVE', '2025-05-10', '2025-05-20'),
 (30, 'EXPIRE', '2025-04-01', '2025-05-01');
@@ -290,7 +288,7 @@ INSERT INTO game_key (id, game_id, key, activated) VALUES
 (1, 1, 'ABCD-EFGH-IJKL-MNOP', false),
 (2, 1, 'QRST-UVWX-YZ12-3456', false),
 (3, 2, '78AB-CDEF-GHIJ-KLMN', false),
-(4, 2, 'OPQR-STUV-WXYZ-1234', true),
+(4, 2, 'OPQR-STUV-WXYZ-1234', false),
 (5, 3, '5678-9ABC-DEFG-HIJK', false),
 (6, 4, 'LMNO-PQRS-TUVW-XYZ1', false),
 (7, 5, '2345-6789-ABCD-EFGH', false);
@@ -326,12 +324,12 @@ INSERT INTO carts (status) VALUES
 ('EXPIRED');
 
 -- Insert data into users table
-INSERT INTO users (email, password, name, address, phone, cart_id) VALUES
-('user1@example.com', 'hashed_password_user1', 'Alex Johnson', '123 Main St, New York, NY', '555-123-4567', 1),
-('user2@example.com', 'hashed_password_user2', 'Emma Smith', '456 Oak Ave, Los Angeles, CA', '555-234-5678', 2),
-('user3@example.com', 'hashed_password_user3', 'Michael Brown', '789 Pine Rd, Chicago, IL', '555-345-6789', 3),
-('user4@example.com', 'hashed_password_user4', 'Sophia Wilson', '101 Maple Dr, Houston, TX', '555-456-7890', 4),
-('user5@example.com', 'hashed_password_user5', 'William Davis', '202 Cedar Ln, Phoenix, AZ', '555-567-8901', 5);
+INSERT INTO users (email, password, name, cart_id) VALUES
+('user1@example.com', 'hashed_password_user1', 'Alex Johnson', 1),
+('user2@example.com', 'hashed_password_user2', 'Emma Smith', 2),
+('user3@example.com', 'hashed_password_user3', 'Michael Brown', 3),
+('user4@example.com', 'hashed_password_user4', 'Sophia Wilson', 4),
+('user5@example.com', 'hashed_password_user5', 'William Davis', 5);
 
 -- Insert data into cart_items table
 INSERT INTO cart_items (game_id, cart_id) VALUES
@@ -376,3 +374,7 @@ INSERT INTO order_item (game_id, order_id) VALUES
 (2, 3),
 (4, 4),
 (5, 5);
+
+
+-- temporary work around
+CREATE CAST (character varying AS cart_status) WITH INOUT AS ASSIGNMENT;

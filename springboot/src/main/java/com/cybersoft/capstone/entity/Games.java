@@ -13,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity(name = "games")
@@ -39,6 +41,7 @@ public class Games implements Serializable {
     private Platforms platform;
 
     @OneToMany(mappedBy = "game")
+    @JsonIgnore
     private List<GameKey> gameKeys;
 
     @OneToMany(mappedBy = "game")

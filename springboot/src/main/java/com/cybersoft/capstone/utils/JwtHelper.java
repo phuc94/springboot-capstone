@@ -1,14 +1,19 @@
 package com.cybersoft.capstone.utils;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import javax.crypto.SecretKey;
 
 @Component
 public class JwtHelper {
@@ -17,16 +22,28 @@ public class JwtHelper {
     private String secret;
 
     public String generateToken(String data) {
-        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
-        return Jwts.builder().subject(data).signWith(key).compact();
+        Map<String, Object> claims = new HashMap<>();
+        return Jwts
+          .builder()
+          .claims(claims)
+          .subject(data)
+          .issuedAt(new Date(System.currentTimeMillis()))
+          .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30))
+          .signWith(getSecretKey())
+          .compact();
     }
 
     public String decodeToken(String token) {
-        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         String data = null;
 
         try {
-            data = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getSubject();
+            data = Jwts
+              .parser()
+              .verifyWith(getSecretKey())
+              .build()
+              .parseSignedClaims(token)
+              .getPayload()
+              .getSubject();
         } catch (ExpiredJwtException e) {
             System.out.println("Token Expired!");
         } catch (JwtException e) {
@@ -34,6 +51,10 @@ public class JwtHelper {
         }
 
         return data;
+    }
+
+    private SecretKey getSecretKey() {
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
     }
 
 }

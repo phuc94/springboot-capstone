@@ -4,11 +4,14 @@ import java.util.Optional;
 
 import com.cybersoft.capstone.dto.UserDTO;
 import com.cybersoft.capstone.dto.mapper.UserMapper;
+import com.cybersoft.capstone.entity.Carts;
 import com.cybersoft.capstone.entity.Users;
+import com.cybersoft.capstone.entity.enums.CartStatus;
 import com.cybersoft.capstone.exception.BadRequestException;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.payload.response.AuthResponse;
 import com.cybersoft.capstone.repository.UserRepository;
+import com.cybersoft.capstone.service.interfaces.CartService;
 import com.cybersoft.capstone.service.interfaces.UserService;
 import com.cybersoft.capstone.utils.JwtHelper;
 
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private CartService cartService;
 
     @Autowired
     private JwtHelper jwtHelper;
@@ -53,16 +60,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO signUp(Users user) {
-        // Check if email already exists
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new BadRequestException("Email already exists");
         }
 
-        // Encode password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // Save user
+        Carts newCart = new Carts();
+        newCart.setStatus(CartStatus.ACTIVE);
+        Carts cart = cartService.createCart(newCart);
+        user.setCart(cart);
+
         Users savedUser = userRepository.save(user);
         return userMapper.toUserDTO(savedUser);
     }
@@ -90,5 +100,11 @@ public class UserServiceImpl implements UserService {
         authRes.setToken(token);
         authRes.setUser(userdto);
         return authRes;
+    }
+
+    @Override
+    public Users getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                  .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
 } 

@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 
 import com.cybersoft.capstone.entity.GameKey;
 import com.cybersoft.capstone.payload.response.BaseResponse;
+import com.cybersoft.capstone.payload.response.OkResponse;
 import com.cybersoft.capstone.service.interfaces.GameKeyService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,7 +38,7 @@ public class GameKeyController {
 
     @GetMapping("/{id}")
     public BaseResponse<GameKey> getGameKeyById(@Valid @PathVariable int id) {
-        return gameKeyService.getGameKeyById(id);
+        return new OkResponse<GameKey>(gameKeyService.getAvailableGameKey(id));
     }
 
     @PostMapping("/{id}")
