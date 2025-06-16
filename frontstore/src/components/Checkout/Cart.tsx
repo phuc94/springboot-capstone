@@ -1,7 +1,18 @@
-import { Stepper, Table, Text, Image, NumberInput, Flex, Box, Space, Button, Card, Divider, TextInput } from '@mantine/core';
+import { useCart, useDeleteFromCart } from '@/hooks/useCart';
+import { queryClient } from '@/routes/__root';
+import { Stepper, Table, Text, Image, NumberInput, Flex, Box, Space, Button, Card, Divider, TextInput, CloseButton } from '@mantine/core';
 import { IconArrowLeft, IconTagStarred } from '@tabler/icons-react';
+import { useEffect } from 'react';
 
 function Cart() {
+  const query = useCart();
+
+  useEffect(()=>{
+    if (query.isSuccess) {
+      console.log(query.data);
+    }
+  },[])
+
   return (
     <Box style={{paddingTop: 80}} >
       <Stepper active={0}>
@@ -16,7 +27,7 @@ function Cart() {
                 <Table.Th>Tam tinh</Table.Th>
                </Table.Thead>
                <Table.Tbody>
-                {rows.map((row, index) => <Row key={index} rowData={row} />)}
+                {query.data?.data?.cartDetail.map((row: any) => <Row key={row.gameId} rowData={row} />)}
                </Table.Tbody>
             </Table>
             <OrderDetail />
@@ -27,8 +38,10 @@ function Cart() {
           </Button>
         </Stepper.Step>
         <Stepper.Step label="Chi tiết thanh toán" description="Chi tiết thanh toán">
+          <Text>abc</Text>     
         </Stepper.Step>
         <Stepper.Step label="Đơn hàng hoàn tất" description="Đơn hàng hoàn tất">
+          <Text>abc</Text>     
         </Stepper.Step>
       </Stepper>
     </Box>
@@ -81,8 +94,23 @@ const OrderDetail = () => {
 }
 
 const Row = ({rowData}: any) => {
+  const {mutate: deleteFromCart, isSuccess} = useDeleteFromCart();
+  let tempAmount;
+  if (rowData.sale) {
+    tempAmount = rowData.price * rowData.quantity * (100 - rowData.sale) * 100
+  } else {
+    tempAmount = rowData.price * rowData.quantity
+  }
+
+  const onRemoveCartItem = (gameId: any) => {
+    deleteFromCart(gameId);
+  }
+  if (isSuccess) {
+    queryClient.invalidateQueries({ queryKey: ['cart'] })
+  }
+
   return (
-    <Table.Tr key={rowData.id}>
+    <Table.Tr key={rowData.gameId}>
       <Table.Td>
         <Flex gap="12" align="center">
           <Image height="80" src={rowData.img} />
@@ -92,22 +120,15 @@ const Row = ({rowData}: any) => {
       <Table.Td>{rowData.price}</Table.Td>
       <Table.Td>
         <NumberInput
-          value={rowData.amount}
+          value={rowData.quantity}
         />
       </Table.Td>
       <Table.Td>
-        <Text>{rowData.temporary_calculation}</Text>
+        <Text>{tempAmount}</Text>
       </Table.Td>
+      <CloseButton onClick={(e)=>{e.preventDefault();onRemoveCartItem(rowData.gameId)}} />
     </Table.Tr>
   )
 }
 
-const rows = Array(2).fill(0).map(_=>({
-  id: "2",
-  img: "https://muaga.me/wp-content/uploads/2020/02/xsplit-premium-1-247x296.png.webp",
-  title: " XSplit Premium 1 year",
-  price: "590.000",
-  amount: 1,
-  temporary_calculation: "590.000"
-}))
 

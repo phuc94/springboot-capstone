@@ -1,9 +1,19 @@
 import { Badge, Box, Button, Card, Flex, Image, Space, Text } from "@mantine/core"
 import { IconStar, IconStarFilled } from "@tabler/icons-react"
 import styles from './style.module.scss'
-import { Link } from "@tanstack/react-router"
+import { Link, useRouter } from "@tanstack/react-router"
+import { useAddToCart } from "@/hooks/useCart"
 
 const GameCard = ({data}: any) => {
+  const router = useRouter();
+  const {mutate: addToCart, isSuccess } = useAddToCart();
+
+  const onAddToCard = async (id: number) => {
+    addToCart(id);
+    if (isSuccess) {
+      router.history.push('/cart');
+    }
+  }
 
   return (
     <Link to="/game/$gameId" params={{gameId: data.id}}>
@@ -37,7 +47,9 @@ const GameCard = ({data}: any) => {
             <Text size="xl" fw={700}>{data.price}đ</Text>
           }
           <Space h="md" />
-          <Button color="red">MUA HÀNG</Button>
+          <Button color="red" onClick={(e)=>{e.preventDefault();onAddToCard(data.id)}}>
+            MUA HÀNG
+          </Button>
         </Flex>
         {data.sale !== 0 && <SaleTag amount={data.sale} />}
       </Card>

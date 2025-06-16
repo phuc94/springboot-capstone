@@ -24,8 +24,6 @@ public class Users {
     @Column(nullable = false)
     private String password;
     private String name;
-    private String address;
-    private String phone;
 
     @OneToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "id")

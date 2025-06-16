@@ -9,4 +9,5 @@ public interface UserService {
     UserDTO getUserById(int id);
     UserDTO signUp(Users user);
     AuthResponse signIn(Users user);
+    Users getUserByEmail(String email);
 } 

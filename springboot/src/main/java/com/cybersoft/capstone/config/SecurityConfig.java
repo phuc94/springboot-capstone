@@ -26,12 +26,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationFilter customAuthenticationFilter) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers("/api/auth/login").permitAll();
                     request.anyRequest().permitAll();
                 })
                 .cors(Customizer.withDefaults())
+                .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

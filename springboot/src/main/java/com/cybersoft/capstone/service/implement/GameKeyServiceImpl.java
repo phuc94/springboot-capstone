@@ -62,4 +62,10 @@ public class GameKeyServiceImpl implements GameKeyService {
         }
         throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
     }
+
+    @Override
+    public GameKey getAvailableGameKey(int gameId) {
+        return gameKeyRepository.findFirst1ByGameIdAndActivatedFalse(gameId)
+                .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
+    }
 }

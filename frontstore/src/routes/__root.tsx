@@ -11,8 +11,9 @@ export const Route = createRootRoute({
   component: RootComponent,
 })
 
+export const queryClient = new QueryClient()
+
 function RootComponent() {
-const queryClient = new QueryClient()
   return (
     <MantineProvider forceColorScheme='dark' >
       <QueryClientProvider client={queryClient} >

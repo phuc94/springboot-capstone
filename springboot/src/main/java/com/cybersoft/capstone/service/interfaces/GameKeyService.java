@@ -1,9 +1,9 @@
 package com.cybersoft.capstone.service.interfaces;
 
+import java.util.List;
+
 import com.cybersoft.capstone.entity.GameKey;
 import com.cybersoft.capstone.payload.response.BaseResponse;
-
-import java.util.List;
 
 public interface GameKeyService {
     public BaseResponse<GameKey> createGameKey(GameKey gameKey);
@@ -12,4 +12,5 @@ public interface GameKeyService {
     public BaseResponse<List<GameKey>> getAllGameKeys();
     public BaseResponse<GameKey> updateGameKey(int gameKeyId, GameKey gameKey);
     public BaseResponse<Void> deleteGameKey(int gameKeyId);
+    public GameKey getAvailableGameKey(int gameId);
 }
