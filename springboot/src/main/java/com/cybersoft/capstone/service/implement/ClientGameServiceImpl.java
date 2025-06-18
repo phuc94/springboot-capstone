@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.cybersoft.capstone.dto.ClientGameDTO;
+import com.cybersoft.capstone.dto.ClientGameDetailDTO;
 import com.cybersoft.capstone.dto.GameCardDTO;
 import com.cybersoft.capstone.dto.mapper.GameMapper;
+import com.cybersoft.capstone.entity.Games;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.repository.GameRepository;
 import com.cybersoft.capstone.service.interfaces.ClientGameService;
@@ -25,14 +27,14 @@ public class ClientGameServiceImpl implements ClientGameService {
     }
 
     @Override
-    public List<ClientGameDTO> getAllClientGames() {
+    public List<ClientGameDetailDTO> getAllClientGames() {
         return gameRepository.findByDeletedOnIsNull()
-            .stream().map(gameMapper::toClientGameDTO).collect(Collectors.toList());
+            .stream().map(gameMapper::toClientGameDetailDTO).collect(Collectors.toList());
     }
     @Override
-    public ClientGameDTO getClientGameById(int id) {
+    public ClientGameDetailDTO getClientGameDetailById(int id) {
         return gameRepository.findByIdAndDeletedOnIsNull(id)
-            .map(gameMapper::toClientGameDTO)
+            .map(gameMapper::toClientGameDetailDTO)
             .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
 
@@ -41,4 +43,18 @@ public class ClientGameServiceImpl implements ClientGameService {
         return gameRepository.findTop4ByOrderByCreatedAtDesc().stream()
             .map(gameMapper::toGameCardDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public ClientGameDTO getClientGameById(int id) {
+        return gameRepository.findByIdAndDeletedOnIsNull(id)
+            .map(gameMapper::toClientGameDTO)
+            .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
+    }
+
+    @Override
+    public Games getGameById(int id) {
+        return gameRepository.findByIdAndDeletedOnIsNull(id)
+            .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
+    }
+
 }

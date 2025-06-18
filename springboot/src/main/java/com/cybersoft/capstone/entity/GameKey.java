@@ -1,5 +1,7 @@
 package com.cybersoft.capstone.entity;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,10 +25,15 @@ public class GameKey {
     private String key;
     @Column(nullable = false)
     private boolean activated;
+    private Timestamp reservedUntil;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "game_id", referencedColumnName = "id", nullable = false)
     @JsonIgnore
     private Games game;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_item_id", referencedColumnName = "id", nullable = false)
+    private OrderItem orderItem;
 
 }

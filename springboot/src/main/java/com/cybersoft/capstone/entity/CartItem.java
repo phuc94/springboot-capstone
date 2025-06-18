@@ -3,6 +3,7 @@ package com.cybersoft.capstone.entity;
 import java.io.Serializable;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,13 +20,14 @@ public class CartItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private int quantity;
 
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     @JsonIgnore
     private Carts carts;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "game_id", referencedColumnName = "id")
     private Games games;
 }

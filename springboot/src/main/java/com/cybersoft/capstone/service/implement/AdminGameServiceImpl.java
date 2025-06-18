@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.cybersoft.capstone.payload.request.SearchGameRequest;
-
 import jakarta.transaction.Transactional;
 
 import com.cybersoft.capstone.dto.AdminGameDTO;
@@ -16,6 +14,7 @@ import com.cybersoft.capstone.entity.Games;
 import com.cybersoft.capstone.entity.Platforms;
 import com.cybersoft.capstone.entity.Sales;
 import com.cybersoft.capstone.exception.NotFoundException;
+import com.cybersoft.capstone.payload.request.SearchGameRequest;
 import com.cybersoft.capstone.repository.GameDescriptionRepository;
 import com.cybersoft.capstone.repository.GameRepository;
 import com.cybersoft.capstone.repository.PlatformRepository;

@@ -1,8 +1,11 @@
 package com.cybersoft.capstone.controller.client;
 
+import jakarta.validation.Valid;
+
 import com.cybersoft.capstone.dto.CartDetailDTO;
 import com.cybersoft.capstone.dto.CustomUserDetails;
 import com.cybersoft.capstone.exception.NotFoundException;
+import com.cybersoft.capstone.payload.request.UpdateCartRequest;
 import com.cybersoft.capstone.payload.response.AcceptedResponse;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.OkResponse;
@@ -13,8 +16,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 @RestController
 @RequestMapping("/api/cart")
@@ -28,8 +33,7 @@ public class ClientCartController {
 
     @GetMapping
     public BaseResponse<CartDetailDTO> getCartByUserId(@AuthenticationPrincipal CustomUserDetails user) {
-        int id = user.getId();
-        return new OkResponse<CartDetailDTO>(cartService.getCartById(id));
+        return new OkResponse<CartDetailDTO>(cartService.getCartDetailByCartId(user.getCart().getId(), user));
     }
 
     @PostMapping("/{gameId}")
@@ -47,4 +51,14 @@ public class ClientCartController {
         return new AcceptedResponse<>();
     }
 
+    @PostMapping("/update")
+    public BaseResponse<Void> updateCart(
+        @Valid @RequestBody UpdateCartRequest updateCartRequest,
+        @AuthenticationPrincipal CustomUserDetails user
+    ) {
+        cartService.updateCartItem(updateCartRequest, user.getCart().getId());
+        return new AcceptedResponse<>();
+    }
+
 }
+

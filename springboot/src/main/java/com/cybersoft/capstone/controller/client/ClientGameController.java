@@ -2,7 +2,7 @@ package com.cybersoft.capstone.controller.client;
 
 import java.util.List;
 
-import com.cybersoft.capstone.dto.ClientGameDTO;
+import com.cybersoft.capstone.dto.ClientGameDetailDTO;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.OkResponse;
@@ -24,14 +24,14 @@ public class ClientGameController {
     }
 
     @GetMapping("/home")
-    public BaseResponse<List<ClientGameDTO>> getHomePageClientGames() {
-        return new OkResponse<List<ClientGameDTO>>(clientGameService.getAllClientGames());
+    public BaseResponse<List<ClientGameDetailDTO>> getHomePageClientGames() {
+        return new OkResponse<List<ClientGameDetailDTO>>(clientGameService.getAllClientGames());
     }
 
     @GetMapping("/{id}")
-    public BaseResponse<ClientGameDTO> getClientGameById(@PathVariable int id) {
+    public BaseResponse<ClientGameDetailDTO> getClientGameById(@PathVariable int id) {
         try {
-          return new OkResponse<ClientGameDTO>(clientGameService.getClientGameById(id));
+          return new OkResponse<ClientGameDetailDTO>(clientGameService.getClientGameDetailById(id));
         } catch (NotFoundException ex) {
             throw new NotFoundException("Game not found");
         }

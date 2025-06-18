@@ -35,7 +35,4 @@ public class Carts implements Serializable {
     @OneToMany(mappedBy = "carts", fetch = FetchType.EAGER)
     private List<CartItem> cartItems;
 
-    public void addItemToCart(CartItem cartItem) {
-        this.cartItems.add(cartItem);
-    }
 }
