@@ -28,7 +28,7 @@ public class JwtHelper {
           .claims(claims)
           .subject(data)
           .issuedAt(new Date(System.currentTimeMillis()))
-          .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30))
+          .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30 * 1000))
           .signWith(getSecretKey())
           .compact();
     }

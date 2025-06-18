@@ -9,6 +9,9 @@ spring:
     hibernate:
       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     show-sql: true
+  jackson:
+   serialization:
+     FAIL_ON_EMPTY_BEANS: false
   # web:
   #   cors:
   #     allowed-origins: http://phucserver:3000
