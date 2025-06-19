@@ -1,17 +1,23 @@
-import { useCart, useDeleteFromCart } from '@/hooks/useCart';
+import { UpdateItem } from '@/api/cart';
+import { useCart, useDeleteFromCart, useUpdateCart } from '@/hooks/useCart';
 import { queryClient } from '@/routes/__root';
-import { Stepper, Table, Text, Image, NumberInput, Flex, Box, Space, Button, Card, Divider, TextInput, CloseButton } from '@mantine/core';
-import { IconArrowLeft, IconTagStarred } from '@tabler/icons-react';
+import { Stepper, Table, Text, Image, NumberInput, Flex, Box, Space, Button, Card, Divider, CloseButton } from '@mantine/core';
+import { IconArrowLeft } from '@tabler/icons-react';
+import { useRouter, Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
 
 function Cart() {
-  const query = useCart();
+  const {data, isFetching} = useCart();
+  const {mutate: deleteFromCart, isSuccess: isDeleteSuccess} = useDeleteFromCart();
+  const {mutate: updateCart, isSuccess: isUpdateSucess} = useUpdateCart();
+  const router = useRouter();
 
-  useEffect(()=>{
-    if (query.isSuccess) {
-      console.log(query.data);
+  useEffect(() => {
+    if (isFetching) {
+      return;
     }
-  },[])
+    queryClient.invalidateQueries({ queryKey: ['cart'] })
+  }, [isDeleteSuccess, isUpdateSucess])
 
   return (
     <Box style={{paddingTop: 80}} >
@@ -21,18 +27,26 @@ function Cart() {
           <Flex gap={40} direction="row">
             <Table>
                <Table.Thead>
-                <Table.Th>San pham</Table.Th>
-                <Table.Th>Gia</Table.Th>
-                <Table.Th>So luong</Table.Th>
-                <Table.Th>Tam tinh</Table.Th>
+                <Table.Th>Sản phẩm</Table.Th>
+                <Table.Th>Đơn giá</Table.Th>
+                <Table.Th>Số lượng</Table.Th>
+                <Table.Th>Giá</Table.Th>
                </Table.Thead>
                <Table.Tbody>
-                {query.data?.data?.cartDetail.map((row: any) => <Row key={row.gameId} rowData={row} />)}
+                {data?.data?.cartDetail.map((row: any) => 
+                  <Row
+                    key={row.gameId}
+                    deleteFromCart={deleteFromCart}
+                    updateCart={updateCart}
+                    rowData={row}
+                  />
+                )}
                </Table.Tbody>
             </Table>
             <OrderDetail />
           </Flex>
-          <Button>
+          <Space h="xl" />
+          <Button onClick={() => router.history.back()}>
             <IconArrowLeft />
             Tiếp tục xem sản phẩm
           </Button>
@@ -75,38 +89,47 @@ const OrderDetail = () => {
           <Text size="xl">590.000</Text>
         </Flex>
         <Space h="sm" />
-        <Button>Tiến hành thanh toán</Button>
+        <Button>
+          <Link to="/payment">
+            Tiến hành thanh toán
+          </Link>
+        </Button>
       </Card>
       <Space h="sm" />
-      <Flex gap={12} align="center">
-        <IconTagStarred />
-        <Text size="xl" fw={700}>Mã ưu đãi</Text>
-      </Flex>
-      <Divider />
-      <Space h="sm" />
-      <TextInput
-        placeholder="Mã ưu đãi"
-      />
-      <Space h="sm" />
-      <Button fullWidth>Áp dụng</Button>
+      {/* <Flex gap={12} align="center"> */}
+      {/*   <IconTagStarred /> */}
+      {/*   <Text size="xl" fw={700}>Mã ưu đãi</Text> */}
+      {/* </Flex> */}
+      {/* <Divider /> */}
+      {/* <Space h="sm" /> */}
+      {/* <TextInput */}
+      {/*   placeholder="Mã ưu đãi" */}
+      {/* /> */}
+      {/* <Space h="sm" /> */}
+      {/* <Button fullWidth>Áp dụng</Button> */}
     </Box>
   )
 }
 
-const Row = ({rowData}: any) => {
-  const {mutate: deleteFromCart, isSuccess} = useDeleteFromCart();
+const Row = ({rowData, deleteFromCart, updateCart}: any) => {
   let tempAmount;
+
   if (rowData.sale) {
-    tempAmount = rowData.price * rowData.quantity * (100 - rowData.sale) * 100
+    tempAmount = Math.round(rowData.price * rowData.quantity * (100 - rowData.sale.amount) / 100)
   } else {
-    tempAmount = rowData.price * rowData.quantity
+    tempAmount = Math.round(rowData.price * rowData.quantity)
   }
 
   const onRemoveCartItem = (gameId: any) => {
     deleteFromCart(gameId);
   }
-  if (isSuccess) {
-    queryClient.invalidateQueries({ queryKey: ['cart'] })
+
+  const onQuantityChange = (quantity: number, gameId: number) => {
+    const updateItem: UpdateItem = {
+      quantity,
+      gameId
+    }
+    updateCart(updateItem);
   }
 
   return (
@@ -119,7 +142,7 @@ const Row = ({rowData}: any) => {
       </Table.Td>
       <Table.Td>{rowData.price}</Table.Td>
       <Table.Td>
-        <NumberInput
+        <NumberInput onChange={(quantity: any) => onQuantityChange(quantity, rowData.gameId)} 
           value={rowData.quantity}
         />
       </Table.Td>

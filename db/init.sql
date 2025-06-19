@@ -72,7 +72,9 @@ CREATE TABLE IF NOT EXISTS game_key (
   id INTEGER PRIMARY KEY,
   game_id INTEGER NOT NULL,
   key VARCHAR(255) NOT NULL,
+  order_item_id INTEGER NOT NULL,
   activated BOOLEAN NOT NULL DEFAULT false,
+  reserved_until TIMESTAMP,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -146,8 +148,10 @@ CREATE TABLE IF NOT EXISTS cart_items (
   id SERIAL PRIMARY KEY,
   game_id INTEGER NOT NULL,
   cart_id INTEGER NOT NULL,
+  quantity INTEGER NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (game_id, cart_id)
 );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -174,9 +178,10 @@ CREATE TABLE IF NOT EXISTS reviews (
 
 CREATE TABLE IF NOT EXISTS orders (
   id SERIAL PRIMARY KEY,
-  payment_method_id INTEGER NOT NULL,
-  order_status order_status NOT NULL,
-  payment_status payment_status NOT NULL,
+  payment_method_id INTEGER,
+  session_id VARCHAR(255) NOT NULL,
+  order_status VARCHAR(255) NOT NULL,
+  payment_status VARCHAR(255) NOT NULL,
   original_amount INTEGER,
   discount_amount INTEGER,
   total_amount INTEGER NOT NULL,
@@ -188,8 +193,11 @@ CREATE TABLE IF NOT EXISTS orders (
 
 CREATE TABLE IF NOT EXISTS order_item (
   id SERIAL PRIMARY KEY,
-  game_id INTEGER NOT NULL,
   order_id INTEGER NOT NULL,
+  game_id INTEGER NOT NULL,
+  quantity INTEGER NOT NULL,
+  unit_price INTEGER NOT NULL,
+  total_price INTEGER NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -284,14 +292,14 @@ INSERT INTO games (description_id, title, price, stock, platform_id, sale_id) VA
 (5, 'Puzzle Quest', 1999, 15, 9, 1);
 
 -- Insert data into game_key table
-INSERT INTO game_key (id, game_id, key, activated) VALUES
-(1, 1, 'ABCD-EFGH-IJKL-MNOP', false),
-(2, 1, 'QRST-UVWX-YZ12-3456', false),
-(3, 2, '78AB-CDEF-GHIJ-KLMN', false),
-(4, 2, 'OPQR-STUV-WXYZ-1234', false),
-(5, 3, '5678-9ABC-DEFG-HIJK', false),
-(6, 4, 'LMNO-PQRS-TUVW-XYZ1', false),
-(7, 5, '2345-6789-ABCD-EFGH', false);
+INSERT INTO game_key (id, game_id, key, order_item_id, activated) VALUES
+(1, 1, 'ABCD-EFGH-IJKL-MNOP', 1, false),
+(2, 1, 'QRST-UVWX-YZ12-3456', 1, false),
+(3, 2, '78AB-CDEF-GHIJ-KLMN', 2, false),
+(4, 2, 'OPQR-STUV-WXYZ-1234', 2, false),
+(5, 3, '5678-9ABC-DEFG-HIJK', 3, false),
+(6, 4, 'LMNO-PQRS-TUVW-XYZ1', 4, false),
+(7, 5, '2345-6789-ABCD-EFGH', 5, false);
 
 -- insert data into medias table
 insert into medias (game_id, media_type, url, is_primary) values
@@ -332,15 +340,15 @@ INSERT INTO users (email, password, name, cart_id) VALUES
 ('user5@example.com', 'hashed_password_user5', 'William Davis', 5);
 
 -- Insert data into cart_items table
-INSERT INTO cart_items (game_id, cart_id) VALUES
-(1, 1),
-(3, 1),
-(2, 2),
-(5, 2),
-(4, 3),
-(1, 3),
-(2, 4),
-(3, 5);
+INSERT INTO cart_items (game_id, cart_id, quantity) VALUES
+(1, 1, 1),
+(3, 1, 1),
+(2, 2, 1),
+(5, 2, 1),
+(4, 3, 1),
+(1, 3, 1),
+(2, 4, 1),
+(3, 5, 1);
 
 -- Insert data into reviews table
 INSERT INTO reviews (game_id, user_id, rating, comment) VALUES
@@ -353,28 +361,29 @@ INSERT INTO reviews (game_id, user_id, rating, comment) VALUES
 
 -- Insert data into payment_method table
 INSERT INTO payment_method (title, name, description, account, image) VALUES
-('Credit Card', 'Visa/Mastercard', 'Pay with your credit or debit card', 'payment-processor-account', 'https://gamestore.com/images/card_logo.png'),
+('Stripe', 'Visa/Mastercard', 'Pay with your credit or debit card', 'payment-processor-account', 'https://images.stripeassets.com/fzn2n1nzq965/HTTOloNPhisV9P4hlMPNA/cacf1bb88b9fc492dfad34378d844280/Stripe_icon_-_square.svg'),
 ('PayPal', 'PayPal', 'Fast and secure payment with PayPal', 'paypal-account', 'https://gamestore.com/images/paypal_logo.png'),
 ('Bank Transfer', 'Direct Bank Transfer', 'Direct transfer from your bank account', 'bank-account', 'https://gamestore.com/images/bank_logo.png');
 
 -- Insert data into orders table
-INSERT INTO orders (payment_method_id, order_status, payment_status, original_amount, discount_amount, total_amount, user_id) VALUES
-(1, 'COMPLETED', 'COMPLETED', 8998.00, 0.00, 8998.00, 1),
-(2, 'COMPLETED', 'COMPLETED', 4999.00, 499.90, 4499.10, 2),
-(1, 'PROCESSING', 'COMPLETED', 9998.00, 2000.00, 7998.00, 3),
-(3, 'CANCELLED', 'REFUNDED', 3999.00, 0.00, 3999.00, 4),
-(2, 'PENDING', 'PENDING', 1999.00, 0.00, 1999.00, 5);
+INSERT INTO orders (payment_method_id, order_status, payment_status, original_amount, discount_amount, total_amount, user_id, session_id) VALUES
+(1, 'COMPLETED', 'COMPLETED', 8998.00, 0.00, 8998.00, 1, 'DFOSDdslfkjDJFslLFJ82'),
+(2, 'COMPLETED', 'COMPLETED', 4999.00, 499.90, 4499.10, 2, 'DFOSDdslfkjDJFslLFJ82'),
+(1, 'PROCESSING', 'COMPLETED', 9998.00, 2000.00, 7998.00, 3, 'DFOSDdslfkjDJFslLFJ82'),
+(3, 'CANCELLED', 'REFUNDED', 3999.00, 0.00, 3999.00, 4, 'DFOSDdslfkjDJFslLFJ82'),
+(2, 'PENDING', 'PENDING', 1999.00, 0.00, 1999.00, 5, 'DFOSDdslfkjDJFslLFJ82');
 
 -- Insert data into order_item table
-INSERT INTO order_item (game_id, order_id) VALUES
-(1, 1),
-(3, 1),
-(2, 2),
-(1, 3),
-(2, 3),
-(4, 4),
-(5, 5);
+INSERT INTO order_item (game_id, order_id, quantity, unit_price, total_price) VALUES
+(1, 1, 1, 20000, 20000),
+(3, 1, 1, 20000, 20000),
+(2, 2, 1, 20000, 20000),
+(1, 3, 1, 20000, 20000),
+(2, 3, 1, 20000, 20000),
+(4, 4, 1, 20000, 20000),
+(5, 5, 1, 20000, 20000);
 
 
--- temporary work around
+-- temporary work around for ENUM
 CREATE CAST (character varying AS cart_status) WITH INOUT AS ASSIGNMENT;
+

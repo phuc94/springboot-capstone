@@ -1,9 +1,15 @@
 package com.cybersoft.capstone.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
-
 import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import lombok.Data;
 
 @Entity
 @Data
@@ -17,9 +23,7 @@ public class PaymentMethod {
     @Column(nullable = false)
     private String description;
     @Column(nullable = false)
-    private String account_name;
-    @Column(nullable = false)
-    private String account_number;
+    private String account;
     @Column(nullable = false)
     private String image;
 

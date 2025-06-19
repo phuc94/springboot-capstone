@@ -15,3 +15,13 @@ export const deleteFromCart = async (gameId: any) => {
   return data;
 };
 
+export const updateCart = async (updateItem: UpdateItem) => {
+  const { data } = await axiosInstance.post(`/cart/update`, updateItem);
+  return data;
+};
+
+export interface UpdateItem {
+  quantity: number;
+  gameId: number
+}
+

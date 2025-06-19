@@ -1,5 +1,4 @@
-import { Avatar, Card, Divider, Flex, Space, Text, Title } from "@mantine/core";
-import { IconStarFilled } from "@tabler/icons-react";
+import { Avatar, Card, Divider, Flex, Rating, Space, Text, Title } from "@mantine/core";
 import styles from './style.module.scss'
 
 const Reviews = ({data}: any) => {
@@ -34,13 +33,7 @@ const ReviewCard = ({data}: any) => {
       </Flex>
       <Divider orientation="horizontal" />
       <Space h="md" />
-      <Flex>
-        <IconStarFilled color="yellow" size={12}/>
-        <IconStarFilled color="yellow" size={12}/>
-        <IconStarFilled color="yellow" size={12}/>
-        <IconStarFilled color="yellow" size={12}/>
-        <IconStarFilled color="yellow" size={12}/>
-      </Flex>
+      <Rating value={5} color="#faf737" size="lg"/>
       <Space h="md" />
       <Divider orientation="horizontal" />
       <Text>{data.comment}</Text>

@@ -101,11 +101,11 @@ const QRCard = () => {
             <Table.Tbody>
               <Table.Tr>
                 <Table.Th><DarkText>Họ tên:</DarkText></Table.Th>
-                <Table.Th><DarkText>Vo Ngoc Tuan</DarkText></Table.Th>
+                <Table.Th><DarkText>Nguyen Truong Trung Phuc</DarkText></Table.Th>
               </Table.Tr>
               <Table.Tr>
                 <Table.Th><DarkText>Tài Khoản:</DarkText></Table.Th>
-                <Table.Th><DarkText>0343237950</DarkText></Table.Th>
+                <Table.Th><DarkText>0369999999</DarkText></Table.Th>
               </Table.Tr>
               <Table.Tr>
                 <Table.Th><DarkText>Số Tiền</DarkText></Table.Th>

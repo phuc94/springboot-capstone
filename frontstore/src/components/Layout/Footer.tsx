@@ -1,6 +1,6 @@
 import { Carousel } from "@mantine/carousel"
-import { Avatar, Button, Card, Center, Flex, Group, Image, Paper, Space, Stack, Text } from "@mantine/core"
-import { IconMessageStar, IconStar, IconStarFilled } from "@tabler/icons-react"
+import { Avatar, Button, Card, Center, Flex, Group, Image, Rating, Space, Stack, Text } from "@mantine/core"
+import { IconMessageStar } from "@tabler/icons-react"
 import Autoplay from "embla-carousel-autoplay"
 import { useRef } from "react"
 import styles from './Layout.module.scss'
@@ -101,13 +101,7 @@ const ReviewSite = () => {
           src="https://scontent-hkg1-2.xx.fbcdn.net/v/t39.30808-1/322006656_491317216422889_1302875434044134969_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=107&ccb=1-7&_nc_sid=79bf43&_nc_ohc=cr5O6X8_ooMQ7kNvwGUGE7h&_nc_oc=Adl2HmI8xSzWSgCMPkWj4yGbww1zbkFrJ056VtKSX9JQduS76Yet81whHWzZNDQPiNCCaRh6RQHmu7vnBC8iFCNC&_nc_zt=24&_nc_ht=scontent-hkg1-2.xx&edm=AOf6bZoEAAAA&_nc_gid=9Setjpk8utI0U121Cl-HZw&oh=00_AfFcK4d6GHe-nLKlTwXmwIl6Jc3z8wDxB4O6eLqtjB81PQ&oe=6806F077"/>
           <Stack>
             <Text>MuaGa.me - Game Bản Quyền</Text>
-            <Flex gap="2">
-              <IconStarFilled color="yellow" />
-              <IconStarFilled color="yellow" />
-              <IconStarFilled color="yellow" />
-              <IconStarFilled color="yellow" />
-              <IconStarFilled color="yellow" />
-            </Flex>
+            <Rating value={5} color="#faf737" size="lg"/>
             <Text>239 Facebook bài đánh giá</Text>
           </Stack>
       </Group>

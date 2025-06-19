@@ -16,7 +16,6 @@ import com.cybersoft.capstone.repository.CartRepository;
 import com.cybersoft.capstone.service.interfaces.CartItemService;
 import com.cybersoft.capstone.service.interfaces.CartService;
 import com.cybersoft.capstone.service.interfaces.ClientGameService;
-import com.cybersoft.capstone.service.interfaces.GameKeyService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,19 +27,16 @@ public class CartServiceImpl implements CartService {
     private final ClientGameService clientGameService;
     private final CartRepository cartRepository;
     private final CartMapper cartMapper;
-    private final GameKeyService gameKeyService;
     private final CartItemService cartItemService;
 
     public CartServiceImpl(
         CartRepository cartRepository,
         CartMapper cartMapper,
-        GameKeyService gameKeyService,
         CartItemService cartItemService,
         ClientGameService clientGameService
         ) {
         this.cartRepository = cartRepository;
         this.cartMapper = cartMapper;
-        this.gameKeyService = gameKeyService;
         this.cartItemService = cartItemService;
         this.clientGameService = clientGameService;
     }

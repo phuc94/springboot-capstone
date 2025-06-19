@@ -1,10 +1,9 @@
 package com.cybersoft.capstone.exception;
 
 import com.cybersoft.capstone.payload.response.BadRequestResponse;
-import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.ErrMessage;
 import com.cybersoft.capstone.payload.response.NotFoundResponse;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

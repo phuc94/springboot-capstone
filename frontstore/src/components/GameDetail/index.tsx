@@ -1,6 +1,5 @@
 import { useGameDetail } from "@/hooks/useGameDetail"
-import { Box, Container, Divider, Flex, Group, Image, Space, Stack, Text, Title } from "@mantine/core"
-import { IconStarFilled } from "@tabler/icons-react"
+import { Box, Container, Divider, Flex, Group, Image, Rating, Space, Stack, Text, Title } from "@mantine/core"
 import Description from "../Description";
 import styles from './style.module.scss'
 import { SaleTag } from "../GameCard";
@@ -24,13 +23,7 @@ const GameDetail = () => {
           </Flex>
           <Stack className={styles.info} align="center">
             <Title order={1}>{query.data?.data?.title}</Title>
-            <Flex>
-              <IconStarFilled color="yellow" />
-              <IconStarFilled color="yellow" />
-              <IconStarFilled color="yellow" />
-              <IconStarFilled color="yellow" />
-              <IconStarFilled color="yellow" />
-            </Flex>
+            <Rating value={5} color="#faf737" size="lg"/>
             <Text c="dimmed">({query?.data?.data?.reviews.length} đánh giá của khách hàng)</Text>
             <Group>
               {query.data?.data?.sale !== 0 ?

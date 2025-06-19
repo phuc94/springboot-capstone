@@ -15,6 +15,7 @@ import { Route as WishListImport } from './routes/wish-list'
 import { Route as PlatformImport } from './routes/platform'
 import { Route as IndexImport } from './routes/index'
 import { Route as MyAccountIndexImport } from './routes/my-account/index'
+import { Route as PaymentSuccessImport } from './routes/payment.success'
 import { Route as MyAccountProfileImport } from './routes/my-account/profile'
 import { Route as MyAccountOrdersImport } from './routes/my-account/orders'
 import { Route as MyAccountFundsImport } from './routes/my-account/funds'
@@ -47,6 +48,12 @@ const IndexRoute = IndexImport.update({
 const MyAccountIndexRoute = MyAccountIndexImport.update({
   id: '/my-account/',
   path: '/my-account/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PaymentSuccessRoute = PaymentSuccessImport.update({
+  id: '/payment/success',
+  path: '/payment/success',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -179,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyAccountProfileImport
       parentRoute: typeof rootRoute
     }
+    '/payment/success': {
+      id: '/payment/success'
+      path: '/payment/success'
+      fullPath: '/payment/success'
+      preLoaderRoute: typeof PaymentSuccessImport
+      parentRoute: typeof rootRoute
+    }
     '/my-account/': {
       id: '/my-account/'
       path: '/my-account'
@@ -203,6 +217,7 @@ export interface FileRoutesByFullPath {
   '/my-account/funds': typeof MyAccountFundsRoute
   '/my-account/orders': typeof MyAccountOrdersRoute
   '/my-account/profile': typeof MyAccountProfileRoute
+  '/payment/success': typeof PaymentSuccessRoute
   '/my-account': typeof MyAccountIndexRoute
 }
 
@@ -218,6 +233,7 @@ export interface FileRoutesByTo {
   '/my-account/funds': typeof MyAccountFundsRoute
   '/my-account/orders': typeof MyAccountOrdersRoute
   '/my-account/profile': typeof MyAccountProfileRoute
+  '/payment/success': typeof PaymentSuccessRoute
   '/my-account': typeof MyAccountIndexRoute
 }
 
@@ -234,6 +250,7 @@ export interface FileRoutesById {
   '/my-account/funds': typeof MyAccountFundsRoute
   '/my-account/orders': typeof MyAccountOrdersRoute
   '/my-account/profile': typeof MyAccountProfileRoute
+  '/payment/success': typeof PaymentSuccessRoute
   '/my-account/': typeof MyAccountIndexRoute
 }
 
@@ -251,6 +268,7 @@ export interface FileRouteTypes {
     | '/my-account/funds'
     | '/my-account/orders'
     | '/my-account/profile'
+    | '/payment/success'
     | '/my-account'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -265,6 +283,7 @@ export interface FileRouteTypes {
     | '/my-account/funds'
     | '/my-account/orders'
     | '/my-account/profile'
+    | '/payment/success'
     | '/my-account'
   id:
     | '__root__'
@@ -279,6 +298,7 @@ export interface FileRouteTypes {
     | '/my-account/funds'
     | '/my-account/orders'
     | '/my-account/profile'
+    | '/payment/success'
     | '/my-account/'
   fileRoutesById: FileRoutesById
 }
@@ -295,6 +315,7 @@ export interface RootRouteChildren {
   MyAccountFundsRoute: typeof MyAccountFundsRoute
   MyAccountOrdersRoute: typeof MyAccountOrdersRoute
   MyAccountProfileRoute: typeof MyAccountProfileRoute
+  PaymentSuccessRoute: typeof PaymentSuccessRoute
   MyAccountIndexRoute: typeof MyAccountIndexRoute
 }
 
@@ -310,6 +331,7 @@ const rootRouteChildren: RootRouteChildren = {
   MyAccountFundsRoute: MyAccountFundsRoute,
   MyAccountOrdersRoute: MyAccountOrdersRoute,
   MyAccountProfileRoute: MyAccountProfileRoute,
+  PaymentSuccessRoute: PaymentSuccessRoute,
   MyAccountIndexRoute: MyAccountIndexRoute,
 }
 
@@ -334,6 +356,7 @@ export const routeTree = rootRoute
         "/my-account/funds",
         "/my-account/orders",
         "/my-account/profile",
+        "/payment/success",
         "/my-account/"
       ]
     },
@@ -369,6 +392,9 @@ export const routeTree = rootRoute
     },
     "/my-account/profile": {
       "filePath": "my-account/profile.tsx"
+    },
+    "/payment/success": {
+      "filePath": "payment.success.tsx"
     },
     "/my-account/": {
       "filePath": "my-account/index.tsx"
