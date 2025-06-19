@@ -1,10 +1,10 @@
 import { UpdateItem } from '@/api/cart';
 import { useCart, useDeleteFromCart, useUpdateCart } from '@/hooks/useCart';
 import { queryClient } from '@/routes/__root';
-import { Stepper, Table, Text, Image, NumberInput, Flex, Box, Space, Button, Card, Divider, TextInput, CloseButton } from '@mantine/core';
-import { IconArrowLeft, IconTagStarred } from '@tabler/icons-react';
-import { useRouter } from '@tanstack/react-router';
-import { Link } from '@tanstack/react-router';
+
+import { Stepper, Table, Text, Image, NumberInput, Flex, Box, Space, Button, Card, Divider, CloseButton } from '@mantine/core';
+import { IconArrowLeft } from '@tabler/icons-react';
+import { useRouter, Link } from '@tanstack/react-router';
 import { useEffect } from 'react';
 
 function Cart() {
@@ -14,7 +14,9 @@ function Cart() {
   const router = useRouter();
 
   useEffect(() => {
-    if (isFetching) return;
+    if (isFetching) {
+      return;
+    }
     queryClient.invalidateQueries({ queryKey: ['cart'] })
   }, [isDeleteSuccess, isUpdateSucess])
 
@@ -89,7 +91,7 @@ const OrderDetail = () => {
         </Flex>
         <Space h="sm" />
         <Button>
-          <Link to="/checkout">
+          <Link to="/payment">
             Tiến hành thanh toán
           </Link>
         </Button>

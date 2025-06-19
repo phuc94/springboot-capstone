@@ -1,5 +1,4 @@
-import { Badge, Box, Button, Card, Flex, Image, Space, Text } from "@mantine/core"
-import { IconStar, IconStarFilled } from "@tabler/icons-react"
+import { Badge, Box, Button, Card, Flex, Image, Rating, Space, Text } from "@mantine/core"
 import styles from './style.module.scss'
 import { Link, useRouter } from "@tanstack/react-router"
 import { useAddToCart } from "@/hooks/useCart"
@@ -30,14 +29,7 @@ const GameCard = ({data}: any) => {
         <Flex direction="column" justify="center" align="center">
           <Text size="xl">{data.title}</Text>
           <Space h="xs" />
-          <Box>
-            {/*TODO: data.avgRating*/}
-            <IconStarFilled color="yellow"/>
-            <IconStarFilled color="yellow"/>
-            <IconStarFilled color="yellow"/>
-            <IconStarFilled color="yellow"/>
-            <IconStar color="yellow" />
-          </Box>
+          <Rating value={5} color="#faf737" size="md"/>
           {data.sale !== 0 ?
             <Box>
               <Text size="xl" c="dimmed" td="line-through">{data.price}đ</Text>

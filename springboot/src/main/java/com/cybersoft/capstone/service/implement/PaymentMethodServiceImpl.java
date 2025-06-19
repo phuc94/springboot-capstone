@@ -1,5 +1,7 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.util.List;
+
 import com.cybersoft.capstone.entity.PaymentMethod;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.payload.response.AcceptedResponse;
@@ -7,10 +9,9 @@ import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.OkResponse;
 import com.cybersoft.capstone.repository.PaymentMethodRepository;
 import com.cybersoft.capstone.service.interfaces.PaymentMethodService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PaymentMethodServiceImpl implements PaymentMethodService {
@@ -31,8 +32,7 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
         return paymentMethodRepository.findById(id)
                 .map(foundPaymentMethod-> {
                     foundPaymentMethod.setDescription(paymentMethod.getDescription());
-                    foundPaymentMethod.setAccount_name(paymentMethod.getAccount_name());
-                    foundPaymentMethod.setAccount_number(paymentMethod.getAccount_number());
+                    foundPaymentMethod.setAccount(paymentMethod.getAccount());
                     foundPaymentMethod.setTitle(paymentMethod.getTitle());
                     foundPaymentMethod.setImage(paymentMethod.getImage());
                     return new OkResponse<>(paymentMethodRepository.save(foundPaymentMethod));

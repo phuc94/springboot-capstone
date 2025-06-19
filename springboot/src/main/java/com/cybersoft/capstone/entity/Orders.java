@@ -1,16 +1,27 @@
 package com.cybersoft.capstone.entity;
 
-import com.cybersoft.capstone.entity.enums.OrderStatus;
-import com.cybersoft.capstone.entity.enums.PaymentMethodStatus;
-import jakarta.persistence.*;
-import lombok.Data;
-import jakarta.persistence.OneToMany;
-
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.io.Serializable;
-import java.util.Date;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+
+import com.cybersoft.capstone.entity.enums.OrderStatus;
+import com.cybersoft.capstone.entity.enums.PaymentMethodStatus;
+
+import lombok.Data;
 
 @Entity
 @Data
@@ -25,8 +36,9 @@ public class Orders implements Serializable {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+    private String sessionId ;
     private int originalAmount;
-    private int discountedAmount;
+    private int discountAmount;
     private int totalAmount;
 
     @Column(name = "deleted_on")

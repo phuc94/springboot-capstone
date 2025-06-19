@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface CartState {
   items: { id: number; name: string; quantity: number }[];
@@ -23,4 +24,25 @@ export const useCartStore = create<CartState>((set:any) => ({
   removeItem: (id:any) =>
     set((state:any) => ({ items: state.items.filter((item:any) => item.id !== id) })),
 }));
+
+export interface PaymentState {
+  sessionId: string;
+  url: string;
+  status: string,
+  init: (data: {sessionId: string; url: string, status: string}) => void
+}
+
+export const usePaymentStore = create<PaymentState>()(
+  persist(
+    (set) => ({
+      sessionId: "",
+      url: "",
+      status: "",
+      init: (data) => {set(data);}
+    }),
+    {
+      name: "payment",
+    }
+  )
+);
 

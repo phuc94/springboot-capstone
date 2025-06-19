@@ -1,13 +1,17 @@
 package com.cybersoft.capstone.service.interfaces;
 
-import com.cybersoft.capstone.dto.OrderDTO;
+import java.util.List;
+
 import jakarta.validation.Valid;
 
-import java.util.List;
+import com.cybersoft.capstone.dto.OrderDTO;
 
 public interface OrderService {
     public List<OrderDTO> getAllOrders();
     public OrderDTO getOrderById(int id);
-    public OrderDTO createOrder(@Valid OrderDTO orderDTO);
     public void softDeleteOrderById(int id);
+    public OrderDTO createOrder(@Valid OrderDTO orderDTO);
+    public OrderDTO findOrderBySessionId(String sessionId);
+    public OrderDTO save(OrderDTO order);
+    public Boolean checkUserOrderSessionId(int userId, String sessionId);
 }

@@ -1,12 +1,13 @@
-import { Accordion, Box, Button, Card, Flex, Image, Radio, Space, Stack, Stepper, Table, Text, Textarea, TextInput } from "@mantine/core"
-import { useState } from "react"
+import { useCheckout } from "@/hooks/useCheckout"
+import { usePaymentStore } from "@/store/useCartStore"
+import { Accordion, Box, Button, Card, Flex, Radio, Space, Stepper, Table, Text, Textarea, TextInput } from "@mantine/core"
+import { useEffect, useState } from "react"
 
 const Payment = () => {
   return (
     <Box style={{paddingTop: 80}} >
       <Stepper active={1}>
-        <Stepper.Step label="Giỏ hàng" description="Điều chỉnh giỏ hàng">
-        </Stepper.Step>
+        <Stepper.Step label="Giỏ hàng" description="Điều chỉnh giỏ hàng" />
         <Stepper.Step label="Chi tiết thanh toán" description="Chi tiết thanh toán">
           <Space h="xl" />
           <Flex gap={40} direction="row">
@@ -14,8 +15,7 @@ const Payment = () => {
             <OrderDetail />
           </Flex>
         </Stepper.Step>
-        <Stepper.Step label="Đơn hàng hoàn tất" description="Đơn hàng hoàn tất">
-        </Stepper.Step>
+        <Stepper.Step label="Đơn hàng hoàn tất" description="Đơn hàng hoàn tất" />
       </Stepper>
     </Box>
   )
@@ -46,6 +46,23 @@ const PaymentForm = () => {
 
 const OrderDetail = () => {
   const [value, setValue] = useState<string | null>("vcb");
+  const {mutate: checkout, isSuccess, data} = useCheckout();
+  const init = usePaymentStore(state => state.init);
+
+  const onOrder = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    checkout();
+  }
+  useEffect(() => {
+    if (isSuccess) {
+      init({
+        sessionId: data.data.sessionId,
+        url: data.data.sessionUrl,
+        status: data.data.status
+      })
+      window.location = data.data.sessionUrl
+    }
+  }, [isSuccess])
 
   return (
     <Card style={{flex: 1}}>
@@ -90,7 +107,7 @@ const OrderDetail = () => {
         </Accordion>
       </Radio.Group>
       <Space h="xl" />
-      <Button>
+      <Button onClick={onOrder}>
         <Text size="xl" fw={700}>Đặt hàng</Text>
       </Button>
       <Space h="xl" />
@@ -101,12 +118,3 @@ const OrderDetail = () => {
   )
 }
 
-const VCBControl = () => (
-  <Flex>
-    <Image width={40} height={40} src="https://muaga.me/wp-content/plugins/vcb-mh/public/images/VCB.png" />
-
-  </Flex>
-)
-
-          // <Radio value="react" label="React" />
-          // <Radio value="react" label="React" />

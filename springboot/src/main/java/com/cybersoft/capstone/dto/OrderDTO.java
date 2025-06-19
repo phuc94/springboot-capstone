@@ -1,21 +1,24 @@
 package com.cybersoft.capstone.dto;
 
+import java.sql.Timestamp;
+
 import com.cybersoft.capstone.entity.enums.OrderStatus;
 import com.cybersoft.capstone.entity.enums.PaymentMethodStatus;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 @Data
+@Builder
 public class OrderDTO {
     private int id;
     private int paymentMethodId;
+    private String sessionId;
     private PaymentMethodStatus paymentMethodStatus;
     private OrderStatus orderStatus;
     private PaymentMethodStatus paymentStatus;
     private int originalAmount;
-    private int discountedAmount;
+    private int discountAmount;
     private int totalAmount;
     private int userId;
     private Timestamp deletedOn;
