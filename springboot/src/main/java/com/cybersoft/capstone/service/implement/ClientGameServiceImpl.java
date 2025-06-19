@@ -57,4 +57,9 @@ public class ClientGameServiceImpl implements ClientGameService {
             .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
 
+    @Override
+    public Games save(Games game) {
+        return gameRepository.save(game);
+    }
+
 }

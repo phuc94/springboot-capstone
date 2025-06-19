@@ -68,5 +68,10 @@ public class CartItemServiceImpl implements CartItemService {
         return cartItemRepository.findByCartsId(cartId);
     }
 
+    @Override
+    public void deleteAll(List<CartItem> cartItems) {
+        cartItemRepository.deleteAll(cartItems);
+    }
+
 }
 

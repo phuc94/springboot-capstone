@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface StripeService {
     StripeResponse checkout(int cartId, int userID);
-    void fulfillCheckout(String sessionId);
+    void fulfillCheckout(String sessionId, int userId, int cartId);
 }
 

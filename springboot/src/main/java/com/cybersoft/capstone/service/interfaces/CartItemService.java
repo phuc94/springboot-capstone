@@ -12,4 +12,5 @@ public interface CartItemService {
     public Boolean existsByGameIdAndCartId(int gameId, int cartId);
     public Boolean existsByCartId(int cartId);
     public void deleteByGameIdAndCartId(int gameId, int cartId);
+    public void deleteAll(List<CartItem> cartItems);
 }

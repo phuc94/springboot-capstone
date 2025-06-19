@@ -68,4 +68,14 @@ public class GameKeyServiceImpl implements GameKeyService {
         return gameKeyRepository.findFirst1ByGameIdAndActivatedFalse(gameId)
                 .orElseThrow(() -> new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase()));
     }
+
+    @Override
+    public List<GameKey> findTopNByGamesIdAndActivatedIsFalse(int gameId, int n) {
+        return gameKeyRepository.findTopNByGameIdAndActivatedIsFalse(gameId, n);
+    }
+
+    @Override
+    public List<GameKey> saveAll(List<GameKey> gameKeys) {
+        return gameKeyRepository.saveAll(gameKeys);
+    }
 }

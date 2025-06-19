@@ -13,5 +13,6 @@ public interface ClientGameService {
     public ClientGameDTO getClientGameById(int id);
     public List<GameCardDTO> getCardGameByPlatform(int id);
     public Games getGameById(int id);
+    public Games save(Games game);
 
 }
