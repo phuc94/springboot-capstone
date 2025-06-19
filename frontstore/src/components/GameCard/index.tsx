@@ -29,7 +29,7 @@ const GameCard = ({data}: any) => {
         <Flex direction="column" justify="center" align="center">
           <Text size="xl">{data.title}</Text>
           <Space h="xs" />
-          <Rating value={5} color="#faf737" size="md"/>
+          <Rating value={5} color="#faf737" size="md" readOnly/>
           {data.sale !== 0 ?
             <Box>
               <Text size="xl" c="dimmed" td="line-through">{data.price}đ</Text>

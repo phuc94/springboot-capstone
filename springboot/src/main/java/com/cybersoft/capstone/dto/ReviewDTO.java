@@ -9,6 +9,6 @@ public class ReviewDTO {
     private int id;
     private int rating;
     private String comment;
-    private UserDTO user;
+    private SimpleUserDTO user;
     private Timestamp createdAt;
 }
