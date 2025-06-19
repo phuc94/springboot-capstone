@@ -23,7 +23,7 @@ const GameDetail = () => {
           </Flex>
           <Stack className={styles.info} align="center">
             <Title order={1}>{query.data?.data?.title}</Title>
-            <Rating value={5} color="#faf737" size="lg"/>
+            <Rating value={5} color="#faf737" size="lg" readOnly/>
             <Text c="dimmed">({query?.data?.data?.reviews.length} đánh giá của khách hàng)</Text>
             <Group>
               {query.data?.data?.sale !== 0 ?
