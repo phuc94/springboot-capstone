@@ -6,10 +6,19 @@ import java.util.stream.Collectors;
 import com.cybersoft.capstone.dto.GameItemDTO;
 import com.cybersoft.capstone.dto.OrderDTO;
 import com.cybersoft.capstone.entity.CartItem;
+import com.cybersoft.capstone.entity.GameKey;
+import com.cybersoft.capstone.entity.Games;
+import com.cybersoft.capstone.entity.OrderItem;
+import com.cybersoft.capstone.entity.Orders;
+import com.cybersoft.capstone.entity.Sales;
 import com.cybersoft.capstone.entity.enums.OrderStatus;
 import com.cybersoft.capstone.entity.enums.PaymentMethodStatus;
+import com.cybersoft.capstone.entity.enums.SaleStatus;
 import com.cybersoft.capstone.payload.response.StripeResponse;
 import com.cybersoft.capstone.service.interfaces.CartItemService;
+import com.cybersoft.capstone.service.interfaces.ClientGameService;
+import com.cybersoft.capstone.service.interfaces.GameKeyService;
+import com.cybersoft.capstone.service.interfaces.OrderItemService;
 import com.cybersoft.capstone.service.interfaces.OrderService;
 import com.cybersoft.capstone.service.interfaces.StripeService;
 import com.stripe.Stripe;
@@ -28,12 +37,23 @@ public class StripeServiceImpl implements StripeService {
     private String secretKey;
 
     private OrderService orderService;
-
+    private OrderItemService orderItemService;
     private CartItemService cartItemService;
+    private GameKeyService gameKeyService;
+    private ClientGameService clientGameService;
 
-    public StripeServiceImpl(CartItemService cartItemService, OrderService orderService) {
+    public StripeServiceImpl(
+        CartItemService cartItemService,
+        OrderService orderService,
+        OrderItemService orderItemService,
+        GameKeyService gameKeyService,
+        ClientGameService clientGameService
+    ) {
         this.cartItemService = cartItemService;
         this.orderService = orderService;
+        this.orderItemService = orderItemService;
+        this.gameKeyService = gameKeyService;
+        this.clientGameService = clientGameService;
     }
 
     @Override
@@ -79,6 +99,66 @@ public class StripeServiceImpl implements StripeService {
         return stripeResponse;
     }
 
+    @Override
+    @Transactional
+    public void fulfillCheckout(String sessionId, int userId, int cartId) {
+        try {
+          OrderDTO orderDTO = orderService.findOrderBySessionId(sessionId);
+          orderDTO.setPaymentStatus(PaymentMethodStatus.COMPLETED);
+          orderDTO.setOrderStatus(OrderStatus.COMPLETED);
+          orderService.save(orderDTO);
+
+          // transfer cartItems into orderItems
+          List<CartItem> cartItems = cartItemService.findByCartsId(cartId);
+          List<OrderItem> orderItems = toOrderItem(cartItems, orderDTO);
+          orderItemService.saveAll(orderItems);
+          // delete all cartItems
+          cartItemService.deleteAll(cartItems);
+          // find and assign enough game_key to orderItem
+          orderItems.stream().forEach(orderItem -> {
+              List<GameKey> gameKeys = gameKeyService.findTopNByGamesIdAndActivatedIsFalse(
+                  orderItem.getGame().getId(), orderItem.getQuantity()
+              );
+              List<GameKey> activatedGameKeys = gameKeys.stream().map(gameKey -> {
+                  System.out.println(gameKey.isActivated());
+                  gameKey.setOrderItem(orderItem);
+                  gameKey.setActivated(true);
+                  return gameKey;
+              }).collect(Collectors.toList());
+              gameKeyService.saveAll(activatedGameKeys);
+              // update game's stock
+              Games game = orderItem.getGame();
+              game.setStock(game.getStock() - orderItem.getQuantity());
+              clientGameService.save(game);
+          });
+          
+          
+        } catch (Error e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private List<OrderItem> toOrderItem(List<CartItem> cartItems, OrderDTO orderDTO) {
+        return cartItems.stream()
+                .map(cartItem -> {
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setGame(cartItem.getGames());
+                    Orders order = new Orders();
+                    order.setId(orderDTO.getId());
+                    orderItem.setOrder(order);
+                    orderItem.setQuantity(cartItem.getQuantity());
+                    int unitPrice = cartItem.getGames().getPrice();
+                    Sales sale = cartItem.getGames().getSale();
+                    if (sale != null && sale.getStatus().equals(SaleStatus.ACTIVE)) {
+                        unitPrice = unitPrice * (100 - sale.getAmount()) / 100;
+                    }
+                    orderItem.setUnitPrice(unitPrice);
+                    orderItem.setTotalPrice(unitPrice * orderItem.getQuantity());
+                    return orderItem;
+                })
+                .collect(Collectors.toList());
+    }
+
     private List<SessionCreateParams.LineItem> toLineItems(List<CartItem> cartItems) {
         return cartItems.stream().map(cartItem -> this.toLineItem(cartItem))
                 .collect(Collectors.toList());
@@ -99,19 +179,6 @@ public class StripeServiceImpl implements StripeService {
                 .setQuantity(Long.valueOf(gameItemDTO.getQuantity()))
                 .setPriceData(priceData)
                 .build();
-    }
-
-    @Override
-    @Transactional
-    public void fulfillCheckout(String sessionId) {
-        try {
-          OrderDTO orderDTO = orderService.findOrderBySessionId(sessionId);
-          orderDTO.setPaymentStatus(PaymentMethodStatus.COMPLETED);
-          orderDTO.setOrderStatus(OrderStatus.COMPLETED);
-          orderService.save(orderDTO);
-        } catch (Error e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     // // TODO: 

@@ -13,4 +13,6 @@ public interface GameKeyService {
     public BaseResponse<GameKey> updateGameKey(int gameKeyId, GameKey gameKey);
     public BaseResponse<Void> deleteGameKey(int gameKeyId);
     public GameKey getAvailableGameKey(int gameId);
+    public List<GameKey> findTopNByGamesIdAndActivatedIsFalse(int gameId, int n);
+    public List<GameKey> saveAll(List<GameKey> gameKeys);
 }

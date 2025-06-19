@@ -35,7 +35,7 @@ public class ClientCheckoutController {
     @PostMapping("/fullfill")
     public BaseResponse<?> fullfill(@AuthenticationPrincipal CustomUserDetails user, @RequestParam String sessionId) {
         if (orderService.checkUserOrderSessionId(user.getId(), sessionId)) {
-            stripeService.fulfillCheckout(sessionId);
+            stripeService.fulfillCheckout(sessionId, user.getId(), user.getCart().getId());
         } else {
             throw new NotFoundException("Order not found");
         }
