@@ -12,6 +12,7 @@ import com.cybersoft.capstone.dto.mapper.OrderMapper;
 import com.cybersoft.capstone.entity.Orders;
 import com.cybersoft.capstone.entity.PaymentMethod;
 import com.cybersoft.capstone.entity.Users;
+import com.cybersoft.capstone.entity.enums.OrderStatus;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.repository.OrderRepository;
 import com.cybersoft.capstone.repository.PaymentMethodRepository;
@@ -100,6 +101,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Boolean checkUserOrderSessionId(int userId, String sessionId) {
         return orderRepository.existsByUsersIdAndSessionId(userId, sessionId);
+    }
+
+    @Override
+    public List<OrderDTO> getOrdersByUserIdAndStatus(int userId, OrderStatus orderStatus) {
+        return orderRepository.findByUsersIdAndOrderStatusAndDeletedOnIsNull(userId, orderStatus)
+                .stream()
+                .map(orderMapper::toOrderDTO)
+                .collect(Collectors.toList());
     }
 
 }
