@@ -50,14 +50,14 @@ function App() {
                 create: "/coupon/create",
                 meta: { label: "Coupon" },
               },
-              {
-                name: "coupon_type",
-                list: "/coupon_type",
-                show: "/coupon_type/:id",
-                edit: "/coupon_type/:id/edit",
-                create: "/coupon_type/create",
-                meta: { label: "Coupon Type" },
-              },
+              // {
+              //   name: "coupon_type",
+              //   list: "/coupon_type",
+              //   show: "/coupon_type/:id",
+              //   edit: "/coupon_type/:id/edit",
+              //   create: "/coupon_type/create",
+              //   meta: { label: "Coupon Type" },
+              // },
               {
                 name: "platform",
                 list: "/platform",
@@ -98,12 +98,12 @@ function App() {
                   <Route path=":id/edit" element={<EditCoupon/>} />
                   <Route path="create" element={<CreateCoupon/>} />
                 </Route>
-                <Route path="/coupon_type">
-                  <Route index element={<ListCouponType />} />
-                  <Route path=":id" element={<ShowCouponType />} />
-                  <Route path=":id/edit" element={<EditCouponType />} />
-                  <Route path="create" element={<CreateCouponType />} />
-                </Route>
+                {/* <Route path="/coupon_type"> */}
+                {/*   <Route index element={<ListCouponType />} /> */}
+                {/*   <Route path=":id" element={<ShowCouponType />} /> */}
+                {/*   <Route path=":id/edit" element={<EditCouponType />} /> */}
+                {/*   <Route path="create" element={<CreateCouponType />} /> */}
+                {/* </Route> */}
                 <Route path="/game">
                   <Route index element={<ListGame />} />
                   <Route path=":id" element={<ShowGame />} />

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface MediaService {
-    public BaseResponse<Medias> createMedia(Medias media);
+    public Medias createMedia(Medias media);
     public BaseResponse<List<Medias>> getAllMedia();
     public BaseResponse<Medias> getMediaById(int id);
     public BaseResponse<Medias> updateMedia(int id, Medias media);
