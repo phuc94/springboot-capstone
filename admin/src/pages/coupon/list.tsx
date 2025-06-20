@@ -19,12 +19,15 @@ export const ListCoupon = () => {
   } = useTable({
     sorters: {initial: [{field: "id", order: "asc"}]},
     syncWithLocation: true,
+    pagination: {
+      pageSize: 20
+    }
   })
 
-  const {data} = useMany({
-    resource: "coupon_type",
-    ids: tableProps?.dataSource?.map(coupon => coupon.coupon_type_id) ?? []
-  })
+  // const {data} = useMany({
+  //   resource: "coupon_type",
+  //   ids: tableProps?.dataSource?.map(coupon => coupon.coupon_type_id) ?? []
+  // })
 
   return (
     <List>
@@ -40,21 +43,23 @@ export const ListCoupon = () => {
         <Table.Column dataIndex="usageLimit" title="Usage Limit" />
         <Table.Column dataIndex="usedCount" title="Usage Count" />
         <Table.Column
-          dataIndex="startDate"
           title="Start Date"
-          render={(_, record)=>{
-            console.log(dayjs(record.startDate).toString())
-            return <DateField value={dayjs(record.startDate).toString()} />
-          }
-          }
-        />
-        <Table.Column dataIndex="endDate" title="End Date" />
+          render={(_, record)=> (
+              <DateField value={dayjs(record.startDate).toString()} />
+            )}
+          />
+        <Table.Column
+          title="End Date"
+          render={(_, record)=> (
+              <DateField value={dayjs(record.endDate).toString()} />
+            )}
+          />
         <Table.Column dataIndex="status" title="Status" />
-        <Table.Column title="Coupon Type"
-          render={(_, record)=>(
-            <span>{data?.data?.find(type => type.id == record.couponTypeId)?.type ?? ""}</span>
-          )}
-        />
+        {/* <Table.Column title="Coupon Type" */}
+        {/*   render={(_, record)=>( */}
+        {/*     <span>{data?.data?.find(type => type.id == record.couponTypeId)?.type ?? ""}</span> */}
+        {/*   )} */}
+        {/* /> */}
         <Table.Column
           title="Actions"
           render={(_, record) => (

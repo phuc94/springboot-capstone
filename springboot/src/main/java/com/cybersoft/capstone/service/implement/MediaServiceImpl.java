@@ -22,8 +22,8 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public BaseResponse<Medias> createMedia(Medias media) {
-        return new OkResponse<>(mediaRepository.save(media));
+    public Medias createMedia(Medias media) {
+        return mediaRepository.save(media);
     }
 
     @Override

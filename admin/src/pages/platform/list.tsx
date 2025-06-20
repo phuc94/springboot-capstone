@@ -14,6 +14,9 @@ export const ListPlatform = () => {
   } = useTable({
     sorters: {initial: [{field: "id", order: "asc"}]},
     syncWithLocation: true,
+    pagination: {
+      pageSize: 20
+    }
   })
 
   return (
