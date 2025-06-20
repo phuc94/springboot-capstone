@@ -1,29 +1,61 @@
-import { Center, Container, Grid, Pagination, Space, Text } from "@mantine/core"
+import { Center, Container, Grid, Pagination, Space, Text, Title } from "@mantine/core"
 import GameCard from "../GameCard"
+import { useParams } from "@tanstack/react-router"
+import { usePlatformGameList } from "@/hooks/usePlatformGames"
+import { useEffect, useState } from "react"
 
 const GameList = () => {
-  return (
-    <Container>
-      <Space h="xl" />
-      <Text size="xl">Mua game Steam tại shop MuaGa.me với giá rẻ, uy tín. Nhận game nhanh chóng, nhiều giảm giá so với mua trực tiếp trên Steam. Sau khi mua trò chơi, bạn có thể tải xuống và cài đặt trò chơi trên máy tính của mình bằng phần mềm Steam.</Text>
-      <Space h="xl" />
-      <Grid gutter="md">
-        {
-          Array(12).fill(0).map(_ => (
-            <Grid.Col span={3}>
-              <GameCard />
-              <Space h="md" />
-            </Grid.Col>
-          ))
-        }
-      </Grid>
-      <Space h="xl" />
-      <Center>
-        <Pagination total={10} />
-      </Center>
-      <Space h="xl" />
-    </Container>
-  )
+    const { platformName } = useParams({ from: '/platform/$platformName' })
+    const [currentPage, setCurrentPage] = useState(1)
+    const [gamesPerPage] = useState(12)
+
+    const { data, isLoading } = usePlatformGameList(platformName || '')
+    const games = data?.data || []
+
+    // Pagination logic
+    const indexOfLastGame = currentPage * gamesPerPage
+    const indexOfFirstGame = indexOfLastGame - gamesPerPage
+    const currentGames = games.slice(indexOfFirstGame, indexOfLastGame)
+    const totalPages = Math.ceil(games.length / gamesPerPage)
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page)
+    }
+
+    return (
+        <Container>
+            <Space h="xl" />
+            <Title>{platformName ? `${platformName.toUpperCase()} Games` : 'All Games'}</Title>
+            <Space h="xl" />
+            <Text size="xl">Mua game {platformName ? platformName : ''} tại shop MuaGa.me với giá rẻ, uy tín. Nhận game nhanh chóng, nhiều giảm giá so với mua trực tiếp.</Text>
+            <Space h="xl" />
+            {isLoading ? (
+                <Text>Loading games...</Text>
+            ) : (
+                <>
+                    <Grid gutter="md">
+                        {currentGames.length > 0 ? (
+                            currentGames.map(game => (
+                                <Grid.Col key={game.id} span={3}>
+                                    <GameCard data={game} />
+                                    <Space h="md" />
+                                </Grid.Col>
+                            ))
+                        ) : (
+                            <Text>No games found for this platform.</Text>
+                        )}
+                    </Grid>
+                    <Space h="xl" />
+                    {totalPages > 1 && (
+                        <Center>
+                            <Pagination total={totalPages} value={currentPage} onChange={handlePageChange} />
+                        </Center>
+                    )}
+                </>
+            )}
+            <Space h="xl" />
+        </Container>
+    )
 }
 
 export default GameList

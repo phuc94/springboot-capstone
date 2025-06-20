@@ -15,4 +15,5 @@ public interface ClientGameService {
     public Games getGameById(int id);
     public Games save(Games game);
 
+    public List<ClientGameDetailDTO> getGamesByPlatform(String platformName);
 }
