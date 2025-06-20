@@ -37,5 +37,13 @@ public class ClientGameController {
         }
     }
 
+    @GetMapping("/platform/{platformName}")
+    public BaseResponse<List<ClientGameDetailDTO>> getGamesByPlatform(@PathVariable String platformName) {
+        try {
+            return new OkResponse<>(clientGameService.getGamesByPlatform(platformName));
+        } catch (NotFoundException ex) {
+            throw new NotFoundException("Games for platform not found");
+        }
+    }
 }
 

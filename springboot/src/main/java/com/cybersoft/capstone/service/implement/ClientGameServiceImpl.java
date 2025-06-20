@@ -62,4 +62,9 @@ public class ClientGameServiceImpl implements ClientGameService {
         return gameRepository.save(game);
     }
 
+    @Override
+    public List<ClientGameDetailDTO> getGamesByPlatform(String platformName) {
+        return gameRepository.findByPlatform_NameAndDeletedOnIsNull(platformName)
+                .stream().map(gameMapper::toClientGameDetailDTO).collect(Collectors.toList());
+    }
 }
