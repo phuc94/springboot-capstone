@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS game_description (
 CREATE TABLE IF NOT EXISTS sales (
   id SERIAL PRIMARY KEY,
   amount INTEGER NOT NULL,
-  status sale_status NOT NULL,
+  status VARCHAR(255) NOT NULL,
   start_date TIMESTAMP,
   end_date TIMESTAMP,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -179,7 +179,8 @@ CREATE TABLE IF NOT EXISTS reviews (
 CREATE TABLE IF NOT EXISTS orders (
   id SERIAL PRIMARY KEY,
   payment_method_id INTEGER,
-  session_id VARCHAR(255) NOT NULL,
+  session_id VARCHAR(255),
+  url TEXT,
   order_status VARCHAR(255) NOT NULL,
   payment_status VARCHAR(255) NOT NULL,
   original_amount INTEGER,

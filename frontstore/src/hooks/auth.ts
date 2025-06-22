@@ -5,7 +5,11 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: login,
     onError: (err: any) => console.log(err),
-    onSuccess: (data: any) => localStorage.setItem("token", data.data.token)
+    onSuccess: (data: any) => {
+      if (!!data.data.token) {
+        localStorage.setItem("token", data.data.token)
+      }
+    }
   })
 }
 

@@ -3,6 +3,7 @@ package com.cybersoft.capstone.service.implement;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cybersoft.capstone.dto.CartDetailDTO;
 import com.cybersoft.capstone.dto.GameItemDTO;
 import com.cybersoft.capstone.dto.OrderDTO;
 import com.cybersoft.capstone.entity.CartItem;
@@ -16,6 +17,7 @@ import com.cybersoft.capstone.entity.enums.PaymentMethodStatus;
 import com.cybersoft.capstone.entity.enums.SaleStatus;
 import com.cybersoft.capstone.payload.response.StripeResponse;
 import com.cybersoft.capstone.service.interfaces.CartItemService;
+import com.cybersoft.capstone.service.interfaces.CartService;
 import com.cybersoft.capstone.service.interfaces.ClientGameService;
 import com.cybersoft.capstone.service.interfaces.GameKeyService;
 import com.cybersoft.capstone.service.interfaces.OrderItemService;
@@ -36,29 +38,34 @@ public class StripeServiceImpl implements StripeService {
     @Value("${stripe.secretKey}")
     private String secretKey;
 
-    private OrderService orderService;
-    private OrderItemService orderItemService;
-    private CartItemService cartItemService;
-    private GameKeyService gameKeyService;
-    private ClientGameService clientGameService;
+    private final OrderService orderService;
+    private final OrderItemService orderItemService;
+    private final CartItemService cartItemService;
+    private final GameKeyService gameKeyService;
+    private final ClientGameService clientGameService;
+    private final CartService cartService;
 
     public StripeServiceImpl(
         CartItemService cartItemService,
         OrderService orderService,
         OrderItemService orderItemService,
         GameKeyService gameKeyService,
-        ClientGameService clientGameService
+        ClientGameService clientGameService,
+        CartService cartService
     ) {
         this.cartItemService = cartItemService;
         this.orderService = orderService;
         this.orderItemService = orderItemService;
         this.gameKeyService = gameKeyService;
         this.clientGameService = clientGameService;
+        this.cartService = cartService;
     }
 
     @Override
     public StripeResponse checkout(int cartId, int userId) {
         Stripe.apiKey = secretKey;
+        CartDetailDTO cartDetailDTO = cartService.getCartDetailByCartId(cartId);
+        // TODO: replace cartItems by cartDetailDTO.items
         List<CartItem> cartItems = cartItemService.findByCartsId(cartId);
 
         List<SessionCreateParams.LineItem> lineItems = toLineItems(cartItems);
@@ -66,7 +73,7 @@ public class StripeServiceImpl implements StripeService {
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
                 .setSuccessUrl("http://phucserver:3000/payment/success")
-                .setCancelUrl("http://phucserver:3000/cancel")
+                .setCancelUrl("http://phucserver:3000")
                 .addAllLineItem(lineItems)
                 .build();
 
@@ -83,11 +90,20 @@ public class StripeServiceImpl implements StripeService {
                 .paymentStatus(PaymentMethodStatus.PENDING)
                 .orderStatus(OrderStatus.PENDING)
                 .userId(userId)
-                .totalAmount(900)
+                .url(session.getUrl())
+                .originalAmount(cartDetailDTO.getOriginalPrice())
+                .discountAmount(cartDetailDTO.getDiscountAmount())
+                .totalAmount(cartDetailDTO.getFinalPrice())
                 .sessionId(session.getId())
                 .build();
 
-        orderService.save(orderDTO);
+        OrderDTO savedOrder = orderService.save(orderDTO);
+
+          // transfer cartItems into orderItems
+          List<OrderItem> orderItems = toOrderItem(cartItems, savedOrder);
+          orderItemService.saveAll(orderItems);
+          // delete all cartItems
+          cartItemService.deleteAll(cartItems);
 
         StripeResponse stripeResponse = StripeResponse.builder()
                 .status("PENDING")
@@ -101,20 +117,15 @@ public class StripeServiceImpl implements StripeService {
 
     @Override
     @Transactional
-    public void fulfillCheckout(String sessionId, int userId, int cartId) {
+    public OrderDTO fulfillCheckout(String sessionId, int userId, int cartId) {
+        OrderDTO orderDTO = orderService.findOrderBySessionId(sessionId);
         try {
-          OrderDTO orderDTO = orderService.findOrderBySessionId(sessionId);
           orderDTO.setPaymentStatus(PaymentMethodStatus.COMPLETED);
           orderDTO.setOrderStatus(OrderStatus.COMPLETED);
-          orderService.save(orderDTO);
+          orderDTO = orderService.save(orderDTO);
 
-          // transfer cartItems into orderItems
-          List<CartItem> cartItems = cartItemService.findByCartsId(cartId);
-          List<OrderItem> orderItems = toOrderItem(cartItems, orderDTO);
-          orderItemService.saveAll(orderItems);
-          // delete all cartItems
-          cartItemService.deleteAll(cartItems);
           // find and assign enough game_key to orderItem
+          List<OrderItem> orderItems = orderItemService.findByOrderId(orderDTO.getId());
           orderItems.stream().forEach(orderItem -> {
               List<GameKey> gameKeys = gameKeyService.findTopNByGamesIdAndActivatedIsFalse(
                   orderItem.getGame().getId(), orderItem.getQuantity()
@@ -132,10 +143,11 @@ public class StripeServiceImpl implements StripeService {
               clientGameService.save(game);
           });
           
-          
         } catch (Error e) {
             System.out.println(e.getMessage());
         }
+
+        return orderDTO;
     }
 
     private List<OrderItem> toOrderItem(List<CartItem> cartItems, OrderDTO orderDTO) {

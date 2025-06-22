@@ -7,7 +7,8 @@ public class ClientGameDTO {
     private int id;
     private String title;
     private int price;
+    private int salePrice;
     private int stock;
     private int avgRating;
-    private int sale;
+    private SaleDTO sale;
 }

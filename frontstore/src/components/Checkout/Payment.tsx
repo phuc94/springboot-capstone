@@ -108,7 +108,7 @@ const OrderDetail = () => {
       </Radio.Group>
       <Space h="xl" />
       <Button onClick={onOrder}>
-        <Text size="xl" fw={700}>Đặt hàng</Text>
+        <Text size="xl" fw={700} >Đặt hàng</Text>
       </Button>
       <Space h="xl" />
       <Text>

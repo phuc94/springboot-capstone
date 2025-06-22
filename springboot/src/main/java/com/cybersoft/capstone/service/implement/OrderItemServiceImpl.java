@@ -5,6 +5,7 @@ import java.util.List;
 import com.cybersoft.capstone.entity.OrderItem;
 import com.cybersoft.capstone.repository.OrderItemRepository;
 import com.cybersoft.capstone.service.interfaces.OrderItemService;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,6 +20,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public List<OrderItem> saveAll(List<OrderItem> orderItems) {
         return orderItemRepository.saveAll(orderItems);
+    }
+
+    @Override
+    public List<OrderItem> findByOrderId(int orderId) {
+       return orderItemRepository.findByOrderId(orderId);
     }
 
 }

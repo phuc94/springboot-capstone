@@ -1,6 +1,7 @@
 package com.cybersoft.capstone.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import com.cybersoft.capstone.entity.enums.OrderStatus;
 import com.cybersoft.capstone.entity.enums.PaymentMethodStatus;
@@ -14,6 +15,7 @@ public class OrderDTO {
     private int id;
     private int paymentMethodId;
     private String sessionId;
+    private String url;
     private PaymentMethodStatus paymentMethodStatus;
     private OrderStatus orderStatus;
     private PaymentMethodStatus paymentStatus;
@@ -22,4 +24,5 @@ public class OrderDTO {
     private int totalAmount;
     private int userId;
     private Timestamp deletedOn;
+    private List<OrderItemDTO> orderItems;
 }

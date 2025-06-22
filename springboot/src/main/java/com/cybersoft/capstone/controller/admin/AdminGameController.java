@@ -1,5 +1,7 @@
 package com.cybersoft.capstone.controller.admin;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.cybersoft.capstone.dto.AdminGameDTO;
@@ -66,6 +68,8 @@ public class AdminGameController {
     @PostMapping
     public BaseResponse<AdminGameDTO> createGame(@RequestBody AdminGameDTO adminGameDTO) {
         try {
+            adminGameDTO.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            adminGameDTO.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
             AdminGameDTO gameDTO = adminGameService.createAdminGame(adminGameDTO);
             BaseResponse<AdminGameDTO> response = new BaseResponse<>(201, "Thêm game thành công!");
             response.setData(gameDTO);
@@ -80,6 +84,7 @@ public class AdminGameController {
     @PostMapping("/{id}")
     public BaseResponse<AdminGameDTO> updateGame(@PathVariable int id, @RequestBody AdminGameDTO adminGameDTO) {
         try {
+            adminGameDTO.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
             AdminGameDTO updateGame = adminGameService.updateAdminGame(id, adminGameDTO);
             BaseResponse<AdminGameDTO> response = new BaseResponse<>(200, "Update game thành công!");
             response.setData(updateGame);

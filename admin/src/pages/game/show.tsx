@@ -11,9 +11,8 @@ export const ShowGame = () => {
 
   const {data: saleData} = useOne({
     resource: "sale",
-    id: data?.data?.id
+    id: data?.data?.saleId
   })
-  console.log(saleData)
 
   return (
     <Show isLoading={isLoading}>

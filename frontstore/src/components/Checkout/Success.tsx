@@ -1,4 +1,5 @@
 import { useCheckoutSuccess } from "@/hooks/useCheckout"
+import { useOrderById } from "@/hooks/useOrder"
 import { usePaymentStore } from "@/store/useCartStore"
 import { Button, Card, Center, Divider, Flex, Loader, Space, Stack, Text, Title } from "@mantine/core"
 import { IconCircleCheck } from "@tabler/icons-react"
@@ -6,7 +7,7 @@ import { Link } from "@tanstack/react-router"
 import { useEffect } from "react"
 
 const Success = () => {
-  const {mutate: checkoutFulFill, isSuccess} = useCheckoutSuccess();
+  const {mutate: checkoutFulFill, isSuccess, data} = useCheckoutSuccess();
   const sessionId = usePaymentStore(state => state.sessionId);
 
   useEffect(() => {
@@ -23,6 +24,8 @@ const Success = () => {
       <Text c="dimmed">Yêu cầu đang được xử lý. Xin chờ giây lát.</Text>
     </Flex>;
   }
+
+  // const {data: successOrderData} = useOrderById(data.data.id)
 
   return (
     <Stack>

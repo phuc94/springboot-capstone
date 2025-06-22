@@ -10,7 +10,7 @@ import com.cybersoft.capstone.payload.request.UpdateCartRequest;
 
 public interface CartService {
     public List<CartDTO> getAllCarts();
-    public CartDetailDTO getCartDetailByCartId(int cartId, CustomUserDetails user);
+    public CartDetailDTO getCartDetailByCartId(int cartId);
     public Carts createCart(Carts cart);
     public CartDTO updateCart(int id, CartDTO cartDTO);
     public Boolean removeItemFromCart(int gameId, CustomUserDetails user);

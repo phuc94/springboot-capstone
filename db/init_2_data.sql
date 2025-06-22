@@ -49,11 +49,11 @@ INSERT INTO game_description (description) VALUES
 
 -- Insert data into games table
 INSERT INTO games (description_id, title, price, stock, platform_id, sale_id) VALUES
-(1, 'Cities Skylines', 5999, 50, 5, 1),
-(2, 'Dont Starve Together', 4999, 100, 1, 2),
-(3, 'City Architect', 2999, 30, 1, 1),
-(4, 'Speed Racers', 3999, 25, 6, 3),
-(5, 'Puzzle Quest', 1999, 15, 9, 1);
+(1, 'Cities Skylines', 80000, 50, 5, 1),
+(2, 'Dont Starve Together', 30000, 100, 1, 2),
+(3, 'City Architect', 12000, 30, 1, 1),
+(4, 'Speed Racers', 99000, 25, 6, 3),
+(5, 'Puzzle Quest', 72000, 15, 9, 1);
 
 -- Insert data into game_key table
 INSERT INTO game_key (id, game_id, key, order_item_id, activated) VALUES

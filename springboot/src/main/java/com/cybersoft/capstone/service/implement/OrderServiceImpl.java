@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
 
         Orders orders = new Orders();
         orders.setPaymentMethod(paymentMethod);
-        orders.setOrderStatus(orderDTO.getOrderStatus());
+        // orders.setOrderStatus(orderDTO.getOrderStatus());
         orders.setPaymentStatus(orderDTO.getPaymentStatus());
         orders.setOriginalAmount(orderDTO.getOriginalAmount());
         orders.setDiscountAmount(orderDTO.getDiscountAmount());

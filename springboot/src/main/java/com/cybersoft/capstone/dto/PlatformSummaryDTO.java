@@ -8,5 +8,5 @@ import lombok.Data;
 public class PlatformSummaryDTO {
     private String name;
     private String title;
-    private List<GameCardDTO> games;
+    private List<ClientGameCardDTO> games;
 }

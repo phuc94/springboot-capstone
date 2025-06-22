@@ -1,5 +1,6 @@
 package com.cybersoft.capstone.controller.client;
 
+import com.cybersoft.capstone.dto.mapper.CartMapper;
 import com.cybersoft.capstone.entity.Users;
 import com.cybersoft.capstone.payload.request.SignInRequest;
 import com.cybersoft.capstone.payload.request.SignUpRequest;
@@ -23,9 +24,10 @@ public class ClientAuthenticationController {
 
     @Autowired
     private ClientAuthenticationService authenticationService;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private CartMapper cartMapper;
 
     @PostMapping("/register")
     public BaseResponse<?> signUp(@RequestBody SignUpRequest signUpRequest) {
