@@ -5,3 +5,7 @@ export const fetchGameDetail = async (id: number) => {
   return data;
 };
 
+export const fetchPlatformGameList = async (platformName: string) => {
+  const { data } = await axiosInstance.get(`/game/platform/${platformName}`);
+  return data;
+};

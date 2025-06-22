@@ -16,6 +16,7 @@ import { Route as PlatformImport } from './routes/platform'
 import { Route as OrdersImport } from './routes/orders'
 import { Route as IndexImport } from './routes/index'
 import { Route as MyAccountIndexImport } from './routes/my-account/index'
+import { Route as PlatformPlatformNameImport } from './routes/platform.$platformName'
 import { Route as PaymentSuccessImport } from './routes/payment.success'
 import { Route as MyAccountProfileImport } from './routes/my-account/profile'
 import { Route as MyAccountOrdersImport } from './routes/my-account/orders'
@@ -56,6 +57,12 @@ const MyAccountIndexRoute = MyAccountIndexImport.update({
   id: '/my-account/',
   path: '/my-account/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const PlatformPlatformNameRoute = PlatformPlatformNameImport.update({
+  id: '/$platformName',
+  path: '/$platformName',
+  getParentRoute: () => PlatformRoute,
 } as any)
 
 const PaymentSuccessRoute = PaymentSuccessImport.update({
@@ -207,6 +214,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PaymentSuccessImport
       parentRoute: typeof rootRoute
     }
+    '/platform/$platformName': {
+      id: '/platform/$platformName'
+      path: '/$platformName'
+      fullPath: '/platform/$platformName'
+      preLoaderRoute: typeof PlatformPlatformNameImport
+      parentRoute: typeof PlatformImport
+    }
     '/my-account/': {
       id: '/my-account/'
       path: '/my-account'
@@ -219,10 +233,22 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface PlatformRouteChildren {
+  PlatformPlatformNameRoute: typeof PlatformPlatformNameRoute
+}
+
+const PlatformRouteChildren: PlatformRouteChildren = {
+  PlatformPlatformNameRoute: PlatformPlatformNameRoute,
+}
+
+const PlatformRouteWithChildren = PlatformRoute._addFileChildren(
+  PlatformRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/platform': typeof PlatformRouteWithChildren
   '/orders': typeof OrdersRoute
-  '/platform': typeof PlatformRoute
   '/wish-list': typeof WishListRoute
   '/cart': typeof CheckoutCartRoute
   '/checkout': typeof CheckoutCheckoutRoute
@@ -233,13 +259,14 @@ export interface FileRoutesByFullPath {
   '/my-account/orders': typeof MyAccountOrdersRoute
   '/my-account/profile': typeof MyAccountProfileRoute
   '/payment/success': typeof PaymentSuccessRoute
+  '/platform/$platformName': typeof PlatformPlatformNameRoute
   '/my-account': typeof MyAccountIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/platform': typeof PlatformRouteWithChildren
   '/orders': typeof OrdersRoute
-  '/platform': typeof PlatformRoute
   '/wish-list': typeof WishListRoute
   '/cart': typeof CheckoutCartRoute
   '/checkout': typeof CheckoutCheckoutRoute
@@ -250,14 +277,15 @@ export interface FileRoutesByTo {
   '/my-account/orders': typeof MyAccountOrdersRoute
   '/my-account/profile': typeof MyAccountProfileRoute
   '/payment/success': typeof PaymentSuccessRoute
+  '/platform/$platformName': typeof PlatformPlatformNameRoute
   '/my-account': typeof MyAccountIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/platform': typeof PlatformRouteWithChildren
   '/orders': typeof OrdersRoute
-  '/platform': typeof PlatformRoute
   '/wish-list': typeof WishListRoute
   '/_checkout/cart': typeof CheckoutCartRoute
   '/_checkout/checkout': typeof CheckoutCheckoutRoute
@@ -268,6 +296,7 @@ export interface FileRoutesById {
   '/my-account/orders': typeof MyAccountOrdersRoute
   '/my-account/profile': typeof MyAccountProfileRoute
   '/payment/success': typeof PaymentSuccessRoute
+  '/platform/$platformName': typeof PlatformPlatformNameRoute
   '/my-account/': typeof MyAccountIndexRoute
 }
 
@@ -287,6 +316,7 @@ export interface FileRouteTypes {
     | '/my-account/orders'
     | '/my-account/profile'
     | '/payment/success'
+    | '/platform/$platformName'
     | '/my-account'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -303,6 +333,7 @@ export interface FileRouteTypes {
     | '/my-account/orders'
     | '/my-account/profile'
     | '/payment/success'
+    | '/platform/$platformName'
     | '/my-account'
   id:
     | '__root__'
@@ -319,14 +350,15 @@ export interface FileRouteTypes {
     | '/my-account/orders'
     | '/my-account/profile'
     | '/payment/success'
+    | '/platform/$platformName'
     | '/my-account/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PlatformRoute: typeof PlatformRouteWithChildren
   OrdersRoute: typeof OrdersRoute
-  PlatformRoute: typeof PlatformRoute
   WishListRoute: typeof WishListRoute
   CheckoutCartRoute: typeof CheckoutCartRoute
   CheckoutCheckoutRoute: typeof CheckoutCheckoutRoute
@@ -342,8 +374,8 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PlatformRoute: PlatformRouteWithChildren,
   OrdersRoute: OrdersRoute,
-  PlatformRoute: PlatformRoute,
   WishListRoute: WishListRoute,
   CheckoutCartRoute: CheckoutCartRoute,
   CheckoutCheckoutRoute: CheckoutCheckoutRoute,
@@ -390,7 +422,10 @@ export const routeTree = rootRoute
       "filePath": "orders.tsx"
     },
     "/platform": {
-      "filePath": "platform.tsx"
+      "filePath": "platform.tsx",
+      "children": [
+        "/platform/$platformName"
+      ]
     },
     "/wish-list": {
       "filePath": "wish-list.tsx"
@@ -421,6 +456,10 @@ export const routeTree = rootRoute
     },
     "/payment/success": {
       "filePath": "payment.success.tsx"
+    },
+    "/platform/$platformName": {
+      "filePath": "platform.$platformName.tsx",
+      "parent": "/platform"
     },
     "/my-account/": {
       "filePath": "my-account/index.tsx"
