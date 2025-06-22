@@ -33,7 +33,7 @@ public class ClientCartController {
 
     @GetMapping
     public BaseResponse<CartDetailDTO> getCartByUserId(@AuthenticationPrincipal CustomUserDetails user) {
-        return new OkResponse<CartDetailDTO>(cartService.getCartDetailByCartId(user.getCart().getId(), user));
+        return new OkResponse<CartDetailDTO>(cartService.getCartDetailByCartId(user.getCart().getId()));
     }
 
     @PostMapping("/{gameId}")

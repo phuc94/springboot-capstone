@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,7 +17,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
-import com.cybersoft.capstone.entity.enums.OrderStatus;
 import com.cybersoft.capstone.entity.enums.PaymentMethodStatus;
 
 import lombok.Data;
@@ -33,10 +31,12 @@ public class Orders implements Serializable {
     @Enumerated(EnumType.STRING)
     private PaymentMethodStatus paymentStatus;
 
-    @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
+    // @Enumerated(EnumType.STRING)
+    // private OrderStatus orderStatus;
+    private String orderStatus;
 
     private String sessionId ;
+    private String url ;
     private int originalAmount;
     private int discountAmount;
     private int totalAmount;
@@ -47,7 +47,7 @@ public class Orders implements Serializable {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 
     @ManyToOne

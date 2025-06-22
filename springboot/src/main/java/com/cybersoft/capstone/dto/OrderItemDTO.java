@@ -6,6 +6,7 @@ import lombok.Data;
 public class OrderItemDTO {
     private int quantity;
     private double price;
-    private int orderId;
     private int gameId;
+    private String title;
+    private String img;
 }

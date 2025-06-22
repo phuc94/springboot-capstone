@@ -1,8 +1,8 @@
 package com.cybersoft.capstone.controller.client;
 
 import com.cybersoft.capstone.dto.CustomUserDetails;
+import com.cybersoft.capstone.dto.OrderDTO;
 import com.cybersoft.capstone.exception.NotFoundException;
-import com.cybersoft.capstone.payload.response.AcceptedResponse;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.OkResponse;
 import com.cybersoft.capstone.payload.response.StripeResponse;
@@ -33,13 +33,12 @@ public class ClientCheckoutController {
     }
 
     @PostMapping("/fullfill")
-    public BaseResponse<?> fullfill(@AuthenticationPrincipal CustomUserDetails user, @RequestParam String sessionId) {
+    public BaseResponse<OrderDTO> fullfill(@AuthenticationPrincipal CustomUserDetails user, @RequestParam String sessionId) {
         if (orderService.checkUserOrderSessionId(user.getId(), sessionId)) {
-            stripeService.fulfillCheckout(sessionId, user.getId(), user.getCart().getId());
+            return new OkResponse<OrderDTO>(stripeService.fulfillCheckout(sessionId, user.getId(), user.getCart().getId()));
         } else {
             throw new NotFoundException("Order not found");
         }
-        return new AcceptedResponse<>();
     }
 
 }

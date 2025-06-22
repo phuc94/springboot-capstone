@@ -2,18 +2,16 @@ import { AppShell } from '@mantine/core';
 import Header from './Header';
 import React from 'react';
 import Footer from './Footer';
-import axios from 'axios';
-import { useAuthStore } from '@/store/useAuthStore';
+import { useCart } from '@/hooks/useCart';
+import { useCartStore } from '@/store/useCartStore';
+import { Notifications } from '@mantine/notifications';
 
 function Layout({children}: {children: React.ReactNode}) {
-
-// const { isAuthenticated, token } = useAuthStore()
-// if (isAuthenticated) {
-//   console.log('tokennnnnnnnnnnnn')
-//   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-//   axios.defaults.withCredentials = true
-// }
-
+  const {data, isSuccess} = useCart()
+  const setStore = useCartStore(state => state.setStore)
+  if (isSuccess) {
+    setStore(data?.data)
+  }
 
   return (
     <AppShell
@@ -26,7 +24,7 @@ function Layout({children}: {children: React.ReactNode}) {
       <AppShell.Main>{children}</AppShell.Main>
 
       <Footer />
-
+      <Notifications position="top-center" />
     </AppShell>
   )
 }

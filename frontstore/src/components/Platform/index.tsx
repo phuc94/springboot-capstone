@@ -3,6 +3,8 @@ import GameCard from "../GameCard";
 
 const Platform = ({data}: any) => {
 
+  if (data?.games.length == 0) return null;
+
   return (
     <Container>
       <Space h="xl" />

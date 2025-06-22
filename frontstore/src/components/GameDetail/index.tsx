@@ -19,7 +19,7 @@ const GameDetail = () => {
         <Flex gap={12}>
           <Flex className="relative">
             <Image radius="md" src={query.data?.data?.medias.find((media:any) => media.primary)?.url} w={320} h={500} />
-            {query.data?.data?.sale !== 0 && <SaleTag amount={query.data?.data?.sale} />}
+            {query.data?.data?.sale && <SaleTag amount={query.data?.data?.sale.amount} />}
           </Flex>
           <Stack className={styles.info} align="center">
             <Title order={1}>{query.data?.data?.title}</Title>
@@ -29,7 +29,7 @@ const GameDetail = () => {
               {query.data?.data?.sale !== 0 ?
                 <Box>
                   <Title order={2} c="dimmed" td="line-through">{query.data?.data?.price}đ</Title>
-                  <Title order={2} fw={700}>{Math.round(query.data?.data?.price * (100 - query.data?.data?.sale) / 100)}đ</Title>
+                  <Title order={2} fw={700}>{query.data?.data?.salePrice}đ</Title>
                 </Box>
                 :
                 <Title order={2} size="xl" fw={700}>{query.data?.data?.price}đ</Title>

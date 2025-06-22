@@ -1,24 +1,19 @@
 import { UpdateItem } from '@/api/cart';
-import { useCart, useDeleteFromCart, useUpdateCart } from '@/hooks/useCart';
-import { queryClient } from '@/routes/__root';
+import { useDeleteFromCart, useUpdateCart } from '@/hooks/useCart';
+import { useCartStore } from '@/store/useCartStore';
 
 import { Stepper, Table, Text, Image, NumberInput, Flex, Box, Space, Button, Card, Divider, CloseButton } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { useRouter, Link } from '@tanstack/react-router';
-import { useEffect } from 'react';
 
 function Cart() {
-  const {data, isFetching} = useCart();
-  const {mutate: deleteFromCart, isSuccess: isDeleteSuccess} = useDeleteFromCart();
-  const {mutate: updateCart, isSuccess: isUpdateSucess} = useUpdateCart();
+  const {mutate: deleteFromCart} = useDeleteFromCart();
+  const {mutate: updateCart} = useUpdateCart();
+  const items = useCartStore(state => state.items);
+  const originalPrice = useCartStore(state => state.originalPrice);
+  const discountAmount = useCartStore(state => state.discountAmount);
+  const finalPrice = useCartStore(state => state.finalPrice);
   const router = useRouter();
-
-  useEffect(() => {
-    if (isFetching) {
-      return;
-    }
-    queryClient.invalidateQueries({ queryKey: ['cart'] })
-  }, [isDeleteSuccess, isUpdateSucess])
 
   return (
     <Box style={{paddingTop: 80}} >
@@ -29,12 +24,12 @@ function Cart() {
             <Table>
                <Table.Thead>
                 <Table.Th>Sản phẩm</Table.Th>
-                <Table.Th>Đơn giá</Table.Th>
-                <Table.Th>Số lượng</Table.Th>
-                <Table.Th>Giá</Table.Th>
+                <Table.Th w={120}>Đơn giá</Table.Th>
+                <Table.Th w={100}>Số lượng</Table.Th>
+                <Table.Th w={120}>Tổng Giá</Table.Th>
                </Table.Thead>
                <Table.Tbody>
-                {data?.data?.cartDetail.map((row: any) => 
+                {items.map((row: any) => 
                   <Row
                     key={row.gameId}
                     deleteFromCart={deleteFromCart}
@@ -44,7 +39,7 @@ function Cart() {
                 )}
                </Table.Tbody>
             </Table>
-            <OrderDetail />
+            <OrderDetail data={{originalPrice, discountAmount, finalPrice}} />
           </Flex>
           <Space h="xl" />
           <Button onClick={() => router.history.back()}>
@@ -65,35 +60,50 @@ function Cart() {
 
 export default Cart
 
-const OrderDetail = () => {
+const OrderDetail = ({data}) => {
+  const router = useRouter();
+
   return (
     <Box>
       <Card
         withBorder
         radius="md"
         padding="20"
-        style={{width: 400}}
+        style={{width: 320}}
       >
         <Text size="xl" fw={700}>Tổng cộng giỏ hàng</Text>
         <Space h="sm" />
         <Divider />
         <Space h="sm" />
         <Flex justify="space-between">
-          <Text size="xl">Tạm tính</Text>
-          <Text size="xl">590.000</Text>
+          <Text size="xl">Giá gốc</Text>
+          <Text size="xl">{data.originalPrice}</Text>
         </Flex>
+        <Space h="sm" />
+        {
+          data.discountAmount > 0 &&
+          <Box>
+          <Divider />
+          <Space h="sm" />
+          <Flex justify="space-between">
+            <Text size="xl">Giá giảm</Text>
+            <Text size="xl">- {data.discountAmount}</Text>
+          </Flex>
+          </Box>
+        }
         <Space h="sm" />
         <Divider />
         <Space h="sm" />
         <Flex justify="space-between">
-          <Text size="xl">Tổng</Text>
-          <Text size="xl">590.000</Text>
+          <Text size="xl">Tạm tính</Text>
+          <Flex gap={12} align="center">
+            <Text size="md" td="line-through" c="dimmed">{data.originalPrice}</Text>
+            <Text size="xl">{data.finalPrice}</Text>
+          </Flex>
         </Flex>
         <Space h="sm" />
-        <Button>
-          <Link to="/payment">
-            Tiến hành thanh toán
-          </Link>
+        <Button onClick={()=>router.history.push('/payment')}>
+          Tiến hành thanh toán
         </Button>
       </Card>
       <Space h="sm" />
@@ -137,8 +147,8 @@ const Row = ({rowData, deleteFromCart, updateCart}: any) => {
     <Table.Tr key={rowData.gameId}>
       <Table.Td>
         <Flex gap="12" align="center">
-          <Image height="80" src={rowData.img} />
-          <Text size="xl" fw={700}>{rowData.title}</Text>
+          <Image h={80} w={60} src={rowData.img} />
+          <Text size="md" fw={700}>{rowData.title}</Text>
         </Flex>
       </Table.Td>
       <Table.Td>{rowData.price}</Table.Td>
@@ -147,9 +157,7 @@ const Row = ({rowData, deleteFromCart, updateCart}: any) => {
           value={rowData.quantity}
         />
       </Table.Td>
-      <Table.Td>
-        <Text>{tempAmount}</Text>
-      </Table.Td>
+      <Table.Td>{tempAmount}</Table.Td>
       <CloseButton onClick={(e)=>{e.preventDefault();onRemoveCartItem(rowData.gameId)}} />
     </Table.Tr>
   )

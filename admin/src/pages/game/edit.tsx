@@ -1,7 +1,8 @@
-import { useForm, Edit, useSelect } from "@refinedev/antd";
+import { useForm, Edit, useSelect, DateField } from "@refinedev/antd";
 
-import { Card, Form, Input, Select, Space } from "antd";
+import { Card, Form, Input, Select, Space, Typography } from "antd";
 import { useWatch } from "antd/es/form/Form";
+import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 
@@ -20,7 +21,7 @@ export const EditGame= () => {
   useEffect(()=> {
     if (typeof saleId == 'object' && Object.keys(saleId).length === 0) return
     const sale = saleQuery?.query?.data?.data?.find(
-      sale => sale.id == form.getFieldValue('sale')
+      (sale: Sale) => sale.id == form.getFieldValue('saleId')
     )
     setSaleInfo({
       amount: sale?.amount,
@@ -71,31 +72,30 @@ export const EditGame= () => {
         </Form.Item>
         <Card size="small" title="Sale info" >
           <Space size="middle" direction="vertical">
-            <Space.Compact>
-              <Input
-                addonBefore="Amount"
-                value={saleInfo.amount}
-                disabled
-              />
-            </Space.Compact>
-            <Space.Compact>
-              <Input
-                addonBefore="Start Date"
-                value={saleInfo.startDate}
-                disabled
-              />
-            </Space.Compact>
-            <Space.Compact>
-              <Input
-                addonBefore="End Date"
-                value={saleInfo.endDate}
-                disabled
-              />
-            </Space.Compact>
+            <Space>
+              <Typography.Text>Amount: {saleInfo.amount}%</Typography.Text>
+            </Space>
+            <Space>
+              <Typography.Text>Start date: </Typography.Text>
+              <DateField value={dayjs(saleInfo.startDate).toString()} />
+            </Space>
+            <Space>
+              <Typography.Text>End date: </Typography.Text>
+              <DateField value={dayjs(saleInfo.endDate).toString()} />
+            </Space>
           </Space>
         </Card>
+        <Form.Item label="Stock" name="stock">
+          <Input />
+        </Form.Item>
       </Form>
     </Edit>
   );
 };
+
+interface Sale {
+  amount: number;
+  startDate: number;
+  endDate: number
+}
 

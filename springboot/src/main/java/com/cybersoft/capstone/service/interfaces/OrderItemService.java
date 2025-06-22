@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface OrderItemService {
     public List<OrderItem> saveAll(List<OrderItem> orderItems);
+    public List<OrderItem> findByOrderId(int orderId);
 }
 
 

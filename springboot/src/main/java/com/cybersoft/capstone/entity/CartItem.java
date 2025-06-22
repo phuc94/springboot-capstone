@@ -1,6 +1,7 @@
 package com.cybersoft.capstone.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,6 +22,8 @@ public class CartItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int quantity;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "id")

@@ -16,4 +16,6 @@ public class AdminGameDTO {
     private String description;
     private int saleId;
     private Timestamp deleted_on;
+    private Timestamp updatedAt;
+    private Timestamp createdAt;
 }

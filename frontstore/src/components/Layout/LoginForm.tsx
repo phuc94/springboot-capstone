@@ -2,6 +2,7 @@ import { useLogin, useRegister } from '@/hooks/auth';
 import { useAuthStore } from '@/store/useAuthStore';
 import { Button, Divider, Flex, Group, Stack, TextInput, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
 import { useEffect } from 'react';
 
 const LoginForm = ({closeModal}: any) => (
@@ -28,9 +29,19 @@ const SignInForm = ({closeModal}: any) => {
   });
 
   useEffect(()=>{
-    if (isSuccess) {
+    if (isSuccess && data.code == 200) {
+      notifications.show({
+        message: 'Đăng nhập thành công!',
+        color: 'green'
+      })
       authLogin(data.data.user, data.data.token);
       closeModal();
+    } else if (isSuccess && data?.code !== 200) {
+      notifications.show({
+        title: 'Đăng nhập thất bại!',
+        message: 'Nhập sai email hoặc mật khẩu.',
+        color: 'red'
+      })
     }
   }, [isSuccess])
 
@@ -67,7 +78,7 @@ const SignInForm = ({closeModal}: any) => {
 }
 
 const SignUpForm = () => {
-  const {mutate: register} = useRegister();
+  const {mutate: register, isSuccess} = useRegister();
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -80,6 +91,17 @@ const SignUpForm = () => {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     },
   });
+
+  useEffect(()=> {
+    if (isSuccess) {
+      notifications.show({
+        title: 'Đăng ký thành công!',
+        message: 'Xin mời đăng nhập.',
+        color: 'green'
+      })
+      form.reset();
+    }
+  }, [isSuccess])
 
   return (
     <form onSubmit={form.onSubmit((values) => register(values))}>

@@ -3,9 +3,9 @@ package com.cybersoft.capstone.service.implement;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cybersoft.capstone.dto.ClientGameCardDTO;
 import com.cybersoft.capstone.dto.ClientGameDTO;
 import com.cybersoft.capstone.dto.ClientGameDetailDTO;
-import com.cybersoft.capstone.dto.GameCardDTO;
 import com.cybersoft.capstone.dto.mapper.GameMapper;
 import com.cybersoft.capstone.entity.Games;
 import com.cybersoft.capstone.exception.NotFoundException;
@@ -39,9 +39,9 @@ public class ClientGameServiceImpl implements ClientGameService {
     }
 
     @Override
-    public List<GameCardDTO> getCardGameByPlatform(int id) {
-        return gameRepository.findTop4ByOrderByCreatedAtDesc().stream()
-            .map(gameMapper::toGameCardDTO).collect(Collectors.toList());
+    public List<ClientGameCardDTO> getCardGameByPlatform(int id) {
+        return gameRepository.findTop4ByPlatformIdAndStockGreaterThanOrderByUpdatedAtDesc(id, 0).stream()
+            .map(gameMapper::toClientGameCardDTO).collect(Collectors.toList());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.cybersoft.capstone.exception;
 
 import com.cybersoft.capstone.payload.response.BadRequestResponse;
+import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.ErrMessage;
 import com.cybersoft.capstone.payload.response.NotFoundResponse;
 
@@ -17,6 +18,16 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(NotFoundException.class)
+    protected BaseResponse<ErrMessage> handleNotFoundException(NotFoundException ex) {
+        return new NotFoundResponse<>(new ErrMessage(ex.getLocalizedMessage()));
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    protected BaseResponse<ErrMessage> handleBadRequestException(BadRequestException ex) {
+        return new BadRequestResponse<>(new ErrMessage(ex.getLocalizedMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<BadRequestResponse<ErrMessage>> handleInvalidRequest(MethodArgumentNotValidException ex, WebRequest request) {
         return new ResponseEntity<>(new BadRequestResponse<>(new ErrMessage(ex.getLocalizedMessage())), HttpStatus.BAD_REQUEST);
@@ -25,11 +36,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     protected ResponseEntity<BadRequestResponse<ErrMessage>> handleInvalidFormat(HttpMessageNotReadableException ex, WebRequest request) {
         return new ResponseEntity<>(new BadRequestResponse<>(new ErrMessage(ex.getLocalizedMessage())), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<NotFoundResponse<ErrMessage>> handleHttpMessageNotReadable(NotFoundException ex, WebRequest request) {
-        return new ResponseEntity<>(new NotFoundResponse<>(new ErrMessage(ex.getLocalizedMessage())), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
