@@ -10,3 +10,8 @@ export const login = async (user: any) => {
   return data;
 };
 
+export const getMe = async () => {
+  const { data } = await axiosInstance.get('/auth/me');
+  return data;
+};
+

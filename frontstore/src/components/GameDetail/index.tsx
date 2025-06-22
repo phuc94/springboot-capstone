@@ -13,13 +13,13 @@ const GameDetail = () => {
   if (query.isFetching) { return null; }
 
   return (
-    <Container>
+    <Container size="xl">
       <Flex direction="column" align="center">
         <Space h="xl" />
-        <Flex gap={40}>
+        <Flex gap={12}>
           <Flex className="relative">
-            <Image radius="md" src={query.data?.data?.medias.find((media:any) => media.primary)?.url} />
-            {query.data?.data?.sale !== 0 && <SaleTag amount={query.data?.data?.sale} />}
+            <Image radius="md" src={query.data?.data?.medias.find((media:any) => media.primary)?.url} w={320} h={500} />
+            {query.data?.data?.sale && <SaleTag amount={query.data?.data?.sale.amount} />}
           </Flex>
           <Stack className={styles.info} align="center">
             <Title order={1}>{query.data?.data?.title}</Title>
@@ -29,7 +29,7 @@ const GameDetail = () => {
               {query.data?.data?.sale !== 0 ?
                 <Box>
                   <Title order={2} c="dimmed" td="line-through">{query.data?.data?.price}đ</Title>
-                  <Title order={2} fw={700}>{Math.round(query.data?.data?.price * (100 - query.data?.data?.sale) / 100)}đ</Title>
+                  <Title order={2} fw={700}>{query.data?.data?.salePrice}đ</Title>
                 </Box>
                 :
                 <Title order={2} size="xl" fw={700}>{query.data?.data?.price}đ</Title>
@@ -39,6 +39,8 @@ const GameDetail = () => {
           <Divider orientation="vertical" />
           <IconBox/>
         </Flex>
+        <Space h="xl" />
+        <Space h="xl" />
         <Description data={query.data?.data?.gameDescription.description} />
       </Flex>
       <Reviews data={query.data?.data?.reviews} />
@@ -48,8 +50,8 @@ const GameDetail = () => {
 export default GameDetail
 
 const IconBox = () => (
-  <Stack>
-    <Flex gap={4} className={styles.iconbox}>
+  <Flex direction="column" justify="space-around">
+    <Flex gap={4} className={styles.iconbox} >
       <Image
         width={65}
         height={65}
@@ -89,5 +91,5 @@ const IconBox = () => (
       />
       <Text>Mua bản quyền để nhận được tính năng cao cấp</Text>
     </Flex>
-  </Stack>
+  </Flex>
 )

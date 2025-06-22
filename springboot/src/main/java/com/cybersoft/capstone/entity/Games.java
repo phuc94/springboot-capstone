@@ -31,6 +31,7 @@ public class Games implements Serializable {
     @Column(name = "deleted_on")
     private Timestamp deletedOn;
     private Timestamp createdAt;
+    private Timestamp updatedAt;
 
     // Entities mapping
     @OneToOne(fetch = FetchType.LAZY)

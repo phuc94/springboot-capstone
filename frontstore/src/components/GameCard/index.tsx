@@ -1,17 +1,41 @@
 import { Badge, Box, Button, Card, Flex, Image, Rating, Space, Text } from "@mantine/core"
 import styles from './style.module.scss'
-import { Link, useRouter } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router"
 import { useAddToCart } from "@/hooks/useCart"
+import { notifications } from "@mantine/notifications"
+import { useRef } from "react"
+import { useAuthStore } from "@/store/useAuthStore"
 
 const GameCard = ({data}: any) => {
-  const router = useRouter();
+  const {isAuthenticated} = useAuthStore();
   const {mutate: addToCart, isSuccess } = useAddToCart();
+  const notiRef = useRef<string>('');
 
-  const onAddToCard = async (id: number) => {
-    addToCart(id);
-    if (isSuccess) {
-      router.history.push('/cart');
+  const onAddToCart = async (id: number) => {
+    if (!isAuthenticated) {
+      notifications.show({
+        title: 'Bạn chưa đăng nhập!',
+        message: 'Vui lòng đăng nhập hoặc đăng ký.',
+        color: 'red'
+      })
+      return;
     }
+    notiRef.current = notifications.show({
+      title: 'Đang được xử lý!',
+      message: 'Xin chờ trong giây lát',
+      loading: true
+    })
+    addToCart(id);
+  }
+
+  if (isSuccess) {
+    notifications.update({
+      id: notiRef.current,
+      title: '✅ Thêm vào giỏ thành công!',
+      message: 'Bấm vào giỏ hàng để tiến hành thanh toán.',
+      color: 'green',
+      loading: false
+    })
   }
 
   return (
@@ -22,28 +46,31 @@ const GameCard = ({data}: any) => {
       >
         <Card.Section>
           <Image
-            src="https://muaga.me/wp-content/uploads/2023/02/nba-2k23-steam-1-247x296.jpg.webp"
+            w={220}
+            h={300}
+            src={data.img}
           />
         </Card.Section>
 
         <Flex direction="column" justify="center" align="center">
-          <Text size="xl">{data.title}</Text>
+          <Space h="xs" />
+          <Text size="xl" ta="center">{data.title}</Text>
           <Space h="xs" />
           <Rating value={5} color="#faf737" size="md" readOnly/>
-          {data.sale !== 0 ?
+          {data.sale ?
             <Box>
               <Text size="xl" c="dimmed" td="line-through">{data.price}đ</Text>
-              <Text size="xl" fw={700}>{Math.round(data.price * (100 - data.sale) / 100)}đ</Text>
+              <Text size="xl" fw={700}>{data.salePrice}đ</Text>
             </Box>
             :
             <Text size="xl" fw={700}>{data.price}đ</Text>
           }
           <Space h="md" />
-          <Button color="red" onClick={(e)=>{e.preventDefault();onAddToCard(data.id)}}>
+          <Button color="red" onClick={(e)=>{e.preventDefault();onAddToCart(data.id)}}>
             MUA HÀNG
           </Button>
         </Flex>
-        {data.sale !== 0 && <SaleTag amount={data.sale} />}
+        {data.sale && <SaleTag amount={data.sale.amount} />}
       </Card>
     </Link>
   )

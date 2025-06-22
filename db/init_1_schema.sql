@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS games (
   stock INTEGER NOT NULL DEFAULT 0,
   avg_rating INTEGER NOT NULL DEFAULT 5,
   platform_id INTEGER NOT NULL,
-  sale_id INTEGER NOT NULL DEFAULT 0,
+  sale_id INTEGER NOT NULL DEFAULT 1,
   deleted_on TIMESTAMP DEFAULT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS game_description (
 CREATE TABLE IF NOT EXISTS sales (
   id SERIAL PRIMARY KEY,
   amount INTEGER NOT NULL,
-  status sale_status NOT NULL,
+  status VARCHAR(255) NOT NULL,
   start_date TIMESTAMP,
   end_date TIMESTAMP,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE coupon_types (
 CREATE TABLE IF NOT EXISTS medias (
   id SERIAL PRIMARY KEY,
   game_id INTEGER NOT NULL,
-  media_type media_type NOT NULL,
+  media_type VARCHAR(255) NOT NULL,
   url VARCHAR(255) NOT NULL,
   is_primary bool NOT NULL DEFAULT false,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -179,7 +179,8 @@ CREATE TABLE IF NOT EXISTS reviews (
 CREATE TABLE IF NOT EXISTS orders (
   id SERIAL PRIMARY KEY,
   payment_method_id INTEGER,
-  session_id VARCHAR(255) NOT NULL,
+  session_id VARCHAR(255),
+  url TEXT,
   order_status VARCHAR(255) NOT NULL,
   payment_status VARCHAR(255) NOT NULL,
   original_amount INTEGER,

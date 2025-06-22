@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as WishListImport } from './routes/wish-list'
 import { Route as PlatformImport } from './routes/platform'
+import { Route as OrdersImport } from './routes/orders'
 import { Route as IndexImport } from './routes/index'
 import { Route as MyAccountIndexImport } from './routes/my-account/index'
 import { Route as PlatformPlatformNameImport } from './routes/platform.$platformName'
@@ -37,6 +38,12 @@ const WishListRoute = WishListImport.update({
 const PlatformRoute = PlatformImport.update({
   id: '/platform',
   path: '/platform',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const OrdersRoute = OrdersImport.update({
+  id: '/orders',
+  path: '/orders',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -121,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersImport
       parentRoute: typeof rootRoute
     }
     '/platform': {
@@ -234,6 +248,7 @@ const PlatformRouteWithChildren = PlatformRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/platform': typeof PlatformRouteWithChildren
+  '/orders': typeof OrdersRoute
   '/wish-list': typeof WishListRoute
   '/cart': typeof CheckoutCartRoute
   '/checkout': typeof CheckoutCheckoutRoute
@@ -251,6 +266,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/platform': typeof PlatformRouteWithChildren
+  '/orders': typeof OrdersRoute
   '/wish-list': typeof WishListRoute
   '/cart': typeof CheckoutCartRoute
   '/checkout': typeof CheckoutCheckoutRoute
@@ -269,6 +285,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/platform': typeof PlatformRouteWithChildren
+  '/orders': typeof OrdersRoute
   '/wish-list': typeof WishListRoute
   '/_checkout/cart': typeof CheckoutCartRoute
   '/_checkout/checkout': typeof CheckoutCheckoutRoute
@@ -287,6 +304,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/orders'
     | '/platform'
     | '/wish-list'
     | '/cart'
@@ -303,6 +321,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/orders'
     | '/platform'
     | '/wish-list'
     | '/cart'
@@ -319,6 +338,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/orders'
     | '/platform'
     | '/wish-list'
     | '/_checkout/cart'
@@ -338,6 +358,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PlatformRoute: typeof PlatformRouteWithChildren
+  OrdersRoute: typeof OrdersRoute
   WishListRoute: typeof WishListRoute
   CheckoutCartRoute: typeof CheckoutCartRoute
   CheckoutCheckoutRoute: typeof CheckoutCheckoutRoute
@@ -354,6 +375,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PlatformRoute: PlatformRouteWithChildren,
+  OrdersRoute: OrdersRoute,
   WishListRoute: WishListRoute,
   CheckoutCartRoute: CheckoutCartRoute,
   CheckoutCheckoutRoute: CheckoutCheckoutRoute,
@@ -378,6 +400,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/orders",
         "/platform",
         "/wish-list",
         "/_checkout/cart",
@@ -394,6 +417,9 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/orders": {
+      "filePath": "orders.tsx"
     },
     "/platform": {
       "filePath": "platform.tsx",

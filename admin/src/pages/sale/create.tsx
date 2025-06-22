@@ -1,6 +1,6 @@
 import { useForm, Create } from "@refinedev/antd";
 
-import { Form, Input, Select } from "antd";
+import { DatePicker, Form, Input, Select } from "antd";
 
 export const CreateSale= () => {
   const { formProps, saveButtonProps } = useForm({
@@ -18,6 +18,12 @@ export const CreateSale= () => {
               Object.keys(SaleStatus).map(key => {return {value: key, label: key}})
             }
           />
+        </Form.Item>
+        <Form.Item label="Start Date" name="startDate">
+          <DatePicker />
+        </Form.Item>
+        <Form.Item label="End Date" name="endDate">
+          <DatePicker />
         </Form.Item>
       </Form>
     </Create>

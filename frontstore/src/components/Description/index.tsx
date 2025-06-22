@@ -26,4 +26,3 @@ const Description = ({data}: {data: string}) => {
 }
 export default Description;
 
-

@@ -1,5 +1,7 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,11 +51,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public CartDetailDTO getCartDetailByCartId(int cartId, CustomUserDetails user) {
-        if (cartItemService.existsByCartId(cartId)) {
-            return new CartDetailDTO(cartItemService.findByCartsId(cartId));
-        }
-        throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
+    public CartDetailDTO getCartDetailByCartId(int cartId) {
+        return new CartDetailDTO(cartItemService.findByCartsId(cartId));
     }
 
     @Override
@@ -82,7 +81,6 @@ public class CartServiceImpl implements CartService {
         throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
     }
 
-    // TODO: check quantity with stock
     @Override
     @Transactional
     public CartDetailDTO addItemToCart(int gameId, CustomUserDetails user) {
@@ -108,7 +106,7 @@ public class CartServiceImpl implements CartService {
             }
         }
         if (isCartUpdated) {
-            return this.getCartDetailByCartId(cart.getId(), user);
+            return this.getCartDetailByCartId(cart.getId());
         }
 
         CartItem cartItem = new CartItem();
@@ -120,18 +118,23 @@ public class CartServiceImpl implements CartService {
         gameRef.setMedias(clientGame.getMedias());
         gameRef.setSale(clientGame.getSale());
         cartItem.setGames(gameRef);
+        cartItem.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         cartItemService.save(cartItem);
 
-        return this.getCartDetailByCartId(cart.getId(), user);
+        return this.getCartDetailByCartId(cart.getId());
     }
 
     @Override
     public void updateCartItem(UpdateCartRequest updateCartRequest, int cartId) {
         if (cartItemService.existsByGameIdAndCartId(updateCartRequest.getGameId(), cartId)) {
-            CartItem cartItem = cartItemService.findByGameIdAndCartId(updateCartRequest.getGameId(), cartId);
-            cartItem.setQuantity(updateCartRequest.getQuantity());
-            cartItemService.save(cartItem);
-            return;
+            Games clientGame = clientGameService.getGameById(updateCartRequest.getGameId());
+            int stock = clientGame.getStock();
+            if (stock >= updateCartRequest.getQuantity()) {
+              CartItem cartItem = cartItemService.findByGameIdAndCartId(updateCartRequest.getGameId(), cartId);
+              cartItem.setQuantity(updateCartRequest.getQuantity());
+              cartItemService.save(cartItem);
+              return;
+            }
         }
         throw new NotFoundException(HttpStatus.NOT_FOUND.getReasonPhrase());
     }

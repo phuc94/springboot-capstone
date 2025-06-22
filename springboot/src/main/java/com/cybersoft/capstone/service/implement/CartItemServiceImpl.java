@@ -1,5 +1,7 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.cybersoft.capstone.entity.CartItem;
@@ -21,6 +23,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public CartItem save(CartItem cartItem) {
+        cartItem.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
         return cartItemRepository.save(cartItem);
     }
 
@@ -65,7 +68,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public List<CartItem> findByCartsId(int cartId) {
-        return cartItemRepository.findByCartsId(cartId);
+        return cartItemRepository.findByCartsIdOrderByCreatedAtDesc(cartId);
     }
 
     @Override

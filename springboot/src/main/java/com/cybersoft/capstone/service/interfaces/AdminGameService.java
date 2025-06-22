@@ -2,10 +2,11 @@ package com.cybersoft.capstone.service.interfaces;
 
 import java.util.List;
 
-import com.cybersoft.capstone.payload.request.SearchGameRequest;
 import jakarta.validation.Valid;
 
 import com.cybersoft.capstone.dto.AdminGameDTO;
+import com.cybersoft.capstone.payload.request.SearchGameRequest;
+
 import org.springframework.data.domain.Page;
 
 public interface AdminGameService {

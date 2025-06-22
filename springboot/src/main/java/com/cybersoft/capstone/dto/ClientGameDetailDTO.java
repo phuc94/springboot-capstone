@@ -10,6 +10,7 @@ import lombok.Data;
 public class ClientGameDetailDTO {
     private int id;
     private String title;
+    private int salePrice;
     private int price;
     private int stock;
     private int avgRating;
@@ -17,5 +18,5 @@ public class ClientGameDetailDTO {
     private GameDescriptionDTO gameDescription;
     private List<Medias> medias;
     private List<ReviewDTO> reviews;
-    private int sale;
+    private SaleDTO sale;
 }

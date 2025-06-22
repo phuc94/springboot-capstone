@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import lombok.Data;
 
 @Data
-public class AdminGameDTO {
+public class AdminCreateGameDTO {
     private int id;
     private String title;
     private int price;
@@ -16,6 +16,4 @@ public class AdminGameDTO {
     private String description;
     private int saleId;
     private Timestamp deleted_on;
-    private Timestamp updatedAt;
-    private Timestamp createdAt;
 }

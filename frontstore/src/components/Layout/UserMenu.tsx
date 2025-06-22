@@ -1,15 +1,21 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import { Avatar, Flex, Menu, Text } from "@mantine/core";
-import { IconLogout2 } from "@tabler/icons-react";
+import { IconBasketCheck, IconLogout2 } from "@tabler/icons-react";
 import styles from './Layout.module.scss'
+import { notifications } from "@mantine/notifications";
+import { useRouter } from "@tanstack/react-router";
 
 const UserMenu = () => {
   const user = useAuthStore(state => state.user);
   const logout = useAuthStore(state => state.logout);
+  const router = useRouter();
 
   const onLogout = () => {
     logout();
     localStorage.removeItem("token")
+    notifications.show({
+      message: 'Bạn đã đăng xuất!',
+    })
   }
 
   return (
@@ -22,6 +28,12 @@ const UserMenu = () => {
       </Menu.Target>
 
       <Menu.Dropdown>
+        <Menu.Item
+          leftSection={<IconBasketCheck size={14} />}
+          onClick={()=>router.history.push('/orders')}
+        >
+          Orders
+        </Menu.Item>
         <Menu.Item
           color="red"
           leftSection={<IconLogout2 size={14} />}

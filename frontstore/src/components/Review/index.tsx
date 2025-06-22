@@ -2,11 +2,15 @@ import { Avatar, Card, Divider, Flex, Rating, Space, Text, Title } from "@mantin
 import styles from './style.module.scss'
 
 const Reviews = ({data}: any) => {
-  console.log(data)
   return (
     <Flex direction="column" justify="start" gap={20}>
       <Title order={2}>Review</Title>
-      {data.map((review: any) => <ReviewCard key={review.id} data={review} />)}
+      {data.length > 0 ?
+        data.map((review: any) => <ReviewCard key={review.id} data={review} />)
+        :
+        <Text c="dimmed">Hiện chưa có review nào cho sản phẩm.
+        Bạn hãy là người đầu tiên review cho sản phẩm.</Text>
+      }
       <Space h="xl" />
     </Flex>
   )
@@ -32,11 +36,11 @@ const ReviewCard = ({data}: any) => {
           <Text size="xs" c="dimmed" fs="italic" >{data.createdAt}</Text>
         </Flex>
       </Flex>
+      <Space h="xs" />
+      <Rating value={5} color="#faf737" size="sm" readOnly/>
+      <Space h="xs" />
       <Divider orientation="horizontal" />
-      <Space h="md" />
-      <Rating value={5} color="#faf737" size="lg" readOnly/>
-      <Space h="md" />
-      <Divider orientation="horizontal" />
+      <Space h="xs" />
       <Text>{data.comment}</Text>
     </Card>
   )
