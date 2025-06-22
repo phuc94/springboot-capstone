@@ -2,7 +2,7 @@ import { Center, Container, Grid, Pagination, Space, Text, Title } from "@mantin
 import GameCard from "../GameCard"
 import { useParams } from "@tanstack/react-router"
 import { usePlatformGameList } from "@/hooks/usePlatformGames"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const GameList = () => {
     const { platformName } = useParams({ from: '/platform/$platformName' })
@@ -35,7 +35,7 @@ const GameList = () => {
                 <>
                     <Grid gutter="md">
                         {currentGames.length > 0 ? (
-                            currentGames.map(game => (
+                            currentGames.map((game: any) => (
                                 <Grid.Col key={game.id} span={3}>
                                     <GameCard data={game} />
                                     <Space h="md" />

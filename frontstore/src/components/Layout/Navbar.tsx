@@ -1,77 +1,114 @@
 import { Center, Group, Menu, UnstyledButton } from "@mantine/core"
 import { Link } from "@tanstack/react-router";
 import styles from './Layout.module.scss'
+import { usePlatformList } from "@/hooks/usePlatformGames";
 
 const Navbar = () => {
+  const { data: platforms, isSuccess } = usePlatformList();
+
+  if (!isSuccess) {
+    return <StaticPlatform />
+  }
+
+  return (
+    <Center>
+      <Group gap='xl'>
+
+        {platforms.data.length > 0 && platforms.data?.map((platform: any) => (
+          <Menu trigger="hover" closeDelay={100}>
+            <Menu.Target>
+              <Link className={styles.navLink}
+                to="/platform/$platformName"
+                params={{platformName: platform.name}}
+              >{platform.title}</Link>
+            </Menu.Target>
+
+            {
+              platform.children.length > 0 &&
+              <Menu.Dropdown>
+                {platform.children.map((children: any)=> (
+                  <Menu.Item>
+                    <Link className={styles.navLink}
+                      to="/platform/$platformName"
+                      params={{platformName: children.name}}
+                    >{children.title}</Link>
+                  </Menu.Item>
+                ))}
+              </Menu.Dropdown>
+            }
+
+          </Menu>
+        ))}
+
+      </Group>
+    </Center>
+  )
+}
+export default Navbar;
+
+const StaticPlatform = () => {
   return (
     <Center>
       <Group gap='xl'>
       
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <Link className={styles.navLink} to="/platform">STEAM</Link>
+            Steam
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item>ASLKDJ</Menu.Item>
-            <Menu.Item>ASLKDJ</Menu.Item>
-            <Menu.Item>ASLKDJ</Menu.Item>
-            <Menu.Item>ASLKDJ</Menu.Item>
-            <Menu.Item>ASLKDJ</Menu.Item>
+            <Menu.Item>Steam Key</Menu.Item>
+            <Menu.Item>Steam Gift</Menu.Item>
           </Menu.Dropdown>
         </Menu>
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <Link className={styles.navLink} to="/platform">ORIGIN</Link>
+            Origin
+          </Menu.Target>
+        </Menu>
+
+        <Menu trigger="hover" closeDelay={100}>
+          <Menu.Target>
+            Playstation
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item>ASLKDJ</Menu.Item>
-            <Menu.Item>ASLKDJ</Menu.Item>
-            <Menu.Item>ASLKDJ</Menu.Item>
-            <Menu.Item>ASLKDJ</Menu.Item>
-            <Menu.Item>ASLKDJ</Menu.Item>
+            <Menu.Item>PlayStation Game</Menu.Item>
+            <Menu.Item>PlayStation Plus</Menu.Item>
           </Menu.Dropdown>
         </Menu>
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <Link className={styles.navLink} to="/platform">UPLAY</Link>
+            Nintendo
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item>ASLKDJ</Menu.Item>
+            <Menu.Item>Nintendo Switch Game</Menu.Item>
+            <Menu.Item>Nintendo Switch Online Membership</Menu.Item>
           </Menu.Dropdown>
         </Menu>
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <UnstyledButton>XBOX</UnstyledButton>
+            Xbox
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item>ASLKDJ</Menu.Item>
+            <Menu.Item>Xbox Game</Menu.Item>
+            <Menu.Item>Xbox Game Pass Ultimate</Menu.Item>
           </Menu.Dropdown>
         </Menu>
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <Link className={styles.navLink} to="/platform">PLAYSTATION</Link>
+            Uplay
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item>ASLKDJ</Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
-
-        <Menu trigger="hover" closeDelay={100}>
-          <Menu.Target>
-            <Link className={styles.navLink} to="/platform">NINTENDO</Link>
-          </Menu.Target>
-
-          <Menu.Dropdown>
-            <Menu.Item>ASLKDJ</Menu.Item>
+            <Menu.Item>Uplay Key</Menu.Item>
+            <Menu.Item>Ubisoft Connect</Menu.Item>
           </Menu.Dropdown>
         </Menu>
 
@@ -79,5 +116,4 @@ const Navbar = () => {
     </Center>
   )
 }
-export default Navbar;
 

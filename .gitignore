@@ -192,3 +192,4 @@ dist-ssr
 
 .env
 craw_data/
+routeTree.gen.ts

@@ -1,7 +1,10 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import com.cybersoft.capstone.dto.ClientPlatformDTO;
 import com.cybersoft.capstone.dto.PlatformCreateDTO;
 import com.cybersoft.capstone.dto.mapper.PlatformMapper;
 import com.cybersoft.capstone.entity.Platforms;
@@ -10,6 +13,7 @@ import com.cybersoft.capstone.repository.PlatformRepository;
 import com.cybersoft.capstone.service.interfaces.PlatformService;
 import com.cybersoft.capstone.specification.PlatformSpecification;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -39,6 +43,33 @@ public class PlatformServiceImpl implements PlatformService {
     public List<Platforms> getAllPlatforms(Boolean isOrphan) {
         Specification<Platforms> spec = Specification.where(PlatformSpecification.isOrphan(isOrphan));
         return platformRepository.findAll(spec);
+    }
+
+    @Override
+    @Cacheable("clientPlatform")
+    public List<ClientPlatformDTO> getAllClientPlatforms() {
+        List<Platforms> platforms = platformRepository.findAll();
+        HashMap<Integer, ClientPlatformDTO> dtoMap = new HashMap<>();
+        for (Platforms platform : platforms) {
+            ClientPlatformDTO dto = new ClientPlatformDTO();
+            dto.setId(platform.getId());
+            dto.setName(platform.getName());
+            dto.setTitle(platform.getTitle());
+            dto.setChildren(new ArrayList<>());
+            dtoMap.put(Integer.valueOf(dto.getId()), dto);
+        }
+
+        List<ClientPlatformDTO> rootPlatforms = new ArrayList<>();
+        for (Platforms platform : platforms) {
+            ClientPlatformDTO dto = dtoMap.get(platform.getId());
+            if (platform.getParent() != null) {
+                ClientPlatformDTO parentDto = dtoMap.get(platform.getParent().getId());
+                parentDto.getChildren().add(dto);
+            } else {
+                rootPlatforms.add(dto);
+            }
+        }
+        return rootPlatforms;
     }
 
     @Override

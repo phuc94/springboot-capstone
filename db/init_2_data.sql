@@ -26,9 +26,9 @@ INSERT INTO platforms (parent_id, name, title) VALUES
 (6, 'uplay_key', 'Uplay Key'),
 (6, 'ubisoft_connect', 'Ubisoft Connect'),
 (5, 'xbox_game', 'Xbox Game'),
-(5, 'xbox_game', 'Xbox Game Pass Ultimate'),
+(5, 'xbox_game_ultimate', 'Xbox Game Pass Ultimate'),
 (3, 'ps_game', 'PlayStation Game'),
-(3, 'ps_game', 'PlayStation Plus'),
+(3, 'ps_game_plus', 'PlayStation Plus'),
 (4, 'nintendo_switch', 'Nintendo Switch Game'),
 (4, 'nintendo_membership', 'Nintendo Switch Online Membership');
 
