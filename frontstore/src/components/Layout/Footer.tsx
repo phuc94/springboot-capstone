@@ -98,7 +98,7 @@ const ReviewSite = () => {
         <Image
           width={65}
           height={65}
-          src="https://scontent-hkg1-2.xx.fbcdn.net/v/t39.30808-1/322006656_491317216422889_1302875434044134969_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=107&ccb=1-7&_nc_sid=79bf43&_nc_ohc=cr5O6X8_ooMQ7kNvwGUGE7h&_nc_oc=Adl2HmI8xSzWSgCMPkWj4yGbww1zbkFrJ056VtKSX9JQduS76Yet81whHWzZNDQPiNCCaRh6RQHmu7vnBC8iFCNC&_nc_zt=24&_nc_ht=scontent-hkg1-2.xx&edm=AOf6bZoEAAAA&_nc_gid=9Setjpk8utI0U121Cl-HZw&oh=00_AfFcK4d6GHe-nLKlTwXmwIl6Jc3z8wDxB4O6eLqtjB81PQ&oe=6806F077"/>
+          src="https://scontent-hkg1-2.xx.fbcdn.net/v/t39.30808-1/322006656_491317216422889_1302875434044134969_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=107&ccb=1-7&_nc_sid=79bf43&_nc_ohc=Np9xfCpRIBUQ7kNvwH48c2F&_nc_oc=AdkUNty1KpBvWWZRxROm-n0lFBIW7958gNX1l20rUVk9Mm9C2X1b1gFli2mBKgwQW5uUn3QhzON3vgWh2AO4Bpf4&_nc_zt=24&_nc_ht=scontent-hkg1-2.xx&edm=AOf6bZoEAAAA&_nc_gid=eiAPGDMGm5reMdKzS6oANA&oh=00_AfP3J7nruayims9Kgt4aaGfG3wpcU_hNX_qhjCUIUpXd0w&oe=685DBB37"/>
           <Stack>
             <Text>MuaGa.me - Game Bản Quyền</Text>
             <Rating value={5} color="#faf737" size="lg" readOnly/>

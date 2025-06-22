@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchPlatformGames } from "@/api/homepage";
 import { fetchPlatformGameList } from "@/api/gameApi";
+import { getPlatforms } from "@/api/platform";
 
 export const usePlatformGames = () => {
   return useQuery({
@@ -15,3 +16,11 @@ export const usePlatformGameList = (platformName: string) => {
     queryFn: () => fetchPlatformGameList(platformName),
   });
 };
+
+export const usePlatformList = () => {
+  return useQuery({
+    queryKey: ["platformList"],
+    queryFn: getPlatforms,
+  });
+};
+
