@@ -3,6 +3,7 @@ package com.cybersoft.capstone.controller.client;
 import java.util.List;
 
 import com.cybersoft.capstone.dto.ClientGameDetailDTO;
+import com.cybersoft.capstone.dto.GameCardDTO;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.OkResponse;
@@ -37,10 +38,10 @@ public class ClientGameController {
         }
     }
 
-    @GetMapping("/platform/{platformName}")
-    public BaseResponse<List<ClientGameDetailDTO>> getGamesByPlatform(@PathVariable String platformName) {
+    @GetMapping("/platform/{platformId}")
+    public BaseResponse<List<GameCardDTO>> getGamesByPlatform(@PathVariable int platformId) {
         try {
-            return new OkResponse<>(clientGameService.getGamesByPlatform(platformName));
+            return new OkResponse<>(clientGameService.getGamesByPlatformId(platformId));
         } catch (NotFoundException ex) {
             throw new NotFoundException("Games for platform not found");
         }

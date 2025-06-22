@@ -16,5 +16,5 @@ public interface GameRepository extends JpaRepository<Games, Integer>, JpaSpecif
 
     List<Games> findTop4ByOrderByCreatedAtDesc();
 
-    List<Games> findByPlatform_NameAndDeletedOnIsNull(String platformName);
+    List<Games> findByPlatform_IdAndDeletedOnIsNull(int platformId);
 }

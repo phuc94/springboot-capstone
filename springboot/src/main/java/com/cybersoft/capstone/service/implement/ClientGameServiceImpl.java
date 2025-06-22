@@ -63,8 +63,8 @@ public class ClientGameServiceImpl implements ClientGameService {
     }
 
     @Override
-    public List<ClientGameDetailDTO> getGamesByPlatform(String platformName) {
-        return gameRepository.findByPlatform_NameAndDeletedOnIsNull(platformName)
-                .stream().map(gameMapper::toClientGameDetailDTO).collect(Collectors.toList());
+    public List<GameCardDTO> getGamesByPlatformId(int platformId) {
+        return gameRepository.findByPlatform_IdAndDeletedOnIsNull(platformId)
+                .stream().map(gameMapper::toGameCardDTO).collect(Collectors.toList());
     }
 }
