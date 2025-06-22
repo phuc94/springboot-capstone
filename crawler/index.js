@@ -15,7 +15,8 @@ async function main() {
     const urlArray = await getElementHref(elements, page)
     const roundedUrlArrayLength = ((urlArray.length % 5) === 0) ? urlArray.length : Math.floor(urlArray.length/5)*5 + 5
 
-    for (let i = 0; (i*5) <= roundedUrlArrayLength; i++) {
+    // for (let i = 0; (i*5) <= roundedUrlArrayLength; i++) {
+    for (let i = 0; (i*5) <= 10; i++) {
       await Promise.all(urlArray.slice(i*5,(i+1)*5).map((url) => getGameDescription(browser, url)))
     }
 
@@ -70,6 +71,8 @@ async function getGameDescription(browser, url) {
   const textToWrite = imgSrc + separator +
     price.replace('₫', '') + separator +
     textContent.trim().replace(/>\n/g,'>')
+    .replace(/\\n/g, '<br>')
+    .replace(/\\/g, '')
   writeToFile(textToWrite, url)
   await page.close()
 }
