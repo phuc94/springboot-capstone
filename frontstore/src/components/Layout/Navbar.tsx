@@ -53,7 +53,7 @@ const StaticPlatform = () => {
       
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            Steam
+            <span>Steam</span>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -64,13 +64,13 @@ const StaticPlatform = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            Origin
+            <span>Origin</span>
           </Menu.Target>
         </Menu>
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            Playstation
+            <span>Playstation</span>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -81,7 +81,7 @@ const StaticPlatform = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            Nintendo
+            <span>Nintendo</span>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -92,7 +92,7 @@ const StaticPlatform = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            Xbox
+            <span>Xbox</span>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -103,7 +103,7 @@ const StaticPlatform = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            Uplay
+            <span>Uplay</span>
           </Menu.Target>
 
           <Menu.Dropdown>
