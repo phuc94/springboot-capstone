@@ -1,6 +1,7 @@
 import { useCheckout } from "@/hooks/useCheckout"
 import { usePaymentStore } from "@/store/useCartStore"
 import { Accordion, Box, Button, Card, Flex, Radio, Space, Stepper, Table, Text, Textarea, TextInput } from "@mantine/core"
+import { notifications } from "@mantine/notifications"
 import { useEffect, useState } from "react"
 
 const Payment = () => {
@@ -45,12 +46,16 @@ const PaymentForm = () => {
 }
 
 const OrderDetail = () => {
-  const [value, setValue] = useState<string | null>("vcb");
+  const [value, setValue] = useState<string | null>("stripe");
   const {mutate: checkout, isSuccess, data} = useCheckout();
   const init = usePaymentStore(state => state.init);
 
   const onOrder = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+    notifications.show({
+      loading: true,
+      message: "Đang tiến hành chuyển trang, xin chờ giây lát!"
+    })
     checkout();
   }
   useEffect(() => {
@@ -92,17 +97,11 @@ const OrderDetail = () => {
         onChange={setValue}
       >
         <Accordion value={value}>
-          <Accordion.Item value="vcb">
+          <Accordion.Item value="stripe">
             <Accordion.Control >
-              <Radio value="vcb" label="Chuyển khoản ngân hàng/Quét mã" />
+              <Radio value="stripe" label="Thanh toán quốc tế Stripe" />
             </Accordion.Control>
             <Accordion.Panel>Hỗ trợ chuyển tiền tất cả các ngân hàng lớn tại Việt Nam, tự động xác nhận đơn hàng</Accordion.Panel>
-          </Accordion.Item>
-          <Accordion.Item value="momo">
-            <Accordion.Control>
-              <Radio value="momo" label="Thanh toán Momo" />
-            </Accordion.Control>
-            <Accordion.Panel>Chuyển tiền hoặc quét mã QR MoMo, tự động xác nhận đơn hàng</Accordion.Panel>
           </Accordion.Item>
         </Accordion>
       </Radio.Group>

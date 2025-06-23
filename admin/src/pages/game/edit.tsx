@@ -38,7 +38,7 @@ export const EditGame= () => {
       {
         field: "isOrphan",
         operator: "eq",
-        value: false,
+        value: true,
       },
     ],
   })

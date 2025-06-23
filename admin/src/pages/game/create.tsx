@@ -17,7 +17,7 @@ export const CreateGame = () => {
       {
         field: "isOrphan",
         operator: "eq",
-        value: false,
+        value: true,
       },
     ],
   })

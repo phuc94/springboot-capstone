@@ -15,7 +15,7 @@ const Navbar = () => {
       <Group gap='xl'>
 
         {platforms.data.length > 0 && platforms.data?.map((platform: any) => (
-          <Menu trigger="hover" closeDelay={100}>
+          <Menu trigger="hover" closeDelay={100} key={platform.id}>
             <Menu.Target>
               <Link className={styles.navLink}
                 to="/platform/$platformName"
@@ -27,7 +27,7 @@ const Navbar = () => {
               platform.children.length > 0 &&
               <Menu.Dropdown>
                 {platform.children.map((children: any)=> (
-                  <Menu.Item>
+                  <Menu.Item key={children.id}>
                     <Link className={styles.navLink}
                       to="/platform/$platformName"
                       params={{platformName: children.name}}

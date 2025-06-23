@@ -28,6 +28,16 @@ const Description = ({data}: {data: string}) => {
       console.log(el.childNodes[1].dataset.lazySrc)
     })
 
+    const imgEls = document.querySelectorAll('img.aligncenter') as NodeList
+    imgEls.forEach((el: any) => {
+      if (el.dataset.lazySrc) {
+        el.src = el.dataset.lazySrc
+        el.style.width = '100%'
+        el.style.aspectRatio = 'auto'
+        el.style.height = 'auto'
+      }
+    })
+
   }, [data])
 
   return <Container>

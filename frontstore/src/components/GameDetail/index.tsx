@@ -1,16 +1,49 @@
 import { useGameDetail } from "@/hooks/useGameDetail"
-import { Box, Container, Divider, Flex, Group, Image, Rating, Space, Stack, Text, Title } from "@mantine/core"
+import { Box, Button, Container, Divider, Flex, Group, Image, Rating, Space, Stack, Text, Title } from "@mantine/core"
 import Description from "../Description";
 import styles from './style.module.scss'
 import { SaleTag } from "../GameCard";
 import { useParams } from "@tanstack/react-router";
 import Reviews from "../Review";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useAddToCart } from "@/hooks/useCart";
+import { notifications } from "@mantine/notifications";
+import { useRef } from "react";
 
 const GameDetail = () => {
-
+  const {isAuthenticated} = useAuthStore();
+  const {mutate: addToCart, isSuccess } = useAddToCart();
   const { gameId }: {gameId: number}  = useParams({ strict: false });
+  const notiRef = useRef<string>('');
   const query = useGameDetail(gameId);
   if (query.isFetching) { return null; }
+
+  const onAddToCart = async (id: number) => {
+    if (!isAuthenticated) {
+      notifications.show({
+        title: 'Bạn chưa đăng nhập!',
+        message: 'Vui lòng đăng nhập hoặc đăng ký.',
+        color: 'red'
+      })
+      return;
+    }
+    notiRef.current = notifications.show({
+      title: 'Đang được xử lý!',
+      message: 'Xin chờ trong giây lát',
+      loading: true
+    })
+    addToCart(id);
+  }
+
+  if (isSuccess) {
+    notifications.update({
+      id: notiRef.current,
+      title: '✅ Thêm vào giỏ thành công!',
+      message: 'Bấm vào giỏ hàng để tiến hành thanh toán.',
+      color: 'green',
+      loading: false
+    })
+  }
 
   return (
     <Container size="xl">
@@ -26,15 +59,18 @@ const GameDetail = () => {
             <Rating value={5} color="#faf737" size="lg" readOnly/>
             <Text c="dimmed">({query?.data?.data?.reviews.length} đánh giá của khách hàng)</Text>
             <Group>
-              {query.data?.data?.sale !== 0 ?
+              {query.data?.data?.sale ?
                 <Box>
                   <Title order={2} c="dimmed" td="line-through">{query.data?.data?.price}đ</Title>
                   <Title order={2} fw={700}>{query.data?.data?.salePrice}đ</Title>
                 </Box>
                 :
-                <Title order={2} size="xl" fw={700}>{query.data?.data?.price}đ</Title>
+                <Title order={2} fw={700}>{query.data?.data?.price}đ</Title>
               }
             </Group>
+            <Button color="red" onClick={(e)=>{e.preventDefault();onAddToCart(query.data?.data?.id)}}>
+              MUA HÀNG
+            </Button>
           </Stack>
           <Divider orientation="vertical" />
           <IconBox/>

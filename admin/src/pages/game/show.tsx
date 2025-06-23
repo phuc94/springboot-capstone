@@ -16,11 +16,13 @@ export const ShowGame = () => {
 
   return (
     <Show isLoading={isLoading}>
-      <Typography.Title level={5}>Id</Typography.Title>
-      <TextField value={data?.data?.id} />
+      <Typography.Title level={2}>{data?.data?.title}</Typography.Title>
 
       <Typography.Title level={5}>Description</Typography.Title>
       <MarkdownField value={data?.data?.description} />
+
+      <Typography.Title level={5}>Stock</Typography.Title>
+      <Typography.Title level={5}>{data?.data?.stock}</Typography.Title>
 
       <Typography.Title level={5}>Sale</Typography.Title>
       {

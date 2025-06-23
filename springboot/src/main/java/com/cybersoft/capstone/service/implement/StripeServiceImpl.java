@@ -72,8 +72,8 @@ public class StripeServiceImpl implements StripeService {
 
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://phucserver:3000/payment/success")
-                .setCancelUrl("http://phucserver:3000")
+                .setSuccessUrl("http://localhost:3000/payment/success")
+                .setCancelUrl("http://localhost:3000/")
                 .addAllLineItem(lineItems)
                 .build();
 

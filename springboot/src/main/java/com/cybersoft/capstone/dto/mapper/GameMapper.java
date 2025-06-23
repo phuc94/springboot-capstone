@@ -46,7 +46,7 @@ public interface GameMapper {
 
     default int calcSalePrice(Games game) {
         Sales sale = game.getSale();
-        if (sale.getId() == 1 || !sale.getEndDate().toLocalDateTime().isBefore(LocalDateTime.now())) {
+        if (sale.getId() == 1 || sale.getEndDate().toLocalDateTime().isBefore(LocalDateTime.now())) {
             return game.getPrice();
         }
         return game.getPrice() * (100 - sale.getAmount()) / 100;
@@ -54,7 +54,7 @@ public interface GameMapper {
 
     default SaleDTO getSale(Games game) {
         Sales sale = game.getSale();
-        if (sale.getId() == 1 || !sale.getEndDate().toLocalDateTime().isBefore(LocalDateTime.now())) {
+        if (sale.getId() == 1 || sale.getEndDate().toLocalDateTime().isBefore(LocalDateTime.now())) {
             return null;
         }
         SaleDTO saleDTO = new SaleDTO();
