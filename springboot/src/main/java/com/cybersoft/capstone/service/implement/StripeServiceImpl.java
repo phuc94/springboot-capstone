@@ -72,8 +72,8 @@ public class StripeServiceImpl implements StripeService {
 
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://localhost:3000/payment/success")
-                .setCancelUrl("http://localhost:3000/")
+                .setSuccessUrl("http://phucserver:3000/payment/success")
+                .setCancelUrl("http://phucserver:3000/")
                 .addAllLineItem(lineItems)
                 .build();
 
@@ -122,7 +122,7 @@ public class StripeServiceImpl implements StripeService {
         try {
           orderDTO.setPaymentStatus(PaymentMethodStatus.COMPLETED);
           orderDTO.setOrderStatus(OrderStatus.COMPLETED);
-          orderDTO = orderService.save(orderDTO);
+          orderService.save(orderDTO);
 
           // find and assign enough game_key to orderItem
           List<OrderItem> orderItems = orderItemService.findByOrderId(orderDTO.getId());
@@ -131,7 +131,6 @@ public class StripeServiceImpl implements StripeService {
                   orderItem.getGame().getId(), orderItem.getQuantity()
               );
               List<GameKey> activatedGameKeys = gameKeys.stream().map(gameKey -> {
-                  System.out.println(gameKey.isActivated());
                   gameKey.setOrderItem(orderItem);
                   gameKey.setActivated(true);
                   return gameKey;

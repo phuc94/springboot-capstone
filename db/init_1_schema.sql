@@ -152,6 +152,7 @@ CREATE TABLE IF NOT EXISTS cart_items (
   quantity INTEGER NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  deleted_at TIMESTAMP,
   UNIQUE (game_id, cart_id)
 );
 
