@@ -24,6 +24,7 @@ public class CartItem implements Serializable {
     private int quantity;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private Timestamp deletedAt;
 
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
