@@ -13,13 +13,13 @@ export const CreateGame = () => {
     resource: 'platform',
     optionLabel: 'title',
     optionValue: 'id',
-    filters: [
-      {
-        field: "isOrphan",
-        operator: "eq",
-        value: true,
-      },
-    ],
+    // filters: [
+    //   {
+    //     field: "isOrphan",
+    //     operator: "eq",
+    //     value: false,
+    //   },
+    // ],
   })
 
   return (

@@ -1,4 +1,4 @@
-import { Center, Group, Menu, UnstyledButton } from "@mantine/core"
+import { Center, Group, Menu } from "@mantine/core"
 import { Link } from "@tanstack/react-router";
 import styles from './Layout.module.scss'
 import { usePlatformList } from "@/hooks/usePlatformGames";
@@ -20,7 +20,8 @@ const Navbar = () => {
               <Link className={styles.navLink}
                 to="/platform/$platformName"
                 params={{platformName: platform.name}}
-              >{platform.title}</Link>
+              >
+              {platform.title}</Link>
             </Menu.Target>
 
             {
@@ -53,7 +54,7 @@ const StaticPlatform = () => {
       
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <span>Steam</span>
+            <span className={styles.navLink}>Steam</span>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -64,13 +65,13 @@ const StaticPlatform = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <span>Origin</span>
+            <span className={styles.navLink}>Origin</span>
           </Menu.Target>
         </Menu>
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <span>Playstation</span>
+            <span className={styles.navLink}>Playstation</span>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -81,7 +82,7 @@ const StaticPlatform = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <span>Nintendo</span>
+            <span className={styles.navLink}>Nintendo</span>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -92,7 +93,7 @@ const StaticPlatform = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <span>Xbox</span>
+            <span className={styles.navLink}>Xbox</span>
           </Menu.Target>
 
           <Menu.Dropdown>
@@ -103,7 +104,7 @@ const StaticPlatform = () => {
 
         <Menu trigger="hover" closeDelay={100}>
           <Menu.Target>
-            <span>Uplay</span>
+            <span className={styles.navLink}>Uplay</span>
           </Menu.Target>
 
           <Menu.Dropdown>

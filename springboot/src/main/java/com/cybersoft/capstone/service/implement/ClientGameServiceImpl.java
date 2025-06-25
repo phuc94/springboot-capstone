@@ -1,5 +1,6 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,8 +9,10 @@ import com.cybersoft.capstone.dto.ClientGameDTO;
 import com.cybersoft.capstone.dto.ClientGameDetailDTO;
 import com.cybersoft.capstone.dto.mapper.GameMapper;
 import com.cybersoft.capstone.entity.Games;
+import com.cybersoft.capstone.entity.Platforms;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.repository.GameRepository;
+import com.cybersoft.capstone.repository.PlatformRepository;
 import com.cybersoft.capstone.service.interfaces.ClientGameService;
 
 import org.springframework.http.HttpStatus;
@@ -20,10 +23,16 @@ public class ClientGameServiceImpl implements ClientGameService {
 
     private final GameRepository gameRepository;
     private final GameMapper gameMapper;
+    private final PlatformRepository platformRepository;
 
-    public ClientGameServiceImpl (GameRepository gameRepository, GameMapper gameMapper) {
+    public ClientGameServiceImpl (
+        GameRepository gameRepository,
+        GameMapper gameMapper,
+        PlatformRepository platformRepository
+        ) {
         this.gameRepository = gameRepository;
         this.gameMapper = gameMapper;
+        this.platformRepository = platformRepository;
     }
 
     @Override
@@ -64,6 +73,14 @@ public class ClientGameServiceImpl implements ClientGameService {
 
     @Override
     public List<ClientGameCardDTO> getGamesByPlatformName(String platformName) {
+        Platforms platform = platformRepository.findByName(platformName);
+        if (platform.getParent() == null) {
+            List<Platforms> childPlatforms = platformRepository.findByParentId(platform.getId());
+            List<Integer> ids = new ArrayList<Integer>();
+            childPlatforms.forEach(childPlatform -> {ids.add(childPlatform.getId());});
+            return gameRepository.findByPlatform_IdInAndDeletedOnIsNull(ids).stream()
+                .map(gameMapper::toClientGameCardDTO).collect(Collectors.toList());
+        }
         return gameRepository.findByPlatform_NameAndDeletedOnIsNull(platformName)
                 .stream().map(gameMapper::toClientGameCardDTO).collect(Collectors.toList());
     }
