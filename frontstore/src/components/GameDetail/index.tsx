@@ -9,6 +9,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useAddToCart } from "@/hooks/useCart";
 import { notifications } from "@mantine/notifications";
 import { useRef } from "react";
+import Price from "../Price";
 
 const GameDetail = () => {
   const {isAuthenticated} = useAuthStore();
@@ -61,11 +62,17 @@ const GameDetail = () => {
             <Group>
               {query.data?.data?.sale ?
                 <Box>
-                  <Title order={2} c="dimmed" td="line-through">{query.data?.data?.price}đ</Title>
-                  <Title order={2} fw={700}>{query.data?.data?.salePrice}đ</Title>
+                  <Title order={2} c="dimmed" td="line-through">
+                    <Price value={query.data?.data?.price}/>
+                  </Title>
+                  <Title order={2} fw={700}>
+                    <Price value={query.data?.data?.salePrice}/>
+                  </Title>
                 </Box>
                 :
-                <Title order={2} fw={700}>{query.data?.data?.price}đ</Title>
+                <Title order={2} fw={700}>
+                  <Price value={query.data?.data?.price}/>
+                </Title>
               }
             </Group>
             <Button color="red" onClick={(e)=>{e.preventDefault();onAddToCart(query.data?.data?.id)}}>

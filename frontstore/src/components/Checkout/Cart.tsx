@@ -5,6 +5,7 @@ import { useCartStore } from '@/store/useCartStore';
 import { Stepper, Table, Text, Image, NumberInput, Flex, Box, Space, Button, Card, Divider, CloseButton } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { useRouter, Link } from '@tanstack/react-router';
+import Price from '../Price';
 
 function Cart() {
   const {mutate: deleteFromCart} = useDeleteFromCart();
@@ -47,12 +48,8 @@ function Cart() {
             Tiếp tục xem sản phẩm
           </Button>
         </Stepper.Step>
-        <Stepper.Step label="Chi tiết thanh toán" description="Chi tiết thanh toán">
-          <Text>abc</Text>     
-        </Stepper.Step>
-        <Stepper.Step label="Đơn hàng hoàn tất" description="Đơn hàng hoàn tất">
-          <Text>abc</Text>     
-        </Stepper.Step>
+        <Stepper.Step label="Chi tiết thanh toán" description="Chi tiết thanh toán" />
+        <Stepper.Step label="Đơn hàng hoàn tất" description="Đơn hàng hoàn tất" />
       </Stepper>
     </Box>
   );
@@ -60,7 +57,7 @@ function Cart() {
 
 export default Cart
 
-const OrderDetail = ({data}) => {
+const OrderDetail = ({data}: any) => {
   const router = useRouter();
 
   return (
@@ -77,7 +74,9 @@ const OrderDetail = ({data}) => {
         <Space h="sm" />
         <Flex justify="space-between">
           <Text size="xl">Giá gốc</Text>
-          <Text size="xl">{data.originalPrice}</Text>
+          <Text size="xl">
+            <Price value={data.originalPrice} />
+          </Text>
         </Flex>
         <Space h="sm" />
         {
@@ -87,7 +86,7 @@ const OrderDetail = ({data}) => {
           <Space h="sm" />
           <Flex justify="space-between">
             <Text size="xl">Giá giảm</Text>
-            <Text size="xl">- {data.discountAmount}</Text>
+            <Text size="xl">- <Price value={data.discountAmount} /></Text>
           </Flex>
           </Box>
         }
@@ -97,8 +96,15 @@ const OrderDetail = ({data}) => {
         <Flex justify="space-between">
           <Text size="xl">Tạm tính</Text>
           <Flex gap={12} align="center">
-            <Text size="md" td="line-through" c="dimmed">{data.originalPrice}</Text>
-            <Text size="xl">{data.finalPrice}</Text>
+            {
+              data.discountAmount != 0 &&
+              <Text size="md" td="line-through" c="dimmed">
+                <Price value={data.originalPrice} />
+              </Text>
+            }
+            <Text size="xl">
+              <Price value={data.finalPrice} />
+            </Text>
           </Flex>
         </Flex>
         <Space h="sm" />
@@ -151,16 +157,18 @@ const Row = ({rowData, deleteFromCart, updateCart}: any) => {
           <Text size="md" fw={700}>{rowData.title}</Text>
         </Flex>
       </Table.Td>
-      <Table.Td>{rowData.price}</Table.Td>
+      <Table.Td>
+        <Price value={rowData.price} />
+      </Table.Td>
       <Table.Td>
         <NumberInput onChange={(quantity: any) => onQuantityChange(quantity, rowData.gameId)} 
           value={rowData.quantity}
         />
       </Table.Td>
-      <Table.Td>{tempAmount}</Table.Td>
+      <Table.Td>
+        <Price value={tempAmount} />
+      </Table.Td>
       <CloseButton onClick={(e)=>{e.preventDefault();onRemoveCartItem(rowData.gameId)}} />
     </Table.Tr>
   )
 }
-
-

@@ -16,6 +16,10 @@ public class OrderDTO {
     private int paymentMethodId;
     private String sessionId;
     private String url;
+    private String email ;
+    private String name ;
+    private String phone ;
+    private String note ;
     private PaymentMethodStatus paymentMethodStatus;
     private OrderStatus orderStatus;
     private PaymentMethodStatus paymentStatus;

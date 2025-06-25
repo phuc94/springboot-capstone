@@ -130,12 +130,12 @@ INSERT INTO payment_method (title, name, description, account, image) VALUES
 ('Bank Transfer', 'Direct Bank Transfer', 'Direct transfer from your bank account', 'bank-account', 'https://gamestore.com/images/bank_logo.png');
 
 -- Insert data into orders table
-INSERT INTO orders (payment_method_id, order_status, payment_status, original_amount, discount_amount, total_amount, user_id, session_id) VALUES
-(1, 'COMPLETED', 'COMPLETED', 8998.00, 0.00, 8998.00, 1, 'DFOSDdslfkjDJFslLFJ82'),
-(2, 'COMPLETED', 'COMPLETED', 4999.00, 499.90, 4499.10, 2, 'DFOSDdslfkjDJFslLFJ82'),
-(1, 'PROCESSING', 'COMPLETED', 9998.00, 2000.00, 7998.00, 3, 'DFOSDdslfkjDJFslLFJ82'),
-(3, 'CANCELLED', 'REFUNDED', 3999.00, 0.00, 3999.00, 4, 'DFOSDdslfkjDJFslLFJ82'),
-(2, 'PENDING', 'PENDING', 1999.00, 0.00, 1999.00, 5, 'DFOSDdslfkjDJFslLFJ82');
+-- INSERT INTO orders (payment_method_id, order_status, payment_status, original_amount, discount_amount, total_amount, user_id, session_id) VALUES
+-- (1, 'COMPLETED', 'COMPLETED', 8998.00, 0.00, 8998.00, 1, 'DFOSDdslfkjDJFslLFJ82'),
+-- (2, 'COMPLETED', 'COMPLETED', 4999.00, 499.90, 4499.10, 2, 'DFOSDdslfkjDJFslLFJ82'),
+-- (1, 'PROCESSING', 'COMPLETED', 9998.00, 2000.00, 7998.00, 3, 'DFOSDdslfkjDJFslLFJ82'),
+-- (3, 'CANCELLED', 'REFUNDED', 3999.00, 0.00, 3999.00, 4, 'DFOSDdslfkjDJFslLFJ82'),
+-- (2, 'PENDING', 'PENDING', 1999.00, 0.00, 1999.00, 5, 'DFOSDdslfkjDJFslLFJ82');
 
 -- Insert data into order_item table
 -- INSERT INTO order_item (game_id, order_id, quantity, unit_price, total_price) VALUES

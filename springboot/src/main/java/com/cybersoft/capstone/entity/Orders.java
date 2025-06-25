@@ -37,6 +37,10 @@ public class Orders implements Serializable {
 
     private String sessionId ;
     private String url ;
+    private String email ;
+    private String name ;
+    private String phone ;
+    private String note ;
     private int originalAmount;
     private int discountAmount;
     private int totalAmount;

@@ -15,6 +15,7 @@ import com.cybersoft.capstone.entity.Sales;
 import com.cybersoft.capstone.entity.enums.OrderStatus;
 import com.cybersoft.capstone.entity.enums.PaymentMethodStatus;
 import com.cybersoft.capstone.entity.enums.SaleStatus;
+import com.cybersoft.capstone.payload.request.CheckoutRequest;
 import com.cybersoft.capstone.payload.response.StripeResponse;
 import com.cybersoft.capstone.service.interfaces.CartItemService;
 import com.cybersoft.capstone.service.interfaces.CartService;
@@ -62,10 +63,9 @@ public class StripeServiceImpl implements StripeService {
     }
 
     @Override
-    public StripeResponse checkout(int cartId, int userId) {
+    public StripeResponse checkout(int cartId, int userId, CheckoutRequest req) {
         Stripe.apiKey = secretKey;
         CartDetailDTO cartDetailDTO = cartService.getCartDetailByCartId(cartId);
-        // TODO: replace cartItems by cartDetailDTO.items
         List<CartItem> cartItems = cartItemService.findByCartsId(cartId);
 
         List<SessionCreateParams.LineItem> lineItems = toLineItems(cartItems);
@@ -91,6 +91,10 @@ public class StripeServiceImpl implements StripeService {
                 .orderStatus(OrderStatus.PENDING)
                 .userId(userId)
                 .url(session.getUrl())
+                .email(req.getEmail())
+                .name(req.getName())
+                .phone(req.getPhone())
+                .note(req.getNote())
                 .originalAmount(cartDetailDTO.getOriginalPrice())
                 .discountAmount(cartDetailDTO.getDiscountAmount())
                 .totalAmount(cartDetailDTO.getFinalPrice())

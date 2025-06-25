@@ -11,7 +11,7 @@ interface CartState {
   setStore: (data: any) => void
 }
 
-export const useCartStore = create<CartState>((set:any) => ({
+export const useCartStore = create<CartState>((set:any, get:any) => ({
   items: [],
   originalPrice: 0,
   discountAmount: 0,
