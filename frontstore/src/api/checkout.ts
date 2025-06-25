@@ -1,7 +1,7 @@
 import axiosInstance from "@/vendor/axios";
 
-export const checkout = async () => {
-  const { data } = await axiosInstance.post(`/checkout`);
+export const checkout = async (receiverDetail: any) => {
+  const { data } = await axiosInstance.post(`/checkout`, receiverDetail);
   return data;
 };
 

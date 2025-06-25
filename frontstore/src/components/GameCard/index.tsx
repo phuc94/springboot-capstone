@@ -5,6 +5,7 @@ import { useAddToCart } from "@/hooks/useCart"
 import { notifications } from "@mantine/notifications"
 import { useRef } from "react"
 import { useAuthStore } from "@/store/useAuthStore"
+import Price from "../Price"
 
 const GameCard = ({data}: any) => {
   const {isAuthenticated} = useAuthStore();
@@ -59,11 +60,17 @@ const GameCard = ({data}: any) => {
           <Rating value={5} color="#faf737" size="md" readOnly/>
           {data.sale ?
             <Box>
-              <Text size="xl" c="dimmed" td="line-through">{data.price}đ</Text>
-              <Text size="xl" fw={700}>{data.salePrice}đ</Text>
+              <Text size="xl" c="dimmed" td="line-through">
+                <Price value={data.price} />
+              </Text>
+              <Text size="xl" fw={700}>
+                <Price value={data.salePrice} />
+              </Text>
             </Box>
             :
-            <Text size="xl" fw={700}>{data.price}đ</Text>
+            <Text size="xl" fw={700}>
+              <Price value={data.price} />
+            </Text>
           }
           <Space h="md" />
           <Button color="red" onClick={(e)=>{e.preventDefault();onAddToCart(data.id)}}>

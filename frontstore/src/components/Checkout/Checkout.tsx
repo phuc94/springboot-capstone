@@ -6,10 +6,8 @@ const Checkout = () => {
   return (
     <Box style={{paddingTop: 80}} >
       <Stepper active={2}>
-        <Stepper.Step label="Giỏ hàng" description="Điều chỉnh giỏ hàng">
-        </Stepper.Step>
-        <Stepper.Step label="Chi tiết thanh toán" description="Chi tiết thanh toán">
-        </Stepper.Step>
+        <Stepper.Step label="Giỏ hàng" description="Điều chỉnh giỏ hàng" />
+        <Stepper.Step label="Chi tiết thanh toán" description="Chi tiết thanh toán" />
         <Stepper.Step label="Đơn hàng hoàn tất" description="Đơn hàng hoàn tất">
           <Space h="xl" />
           <Flex gap={40} direction="row">

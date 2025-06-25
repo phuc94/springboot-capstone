@@ -1,7 +1,7 @@
 import { useCheckoutSuccess } from "@/hooks/useCheckout"
 import { useOrderById } from "@/hooks/useOrder"
 import { usePaymentStore } from "@/store/useCartStore"
-import { Button, Card, Center, Divider, Flex, Loader, Space, Stack, Text, Title } from "@mantine/core"
+import { Stepper, Box, Button, Card, Center, Divider, Flex, Loader, Space, Stack, Text, Title } from "@mantine/core"
 import { IconCircleCheck } from "@tabler/icons-react"
 import { Link } from "@tanstack/react-router"
 import { useEffect } from "react"
@@ -28,38 +28,45 @@ const Success = () => {
   // const {data: successOrderData} = useOrderById(data.data.id)
 
   return (
-    <Stack>
-      <Space h="xl"/>
-        <Flex direction="column" align="center">
-          <IconCircleCheck size={60} color="#26c957" />
-          <Title>Thanh toán thành công!</Title>
-          <Text c="dimmed">Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</Text>
-        </Flex>
-        <Divider my="sm" />
-        <Card>
-          <Flex justify="space-between" gap={40}>
-            <Text>Tổng tiền đã thanh toán:</Text>
-            <Text>300.000 VND</Text>
+    <Box style={{paddingTop: 80}} >
+      <Stepper active={3}>
+        <Stepper.Step label="Giỏ hàng" description="Điều chỉnh giỏ hàng" />
+        <Stepper.Step label="Chi tiết thanh toán" description="Chi tiết thanh toán" />
+        <Stepper.Step label="Đơn hàng hoàn tất" description="Đơn hàng hoàn tất" />
+      </Stepper>
+      <Stack>
+        <Space h="xl"/>
+          <Flex direction="column" align="center">
+            <IconCircleCheck size={60} color="#26c957" />
+            <Title>Thanh toán thành công!</Title>
+            <Text c="dimmed">Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</Text>
           </Flex>
-          <Flex justify="space-between" gap={40}>
-            <Text>Phương thức thanh toán</Text>
-            <Text>Stripe</Text>
-          </Flex>
-          <Flex justify="space-between" gap={40}>
-            <Text>Số Order</Text>
-            <Text>#1982342</Text>
-          </Flex>
-        </Card>
-        <Divider my="sm" />
-        <Center>
-          <Text>Chi tiết sản phẩm sẽ được gửi qua Email. Xin hãy kiểm tra email.</Text>
-        </Center>
-        <Center>
-          <Button color="green">
-            <Link to="/">Quay lại trang chủ</Link>
-          </Button>
-        </Center>
-    </Stack>
+          <Divider my="sm" />
+          <Card>
+            <Flex justify="space-between" gap={40}>
+              <Text>Tổng tiền đã thanh toán:</Text>
+              <Text>300.000 VND</Text>
+            </Flex>
+            <Flex justify="space-between" gap={40}>
+              <Text>Phương thức thanh toán</Text>
+              <Text>Stripe</Text>
+            </Flex>
+            <Flex justify="space-between" gap={40}>
+              <Text>Số Order</Text>
+              <Text>#1982342</Text>
+            </Flex>
+          </Card>
+          <Divider my="sm" />
+          <Center>
+            <Text>Chi tiết sản phẩm sẽ được gửi qua Email. Xin hãy kiểm tra email.</Text>
+          </Center>
+          <Center>
+            <Button color="green">
+              <Link to="/">Quay lại trang chủ</Link>
+            </Button>
+          </Center>
+      </Stack>
+    </Box>
   )
 }
 
