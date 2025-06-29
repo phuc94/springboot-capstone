@@ -1,5 +1,6 @@
 package com.cybersoft.capstone.service.implement;
 
+import com.cybersoft.capstone.dto.CustomUserDetails;
 import com.cybersoft.capstone.dto.ReviewDTO;
 import com.cybersoft.capstone.dto.mapper.ReviewMapper;
 import com.cybersoft.capstone.exception.NotFoundException;
@@ -50,7 +51,7 @@ public class ClientReviewServiceImpl implements ClientReviewService {
 
     @Transactional
     @Override
-    public ReviewDTO createReview(ReviewDTO reviewDTO, int gameId) {
+    public ReviewDTO createReview(ReviewDTO reviewDTO, int gameId, CustomUserDetails user) {
         if (reviewDTO.getUser() == null || reviewDTO.getUser().getId() == null) {
             throw new RuntimeException("User must be logged in to review");
         }
@@ -82,7 +83,7 @@ public class ClientReviewServiceImpl implements ClientReviewService {
 
     @Transactional
     @Override
-    public ReviewDTO updateReview(int id, ReviewDTO reviewDTO) {
+    public ReviewDTO updateReview(int id, ReviewDTO reviewDTO, CustomUserDetails user) {
         Optional<Reviews> reviewOpt = reviewRepository.findById(id);
         if (reviewOpt.isEmpty()) {
             throw new RuntimeException("Review not found");
@@ -109,7 +110,7 @@ public class ClientReviewServiceImpl implements ClientReviewService {
 
     @Transactional
     @Override
-    public void deleteReviewById(int id) {
+    public void deleteReviewById(int id, CustomUserDetails user) {
         Optional<Reviews> reviewOpt = reviewRepository.findById(id);
         if (reviewOpt.isEmpty()) {
             throw new RuntimeException("Review not found");
