@@ -25,6 +25,7 @@ public class OrderDTO {
     private PaymentMethodStatus paymentStatus;
     private int originalAmount;
     private int discountAmount;
+    private int subTotalAmount;
     private int totalAmount;
     private int userId;
     private Timestamp deletedOn;

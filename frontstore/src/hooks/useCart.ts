@@ -47,7 +47,7 @@ export const useUpdateCart = () => {
       if (data.code !== 202) {return;}
       queryClient.invalidateQueries({ queryKey: ['cart'] })
       notifications.show({
-        title: "Chỉnh sửa sản phầm thành công!",
+        title: "Điều chỉnh sản phầm thành công!",
         message: "",
       })
     }

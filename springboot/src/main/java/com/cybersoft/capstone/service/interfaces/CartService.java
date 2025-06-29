@@ -16,4 +16,5 @@ public interface CartService {
     public Boolean removeItemFromCart(int gameId, CustomUserDetails user);
     public CartDetailDTO addItemToCart(int itemId, CustomUserDetails user);
     public void updateCartItem(UpdateCartRequest updateCartRequest, int cartId);
+    // public void applyCoupon(UpdateCartRequest updateCartRequest, int cartId);
 }

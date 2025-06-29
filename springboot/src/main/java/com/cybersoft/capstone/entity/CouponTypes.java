@@ -20,6 +20,8 @@ public class CouponTypes implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String description;
+
     private String type;
 
     @JsonIgnore

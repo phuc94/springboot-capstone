@@ -42,6 +42,7 @@ public class Orders implements Serializable {
     private String phone ;
     private String note ;
     private int originalAmount;
+    private int subTotalAmount;
     private int discountAmount;
     private int totalAmount;
 

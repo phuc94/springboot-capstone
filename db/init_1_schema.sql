@@ -31,6 +31,11 @@ CREATE TYPE media_type AS ENUM (
   'VIDEO'
 );
 
+CREATE TYPE coupon_unit AS ENUM (
+  'PERCENTAGE',
+  'FIXED'
+);
+
 CREATE TYPE sale_status AS ENUM (
   'DISABLED',
   'ACTIVE',
@@ -110,20 +115,29 @@ CREATE TABLE IF NOT EXISTS roles (
 CREATE TABLE IF NOT EXISTS coupons (
   id SERIAL PRIMARY KEY,
   coupon_type_id INTEGER NOT NULL,
+  coupon_unit coupon_unit NOT NULL,
   code VARCHAR(255) NOT NULL,
-  discount_amount INTEGER,
-  usage_limit INTEGER,
-  used_count INTEGER,
-  start_date TIMESTAMP,
-  end_date TIMESTAMP,
+  description VARCHAR(255),
+  discount_amount INTEGER NOT NULL,
+  usage_limit INTEGER NOT NULL,
+  used_count INTEGER NOT NULL DEFAULT 0,
+  start_date TIMESTAMP NOT NULL,
+  end_date TIMESTAMP NOT NULL,
   status coupon_status NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS order_coupon (
+  id SERIAL PRIMARY KEY,
+  order_id INTEGER NOT NULL,
+  coupon_id INTEGER NOT NULL
+);
+
 CREATE TABLE coupon_types (
   id SERIAL PRIMARY KEY,
   type VARCHAR(255) NOT NULL,
+  description VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -190,7 +204,8 @@ CREATE TABLE IF NOT EXISTS orders (
   order_status VARCHAR(255) NOT NULL,
   payment_status VARCHAR(255) NOT NULL,
   original_amount INTEGER,
-  discount_amount INTEGER,
+  sub_total_amount INTEGER, -- only sale discounted
+  discount_amount INTEGER, -- coupon discount amount
   total_amount INTEGER NOT NULL,
   user_id INTEGER NOT NULL,
   deleted_on TIMESTAMP DEFAULT NULL,
@@ -224,29 +239,28 @@ CREATE TABLE IF NOT EXISTS payment_method (
 -- TODO: add unique constraint
 
 ALTER TABLE games ADD FOREIGN KEY (sale_id) REFERENCES sales (id);
+ALTER TABLE games ADD FOREIGN KEY (description_id) REFERENCES game_description (id);
+ALTER TABLE games ADD FOREIGN KEY (platform_id) REFERENCES platforms (id);
 
 ALTER TABLE game_key ADD FOREIGN KEY (game_id) REFERENCES games (id);
 
 ALTER TABLE admins ADD FOREIGN KEY (role_id) REFERENCES roles (id);
 
-ALTER TABLE games ADD FOREIGN KEY (description_id) REFERENCES game_description (id);
-
 ALTER TABLE medias ADD FOREIGN KEY (game_id) REFERENCES games (id);
 
 ALTER TABLE coupons ADD FOREIGN KEY (coupon_type_id) REFERENCES coupon_types (id);
 
-ALTER TABLE games ADD FOREIGN KEY (platform_id) REFERENCES platforms (id);
-
 ALTER TABLE cart_items ADD FOREIGN KEY (cart_id) REFERENCES carts (id);
-
 ALTER TABLE cart_items ADD FOREIGN KEY (game_id) REFERENCES games (id);
 
 ALTER TABLE users ADD FOREIGN KEY (cart_id) REFERENCES carts (id);
 
 ALTER TABLE reviews ADD FOREIGN KEY (game_id) REFERENCES games (id);
-
 ALTER TABLE reviews ADD FOREIGN KEY (user_id) REFERENCES users (id);
 
+ALTER TABLE order_coupon ADD FOREIGN KEY (order_id) REFERENCES orders (id);
+ALTER TABLE order_coupon ADD FOREIGN KEY (coupon_id) REFERENCES coupons (id);
+
 -- temporary work around for ENUM
-CREATE CAST (character varying AS cart_status) WITH INOUT AS ASSIGNMENT;
+-- CREATE CAST (character varying AS cart_status) WITH INOUT AS ASSIGNMENT;
 

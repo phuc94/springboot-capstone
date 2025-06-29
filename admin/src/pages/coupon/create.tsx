@@ -35,6 +35,12 @@ export const CreateCoupon= () => {
         <Form.Item label="End Date" name="endDate">
           <DatePicker />
         </Form.Item>
+        <Form.Item label="Unit" name="couponUnit" required>
+          <Select options={
+              Object.keys(CouponUnit).map(key => {return {value: key, label: key}})
+            }
+          />
+        </Form.Item>
         <Form.Item label="Status" name="status" required>
           <Select options={
               Object.keys(CouponStatus).map(key => {return {value: key, label: key}})
@@ -53,5 +59,10 @@ export enum CouponStatus {
   DISABLED = 'DISABLED',
   ACTIVE = 'ACTIVE',
   EXPIRE = 'EXPIRE',
+}
+
+export enum CouponUnit {
+  PERCENTAGE = 'PERCENTAGE',
+  FIXED = 'FIXED',
 }
 

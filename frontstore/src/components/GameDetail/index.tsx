@@ -75,9 +75,14 @@ const GameDetail = () => {
                 </Title>
               }
             </Group>
-            <Button color="red" onClick={(e)=>{e.preventDefault();onAddToCart(query.data?.data?.id)}}>
-              MUA HÀNG
-            </Button>
+            {
+              query.data?.data?.stock === 0 ?
+              <Text fw={700} color="red">HẾT HÀNG</Text>
+              :
+              <Button color="red" onClick={(e)=>{e.preventDefault();onAddToCart(query.data?.data?.id)}}>
+                MUA HÀNG
+              </Button>
+            }
           </Stack>
           <Divider orientation="vertical" />
           <IconBox/>

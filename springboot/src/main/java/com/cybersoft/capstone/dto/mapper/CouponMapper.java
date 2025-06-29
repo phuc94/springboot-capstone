@@ -1,6 +1,7 @@
 package com.cybersoft.capstone.dto.mapper;
 
 import com.cybersoft.capstone.dto.AdminCouponDTO;
+import com.cybersoft.capstone.dto.ClientCouponDTO;
 import com.cybersoft.capstone.entity.Coupons;
 
 import org.mapstruct.Mapper;
@@ -14,4 +15,6 @@ public interface CouponMapper {
 
     @Mapping(source = "couponType.id", target = "couponTypeId")
     AdminCouponDTO toAdminCouponDTO(Coupons coupons);
+
+    ClientCouponDTO toClientCouponDTO(Coupons coupons);
 }

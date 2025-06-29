@@ -4,18 +4,22 @@ import { persist } from "zustand/middleware";
 interface CartState {
   items: { id: number; name: string; quantity: number }[];
   originalPrice: number;
+  saleAmount: number;
+  subTotalAmount: number;
   discountAmount: number;
-  finalPrice: number;
+  totalAmount: number;
   // addItem: (item: { id: number; name: string }) => void;
   // removeItem: (id: number) => void;
-  setStore: (data: any) => void
+  setStore: (data: any) => void;
 }
 
 export const useCartStore = create<CartState>((set:any, get:any) => ({
   items: [],
   originalPrice: 0,
+  saleAmount: 0,
+  subTotalAmount: 0,
   discountAmount: 0,
-  finalPrice: 0,
+  totalAmount: 0,
   // addItem: (item:any) =>
   //   set((state:any) => {
   //     const existing = state.items.find((i:any) => i.id === item.id);
