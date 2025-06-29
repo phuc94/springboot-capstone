@@ -24,10 +24,11 @@ export const ListCoupon = () => {
     }
   })
 
-  // const {data} = useMany({
-  //   resource: "coupon_type",
-  //   ids: tableProps?.dataSource?.map(coupon => coupon.coupon_type_id) ?? []
-  // })
+  const {data} = useMany({
+    resource: "coupon_type",
+    ids: tableProps?.dataSource?.map(coupon => coupon.coupon_type_id) ?? []
+  })
+  console.log(data)
 
   return (
     <List>
@@ -42,6 +43,7 @@ export const ListCoupon = () => {
         <Table.Column dataIndex="discountAmount" title="Discount Amount" />
         <Table.Column dataIndex="usageLimit" title="Usage Limit" />
         <Table.Column dataIndex="usedCount" title="Usage Count" />
+        <Table.Column dataIndex="couponUnit" title="Unit" />
         <Table.Column
           title="Start Date"
           render={(_, record)=> (
@@ -55,11 +57,11 @@ export const ListCoupon = () => {
             )}
           />
         <Table.Column dataIndex="status" title="Status" />
-        {/* <Table.Column title="Coupon Type" */}
-        {/*   render={(_, record)=>( */}
-        {/*     <span>{data?.data?.find(type => type.id == record.couponTypeId)?.type ?? ""}</span> */}
-        {/*   )} */}
-        {/* /> */}
+        <Table.Column title="Coupon Type"
+          render={(_, record)=>(
+            <span>{data?.data?.find(type => type.id == record.couponTypeId)?.type ?? ""}</span>
+          )}
+        />
         <Table.Column
           title="Actions"
           render={(_, record) => (

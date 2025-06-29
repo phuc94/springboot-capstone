@@ -12,8 +12,10 @@ import lombok.Data;
 public class CartDetailDTO {
     private List<GameItemDTO> items;
     private int originalPrice;
+    private int saleAmount;
     private int discountAmount;
-    private int finalPrice;
+    private int subTotalAmount;
+    private int totalAmount;
 
     public CartDetailDTO(List<CartItem> cartItems) {
         items = new ArrayList<GameItemDTO>();
@@ -35,14 +37,16 @@ public class CartDetailDTO {
             newGameItem.setSale(sale);
 
             originalPrice = originalPrice + (currentGame.getPrice() * currentCartItem.getQuantity());
-            discountAmount = discountAmount + (
+            saleAmount = saleAmount + (
                 currentGame.getPrice() * currentGame.getSale().getAmount() * currentCartItem.getQuantity() / 100
                 );
 
             items.add(newGameItem);
         }
 
-        finalPrice = originalPrice - discountAmount;
+        subTotalAmount = originalPrice - saleAmount;
+        totalAmount = subTotalAmount;
     }
+
 }
 

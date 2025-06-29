@@ -78,14 +78,13 @@ INSERT INTO sales (amount, status, start_date, end_date) VALUES
 
 -- Insert data into coupon_types table
 INSERT INTO coupon_types (type) VALUES
-('percentage'),
-('fixed');
+('base');
 
 -- Insert data into coupons table
-INSERT INTO coupons (coupon_type_id, code, discount_amount, usage_limit, used_count, start_date, end_date, status) VALUES
-(1, 'WELCOME10', 10, 100, 45, '2025-01-01', '2025-12-31', 'ACTIVE'),
-(2, 'SUMMER20', 2000, 50, 10, '2025-06-01', '2025-08-31', 'ACTIVE'),
-(1, 'EXPIRED25', 25, 200, 198, '2025-01-01', '2025-04-30', 'EXPIRE');
+INSERT INTO coupons (coupon_type_id, code, discount_amount, usage_limit, used_count, start_date, end_date, status, coupon_unit, description) VALUES
+(1, 'WELCOME10', 10, 100, 45, '2025-01-01', '2025-12-31', 'ACTIVE', 'PERCENTAGE', 'Some description about Counpon'),
+(1, 'SUMMER20', 2000, 50, 10, '2025-06-01', '2025-08-31', 'ACTIVE', 'PERCENTAGE', 'Some description about Counpon'),
+(1, 'EXPIRED25', 25, 200, 198, '2025-01-01', '2025-04-30', 'EXPIRE', 'FIXED', 'Some description about Counpon');
 
 -- Insert data into carts table
 INSERT INTO carts (status) VALUES

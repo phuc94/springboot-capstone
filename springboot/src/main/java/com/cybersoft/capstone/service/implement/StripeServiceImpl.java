@@ -1,32 +1,41 @@
 package com.cybersoft.capstone.service.implement;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cybersoft.capstone.dto.AdminCouponDTO;
 import com.cybersoft.capstone.dto.CartDetailDTO;
 import com.cybersoft.capstone.dto.GameItemDTO;
 import com.cybersoft.capstone.dto.OrderDTO;
 import com.cybersoft.capstone.entity.CartItem;
+import com.cybersoft.capstone.entity.Coupons;
 import com.cybersoft.capstone.entity.GameKey;
 import com.cybersoft.capstone.entity.Games;
+import com.cybersoft.capstone.entity.OrderCoupon;
 import com.cybersoft.capstone.entity.OrderItem;
 import com.cybersoft.capstone.entity.Orders;
 import com.cybersoft.capstone.entity.Sales;
 import com.cybersoft.capstone.entity.enums.OrderStatus;
 import com.cybersoft.capstone.entity.enums.PaymentMethodStatus;
 import com.cybersoft.capstone.entity.enums.SaleStatus;
+import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.payload.request.CheckoutRequest;
 import com.cybersoft.capstone.payload.response.StripeResponse;
 import com.cybersoft.capstone.service.interfaces.CartItemService;
 import com.cybersoft.capstone.service.interfaces.CartService;
 import com.cybersoft.capstone.service.interfaces.ClientGameService;
+import com.cybersoft.capstone.service.interfaces.CouponService;
 import com.cybersoft.capstone.service.interfaces.GameKeyService;
+import com.cybersoft.capstone.service.interfaces.OrderCouponService;
 import com.cybersoft.capstone.service.interfaces.OrderItemService;
 import com.cybersoft.capstone.service.interfaces.OrderService;
 import com.cybersoft.capstone.service.interfaces.StripeService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
+import com.stripe.model.Coupon;
 import com.stripe.model.checkout.Session;
+import com.stripe.param.CouponCreateParams;
 import com.stripe.param.checkout.SessionCreateParams;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -45,6 +54,8 @@ public class StripeServiceImpl implements StripeService {
     private final GameKeyService gameKeyService;
     private final ClientGameService clientGameService;
     private final CartService cartService;
+    private final CouponService couponService;
+    private final OrderCouponService orderCouponService;
 
     public StripeServiceImpl(
         CartItemService cartItemService,
@@ -52,7 +63,9 @@ public class StripeServiceImpl implements StripeService {
         OrderItemService orderItemService,
         GameKeyService gameKeyService,
         ClientGameService clientGameService,
-        CartService cartService
+        CartService cartService,
+        CouponService couponService,
+        OrderCouponService orderCouponService
     ) {
         this.cartItemService = cartItemService;
         this.orderService = orderService;
@@ -60,23 +73,35 @@ public class StripeServiceImpl implements StripeService {
         this.gameKeyService = gameKeyService;
         this.clientGameService = clientGameService;
         this.cartService = cartService;
+        this.couponService = couponService;
+        this.orderCouponService = orderCouponService;
     }
 
     @Override
     public StripeResponse checkout(int cartId, int userId, CheckoutRequest req) {
         Stripe.apiKey = secretKey;
         CartDetailDTO cartDetailDTO = cartService.getCartDetailByCartId(cartId);
+        AdminCouponDTO adminCouponDTO = new AdminCouponDTO();
+        Coupon stripeCoupon = null;
+
+        if (!req.getCode().isEmpty()) {
+            adminCouponDTO = couponService.getCouponByCode(req.getCode());
+            if (adminCouponDTO.getUsedCount() >= adminCouponDTO.getUsageLimit()) {
+                throw new NotFoundException("Coupon expired or reach limit usage.");
+            }
+            cartDetailDTO = couponService.applyCoupon(req.getCode(), cartDetailDTO);
+            CouponCreateParams params = buildCouponCreateParams(adminCouponDTO);
+            try {
+                stripeCoupon = Coupon.create(params);
+            } catch (StripeException ex) {
+                throw new NotFoundException("Coupon expired or reach limit usage.");
+            }
+        }
+
         List<CartItem> cartItems = cartItemService.findByCartsId(cartId);
-
         List<SessionCreateParams.LineItem> lineItems = toLineItems(cartItems);
-
-        SessionCreateParams params = SessionCreateParams.builder()
-                .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://phucserver:3000/payment/success")
-                .setCancelUrl("http://phucserver:3000/")
-                .addAllLineItem(lineItems)
-                .build();
-
+        SessionCreateParams params = buildSessionCrateParams(lineItems, stripeCoupon);
+        System.out.println(params.toString());
         Session session = null;
         try {
             session = Session.create(params);
@@ -85,38 +110,34 @@ public class StripeServiceImpl implements StripeService {
             System.out.println(ex.getMessage());
         }
 
-        OrderDTO orderDTO = OrderDTO.builder()
-                .paymentMethodId(1)
-                .paymentStatus(PaymentMethodStatus.PENDING)
-                .orderStatus(OrderStatus.PENDING)
-                .userId(userId)
-                .url(session.getUrl())
-                .email(req.getEmail())
-                .name(req.getName())
-                .phone(req.getPhone())
-                .note(req.getNote())
-                .originalAmount(cartDetailDTO.getOriginalPrice())
-                .discountAmount(cartDetailDTO.getDiscountAmount())
-                .totalAmount(cartDetailDTO.getFinalPrice())
-                .sessionId(session.getId())
-                .build();
+        OrderDTO orderDTO = buildOrderDTO(cartDetailDTO, session, req, userId);
+        OrderDTO savedOrderDTO = orderService.save(orderDTO);
 
-        OrderDTO savedOrder = orderService.save(orderDTO);
+        // transfer cartItems into orderItems
+        List<OrderItem> orderItems = toOrderItem(cartItems, savedOrderDTO);
+        orderItemService.saveAll(orderItems);
+        // delete all cartItems
+        cartItemService.deleteAll(cartItems);
 
-          // transfer cartItems into orderItems
-          List<OrderItem> orderItems = toOrderItem(cartItems, savedOrder);
-          orderItemService.saveAll(orderItems);
-          // delete all cartItems
-          cartItemService.deleteAll(cartItems);
+        // check if there is coupon code
+        if (!req.getCode().isEmpty()) {
 
-        StripeResponse stripeResponse = StripeResponse.builder()
-                .status("PENDING")
-                .message("Payment session created.")
-                .sessionId(session.getId())
-                .sessionUrl(session.getUrl())
-                .build();
+            // find coupon and transfer to order_coupon
+            Orders savedOrder = new Orders();
+            savedOrder.setId(savedOrderDTO.getId());
+            Coupons coupon = new Coupons();
+            coupon.setId(adminCouponDTO.getId());
 
-        return stripeResponse;
+            OrderCoupon orderCoupon = new OrderCoupon();
+            orderCoupon.setOrder(savedOrder);
+            orderCoupon.setCoupon(coupon);
+            orderCouponService.save(orderCoupon);
+            // Increase coupon used count
+            adminCouponDTO.setUsedCount(adminCouponDTO.getUsedCount() + 1);
+            couponService.updateCoupon(adminCouponDTO);
+        }
+
+        return buildStripeResponse(session);
     }
 
     @Override
@@ -230,5 +251,76 @@ public class StripeServiceImpl implements StripeService {
     //     }
     // }
 
+    private SessionCreateParams buildSessionCrateParams(List<SessionCreateParams.LineItem> lineItems, Coupon stripeCoupon) {
+        SessionCreateParams.Discount discount = null;
+        if (stripeCoupon != null) {
+          discount = SessionCreateParams.Discount.builder().setCoupon(stripeCoupon.getId()).build();
+          return SessionCreateParams.builder()
+                  .setMode(SessionCreateParams.Mode.PAYMENT)
+                  .setSuccessUrl("http://phucserver:3000/payment/success")
+                  .setCancelUrl("http://phucserver:3000/")
+                  .addDiscount(discount)
+                  .addAllLineItem(lineItems)
+                  .build();
+        }
+        return SessionCreateParams.builder()
+                .setMode(SessionCreateParams.Mode.PAYMENT)
+                .setSuccessUrl("http://phucserver:3000/payment/success")
+                .setCancelUrl("http://phucserver:3000/")
+                .addAllLineItem(lineItems)
+                .build();
+    }
+
+    private OrderDTO buildOrderDTO(CartDetailDTO cartDetailDTO, Session session, CheckoutRequest req, int userId) {
+        OrderDTO orderDTO = OrderDTO.builder()
+                .paymentMethodId(1)
+                .paymentStatus(PaymentMethodStatus.PENDING)
+                .orderStatus(OrderStatus.PENDING)
+                .userId(userId)
+                .url(session.getUrl())
+                .email(req.getEmail())
+                .name(req.getName())
+                .phone(req.getPhone())
+                .note(req.getNote())
+                .originalAmount(cartDetailDTO.getOriginalPrice())
+                .subTotalAmount(cartDetailDTO.getSubTotalAmount())
+                .totalAmount(cartDetailDTO.getTotalAmount())
+                .sessionId(session.getId())
+                .build();
+        if (!req.getCode().isEmpty()) {
+            orderDTO.setDiscountAmount(cartDetailDTO.getDiscountAmount());
+        }
+        return orderDTO;
+    }
+
+    private StripeResponse buildStripeResponse(Session session) {
+        return StripeResponse.builder()
+                .status("PENDING")
+                .message("Payment session created.")
+                .sessionId(session.getId())
+                .sessionUrl(session.getUrl())
+                .build();
+    }
+    private CouponCreateParams buildCouponCreateParams(AdminCouponDTO adminCouponDTO){
+        CouponCreateParams params = null;
+        switch (adminCouponDTO.getCouponUnit().toString()) {
+          case "PERCENTAGE":
+            params = CouponCreateParams.builder()
+              .setPercentOff(new BigDecimal(adminCouponDTO.getDiscountAmount()))
+              .setDuration(CouponCreateParams.Duration.ONCE)
+              .build();
+            break;
+          case "FIXED":
+            params = CouponCreateParams.builder()
+              .setAmountOff(Long.valueOf(adminCouponDTO.getDiscountAmount()))
+              .setDuration(CouponCreateParams.Duration.ONCE)
+              .setCurrency("VND")
+              .build();
+            break;
+          default:
+            break;
+        }
+        return params;
+    }
 }
 

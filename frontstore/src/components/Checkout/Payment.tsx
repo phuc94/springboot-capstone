@@ -1,13 +1,24 @@
 import { useCheckout } from "@/hooks/useCheckout"
 import { useCartStore, usePaymentStore } from "@/store/useCartStore"
-import { Accordion, Box, Button, Card, Flex, Radio, Space, Stepper, Table, Text, Textarea, TextInput } from "@mantine/core"
+import { Accordion, Box, Button, Card, Divider, Flex, Loader, LoadingOverlay, Radio, Space, Stepper, Table, Text, Textarea, TextInput } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { notifications } from "@mantine/notifications"
 import { useEffect, useState } from "react"
 import Price from "../Price"
+import { IconTagStarred } from "@tabler/icons-react"
+import { useApplyCoupon } from "@/hooks/useApplyCoupon"
+import { useDisclosure } from "@mantine/hooks"
 
 const Payment = () => {
+  const {mutate: checkout, isSuccess, data} = useCheckout();
+  const {mutate: applyCoupon, isSuccess: applyCouponSuccess, data: applyCouponData} = useApplyCoupon();
+  const init = usePaymentStore(state => state.init);
   const cartDetail = useCartStore.getState();
+  const setStore = useCartStore(state => state.setStore);
+  const [visible, { toggle }] = useDisclosure(false);
+  const [couponApplied, setCouponApplied] = useState(false);
+  const fullStore = useCartStore(); // work around for zustand to trigger re-render when setStore
+
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -15,6 +26,7 @@ const Payment = () => {
       name: '',
       phone: '',
       note: '',
+      code: '',
     },
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
@@ -22,10 +34,13 @@ const Payment = () => {
     },
   });
 
-  const {mutate: checkout, isSuccess, data} = useCheckout();
-  const init = usePaymentStore(state => state.init);
+  const onApplyCoupon = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    applyCoupon(form.getValues().code);
+    toggle();
+  }
 
-  const onOrder = (e: React.MouseEvent<HTMLElement>, form) => {
+  const onOrder = (e: React.MouseEvent<HTMLElement>, form: any) => {
     e.preventDefault();
     if (!form.isValid()) {
       notifications.show({
@@ -41,6 +56,27 @@ const Payment = () => {
     })
     checkout(form.values);
   }
+
+  useEffect(() => {
+    if (applyCouponSuccess) {
+      if (applyCouponData.code === 200) {
+        setStore(applyCouponData.data);
+        toggle();
+        setCouponApplied(true)
+        notifications.show({
+          message: 'Áp dụng coupon thành công!',
+          color: 'green'
+        })
+      } else {
+        toggle();
+        notifications.show({
+          title: "Áp dụng coupon không thành công!",
+          message: "Vui lòng kiểm tra lại thông tin coupon.",
+          color: "red"
+        })
+      }
+    }
+  }, [applyCouponSuccess])
 
   useEffect(() => {
     if (isSuccess) {
@@ -61,7 +97,12 @@ const Payment = () => {
           <Space h="xl" />
           <form onSubmit={form.onSubmit(console.log)}>
             <Flex gap={20} direction="row">
-              <PaymentForm form={form}/>
+              <PaymentForm
+                form={form}
+                onApplyCoupon={onApplyCoupon}
+                visible={visible}
+                couponApplied={couponApplied}
+              />
               <OrderDetail onOrder={onOrder} cartDetail={cartDetail} form={form} />
             </Flex>
           </form>
@@ -73,7 +114,8 @@ const Payment = () => {
 }
 export default Payment
 
-const PaymentForm = ({form}: any) => {
+const PaymentForm = ({form, onApplyCoupon, visible, couponApplied}: any) => {
+
   return (
     <Box style={{minWidth: 320}}>
       <Text size="xl" fw={700}>Thông tin thanh toán</Text>
@@ -103,6 +145,27 @@ const PaymentForm = ({form}: any) => {
         key={form.key('note')}
         {...form.getInputProps('note')}
       />
+      <Space h="md" />
+      <Box pos="relative">
+        <LoadingOverlay visible={visible} loaderProps={{ children: <Loader color="blue" /> }} />
+        <Flex gap={12} align="center">
+          <IconTagStarred />
+          <Text size="xl" fw={700}>Mã ưu đãi</Text>
+        </Flex>
+        <Divider />
+        <Space h="sm" />
+        <TextInput
+          placeholder="Mã ưu đãi"
+          key={form.key('code')}
+          {...form.getInputProps('code')}
+          disabled={couponApplied}
+        />
+        <Space h="sm" />
+        <Button disabled={couponApplied} onClick={onApplyCoupon} fullWidth color="green">
+          {couponApplied ? '✅ Áp mã thành công' : 'Áp dụng'}
+        
+        </Button>
+      </Box>
     </Box>
   )
 }
@@ -131,11 +194,23 @@ const OrderDetail = ({onOrder, cartDetail, form}: any) => {
               </Table.Tr>
             ))
           }
+          {
+            cartDetail.discountAmount > 0 &&
+              <Table.Tr>
+                <Table.Td>Coupon</Table.Td>
+                <Table.Td>
+                  <Text>{cartDetail.code}</Text>
+                </Table.Td>
+                <Table.Td>
+                  - <Price value={cartDetail.discountAmount} />
+                </Table.Td>
+              </Table.Tr>
+          }
           <Table.Tr>
             <Table.Td><Text fw={700}>Tổng</Text></Table.Td>
             <Table.Td>{null}</Table.Td>
             <Table.Td>
-              <Price value={cartDetail.finalPrice} />
+              <Price value={cartDetail.totalAmount} />
             </Table.Td>
           </Table.Tr>
         </Table.Tbody>
@@ -164,4 +239,6 @@ const OrderDetail = ({onOrder, cartDetail, form}: any) => {
     </Card>
   )
 }
+
+
 

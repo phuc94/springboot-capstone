@@ -1,14 +1,15 @@
 package com.cybersoft.capstone.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
-import lombok.Data;
+import jakarta.persistence.ManyToOne;
 
-import java.io.Serializable;
+import lombok.Data;
 
 @Entity
 @Data
@@ -25,3 +26,4 @@ public class OrderCoupon implements Serializable {
     @JoinColumn(name = "coupon_id", referencedColumnName = "id")
     private Coupons coupon;
 }
+

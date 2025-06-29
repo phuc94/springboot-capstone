@@ -52,7 +52,7 @@ public class CouponController {
 
     @PostMapping("/{id}")
     public BaseResponse<AdminCouponDTO> updateCoupon(@Valid @PathVariable int id, @RequestBody AdminCouponDTO couponDTO) {
-        AdminCouponDTO updatedCoupon = couponService.updateCoupon(id, couponDTO);
+        AdminCouponDTO updatedCoupon = couponService.updateCoupon(couponDTO);
         BaseResponse<AdminCouponDTO> response = new BaseResponse<>(200, "Cập nhật coupon thành công");
         response.setData(updatedCoupon);
         return response;

@@ -76,9 +76,10 @@ public class ClientGameServiceImpl implements ClientGameService {
         Platforms platform = platformRepository.findByName(platformName);
         if (platform.getParent() == null) {
             List<Platforms> childPlatforms = platformRepository.findByParentId(platform.getId());
-            List<Integer> ids = new ArrayList<Integer>();
-            childPlatforms.forEach(childPlatform -> {ids.add(childPlatform.getId());});
-            return gameRepository.findByPlatform_IdInAndDeletedOnIsNull(ids).stream()
+            List<Integer> platformIds = new ArrayList<Integer>();
+            platformIds.add(platform.getId());
+            childPlatforms.forEach(childPlatform -> {platformIds.add(childPlatform.getId());});
+            return gameRepository.findByPlatform_IdInAndDeletedOnIsNull(platformIds).stream()
                 .map(gameMapper::toClientGameCardDTO).collect(Collectors.toList());
         }
         return gameRepository.findByPlatform_NameAndDeletedOnIsNull(platformName)

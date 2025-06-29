@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import com.cybersoft.capstone.entity.enums.CouponStatus;
+import com.cybersoft.capstone.entity.enums.CouponUnit;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -24,13 +25,29 @@ public class Coupons implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(nullable = false)
     private String code;
-    private Double discountAmount;
+
+    @Column(nullable = false)
+    private Integer discountAmount;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    private CouponUnit couponUnit;
+
     private Integer usageLimit;
+    @Column(nullable = false)
+
     private Integer usedCount;
     private Timestamp startDate;
+
+    @Column(nullable = false)
     private Timestamp endDate;
+
     @Column(nullable = false)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private CouponStatus status;

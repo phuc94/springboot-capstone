@@ -4,6 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
+import Price from "../Price";
 
 const Order = () => {
   const [activeTab, setActiveTab] = useState<string | null>(OrderType.SUCCESS.toString());
@@ -122,15 +123,14 @@ const CanceledTab = () => {
 }
 
 const OrderCard = ({data, onCancel}: any) => {
-
   return (
     <Card padding={20}>
-     <Table ta="center">
+     <Table ta="center" withTableBorder >
         <Table.Thead>
           <Table.Tr>
             <Table.Th ta="center">Số Order</Table.Th>
             <Table.Th ta="center">Giá gốc</Table.Th>
-            <Table.Th ta="center">Giảm</Table.Th>
+            <Table.Th ta="center">Coupon</Table.Th>
             <Table.Th ta="center">Tổng</Table.Th>
             <Table.Th ta="center">Tình trạng</Table.Th>
             {data.orderStatus == OrderType.PENDING.toString() &&
@@ -141,9 +141,9 @@ const OrderCard = ({data, onCancel}: any) => {
         <Table.Tbody>
           <Table.Tr >
             <Table.Td>{data.id}</Table.Td>
-            <Table.Td>{data.originalAmount}</Table.Td>
-            <Table.Td>{data.discountAmount}</Table.Td>
-            <Table.Td>{data.totalAmount}</Table.Td>
+            <Table.Td><Price value={data.subTotalAmount} /></Table.Td>
+            <Table.Td><Price value={-data.discountAmount} /></Table.Td>
+            <Table.Td><Price value={data.totalAmount} /></Table.Td>
             <Table.Td>{renderOrderStats(data.orderStatus)}</Table.Td>
             {data.orderStatus == OrderType.PENDING.toString() &&
               <Table.Td>
@@ -159,9 +159,6 @@ const OrderCard = ({data, onCancel}: any) => {
         </Table.Tbody>
       </Table>
 
-      <Space h="md" />
-      <Divider/>
-      <Space h="sm" />
       <Space h="xl" />
       <Title order={4} ta="center">Danh sách sản phẩm</Title>
       <Space h="md" />
@@ -201,10 +198,12 @@ const OrderItem = ({item}: any) => (
     <Table.Td>
         <Image src={item.img} w={60} h={100}/>
     </Table.Td>
-    <Table.Td>{item.title}</Table.Td>
+    <Table.Td>
+      <Text fw={600}>{item.title}</Text>
+    </Table.Td>
     <Table.Td>{item.quantity}</Table.Td>
-    <Table.Td>{item.price}</Table.Td>
-    <Table.Td>{item.quantity * item.price}</Table.Td>
+    <Table.Td><Price value={item.price} /></Table.Td>
+    <Table.Td><Price value={item.quantity * item.price} /></Table.Td>
   </Table.Tr>
 )
 

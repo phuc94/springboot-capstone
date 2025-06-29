@@ -1,12 +1,17 @@
-import { useShow } from "@refinedev/core";
+import { useOne, useShow } from "@refinedev/core";
 import { TextField, Show, DateField, NumberField, TagField } from "@refinedev/antd";
 
-import { Switch, Typography } from "antd";
+import { Typography } from "antd";
 
 export const ShowCoupon = () => {
   const {
     query: { data, isLoading },
   } = useShow();
+
+  const {data: couponTypeData} = useOne({
+    resource: "coupon_type",
+    id: data?.data?.couponTypeId,
+  })
 
   return (
     <Show isLoading={isLoading}>
@@ -35,7 +40,7 @@ export const ShowCoupon = () => {
       <TagField value={data?.data?.status} />
 
       <Typography.Title level={5}>Coupon Type</Typography.Title>
-      <TextField value={data?.data?.couponTypeId} />
+      <TextField value={couponTypeData?.data.type} />
     </Show>
   );
 };

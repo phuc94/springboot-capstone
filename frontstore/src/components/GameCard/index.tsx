@@ -1,6 +1,6 @@
 import { Badge, Box, Button, Card, Flex, Image, Rating, Space, Text } from "@mantine/core"
 import styles from './style.module.scss'
-import { Link } from "@tanstack/react-router"
+import { Link, useRouter } from "@tanstack/react-router"
 import { useAddToCart } from "@/hooks/useCart"
 import { notifications } from "@mantine/notifications"
 import { useRef } from "react"
@@ -11,8 +11,12 @@ const GameCard = ({data}: any) => {
   const {isAuthenticated} = useAuthStore();
   const {mutate: addToCart, isSuccess } = useAddToCart();
   const notiRef = useRef<string>('');
+  const router = useRouter();
 
-  const onAddToCart = async (id: number) => {
+  const onAddToCart = async (id: number, stock: number) => {
+    if (stock === 0) {
+      return router.history.push(`game/${id}`)
+    }
     if (!isAuthenticated) {
       notifications.show({
         title: 'Bạn chưa đăng nhập!',
@@ -45,12 +49,19 @@ const GameCard = ({data}: any) => {
         shadow="sm" padding="lg" radius="md" withBorder
         className={styles.gameCard}
       >
-        <Card.Section>
+        <Card.Section pos="relative">
           <Image
             w={220}
             h={300}
             src={data.img}
           />
+          {
+            data.stock === 0 &&
+            <div className={styles.outStock}>
+              <div className={styles.outStockOverlay}/>
+              <div className={styles.outStockText}> HẾT HÀNG </div>
+            </div>
+          }
         </Card.Section>
 
         <Flex direction="column" justify="center" align="center">
@@ -73,8 +84,13 @@ const GameCard = ({data}: any) => {
             </Text>
           }
           <Space h="md" />
-          <Button color="red" onClick={(e)=>{e.preventDefault();onAddToCart(data.id)}}>
-            MUA HÀNG
+          <Button color="red"
+            onClick={(e)=>{e.preventDefault();onAddToCart(data.id,data.stock)}}
+          >
+            {
+              data.stock !== 0 ?
+              'MUA HÀNG' : 'XEM TIẾP'
+            }
           </Button>
         </Flex>
         {data.sale && <SaleTag amount={data.sale.amount} />}

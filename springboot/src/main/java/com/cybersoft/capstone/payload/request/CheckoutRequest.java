@@ -12,5 +12,7 @@ public class CheckoutRequest {
     @NotNull
     private String phone;
     private String note;
+
+    private String code;
 }
 
