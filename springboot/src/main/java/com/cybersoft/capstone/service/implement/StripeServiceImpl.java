@@ -217,39 +217,6 @@ public class StripeServiceImpl implements StripeService {
                 .build();
     }
 
-    // // TODO: 
-    // // https://docs.stripe.com/checkout/fulfillment?payment-ui=stripe-hosted&lang=java
-    // @Override
-    // public void fulfillCheckout(String sessionId) {
-    //     Stripe.apiKey = secretKey;
-    //
-    //     // TODO: Make this function safe to run multiple times,
-    //     // even concurrently, with the same session ID
-    //
-    //     // TODO: Make sure fulfillment hasn't already been
-    //     // performed for this Checkout Session
-    //
-    //     // Retrieve the Checkout Session from the API with line_items expanded
-    //     SessionRetrieveParams params = SessionRetrieveParams.builder()
-    //         .addExpand("line_items")
-    //         .build();
-    //
-    //     Session checkoutSession = null;
-    //     try {
-    //         checkoutSession = Session.retrieve(sessionId, params, null);
-    //     } catch (StripeException e) {
-    //         System.out.println(e.getMessage());
-    //     }
-    //
-    //     // Check the Checkout Session's payment_status property
-    //     // to determine if fulfillment should be performed
-    //     if (!checkoutSession.getPaymentStatus().equals("unpaid")) {
-    //       // TODO: Perform fulfillment of the line items
-    //
-    //       // TODO: Record/save fulfillment status for this
-    //       // Checkout Session
-    //     }
-    // }
 
     private SessionCreateParams buildSessionCrateParams(List<SessionCreateParams.LineItem> lineItems, Coupon stripeCoupon) {
         SessionCreateParams.Discount discount = null;
@@ -322,5 +289,39 @@ public class StripeServiceImpl implements StripeService {
         }
         return params;
     }
+
+    // // TODO: 
+    // // https://docs.stripe.com/checkout/fulfillment?payment-ui=stripe-hosted&lang=java
+    // @Override
+    // public void fulfillCheckout(String sessionId) {
+    //     Stripe.apiKey = secretKey;
+    //
+    //     // TODO: Make this function safe to run multiple times,
+    //     // even concurrently, with the same session ID
+    //
+    //     // TODO: Make sure fulfillment hasn't already been
+    //     // performed for this Checkout Session
+    //
+    //     // Retrieve the Checkout Session from the API with line_items expanded
+    //     SessionRetrieveParams params = SessionRetrieveParams.builder()
+    //         .addExpand("line_items")
+    //         .build();
+    //
+    //     Session checkoutSession = null;
+    //     try {
+    //         checkoutSession = Session.retrieve(sessionId, params, null);
+    //     } catch (StripeException e) {
+    //         System.out.println(e.getMessage());
+    //     }
+    //
+    //     // Check the Checkout Session's payment_status property
+    //     // to determine if fulfillment should be performed
+    //     if (!checkoutSession.getPaymentStatus().equals("unpaid")) {
+    //       // TODO: Perform fulfillment of the line items
+    //
+    //       // TODO: Record/save fulfillment status for this
+    //       // Checkout Session
+    //     }
+    // }
 }
 
