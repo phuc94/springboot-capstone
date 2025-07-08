@@ -5,6 +5,7 @@ import { Stepper, Box, Button, Card, Center, Divider, Flex, Loader, Space, Stack
 import { IconCircleCheck } from "@tabler/icons-react"
 import { Link } from "@tanstack/react-router"
 import { useEffect } from "react"
+import Price from "../Price"
 
 const Success = () => {
   const {mutate: checkoutFulFill, isSuccess, data} = useCheckoutSuccess();
@@ -45,7 +46,7 @@ const Success = () => {
           <Card>
             <Flex justify="space-between" gap={40}>
               <Text>Tổng tiền đã thanh toán:</Text>
-              <Text>300.000 VND</Text>
+              <Text><Price value={data.data.totalAmount}/></Text>
             </Flex>
             <Flex justify="space-between" gap={40}>
               <Text>Phương thức thanh toán</Text>
@@ -53,7 +54,7 @@ const Success = () => {
             </Flex>
             <Flex justify="space-between" gap={40}>
               <Text>Số Order</Text>
-              <Text>#1982342</Text>
+              <Text>#{data.data.id}</Text>
             </Flex>
           </Card>
           <Divider my="sm" />
@@ -61,6 +62,10 @@ const Success = () => {
             <Text>Chi tiết sản phẩm sẽ được gửi qua Email. Xin hãy kiểm tra email.</Text>
           </Center>
           <Center>
+            <Button color="blue">
+              <Link to="/orders">Xem đơn hoàn thành</Link>
+            </Button>
+            <Space w="md" />
             <Button color="green">
               <Link to="/">Quay lại trang chủ</Link>
             </Button>
