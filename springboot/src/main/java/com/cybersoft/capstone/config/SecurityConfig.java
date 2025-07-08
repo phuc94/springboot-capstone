@@ -1,6 +1,8 @@
 package com.cybersoft.capstone.config;
 
 import com.cybersoft.capstone.filter.CustomAuthenticationFilter;
+import com.cybersoft.capstone.service.implement.AdminDetailsServiceImpl;
+import com.cybersoft.capstone.service.implement.UserDetailsServiceImpl;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private UserDetailsServiceImpl userDetailsServiceImpl;
+    private AdminDetailsServiceImpl adminDetailsServiceImpl;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -28,11 +33,16 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers("/api/auth/login").permitAll();
+                    request.requestMatchers("/api/checkout").hasAuthority("ROLE_USER");
+                    request.requestMatchers("/api/checkout/fullfill").hasAuthority("ROLE_USER");
+
+                    request.requestMatchers("/admin/register").permitAll();
+                    request.requestMatchers("/admin/login").permitAll();
+                    request.requestMatchers("/admin/**").hasAnyAuthority("ROLE_SUPER_ADMIN");
                     request.anyRequest().permitAll();
                 })
                 .cors(Customizer.withDefaults())
                 .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
-
 }

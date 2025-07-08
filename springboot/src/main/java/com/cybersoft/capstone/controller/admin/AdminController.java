@@ -4,8 +4,10 @@ import java.util.List;
 
 import jakarta.validation.Valid;
 
+import com.cybersoft.capstone.dto.AdminDTO;
 import com.cybersoft.capstone.entity.Admins;
 import com.cybersoft.capstone.payload.response.BaseResponse;
+import com.cybersoft.capstone.payload.response.OkResponse;
 import com.cybersoft.capstone.service.interfaces.AdminService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,8 +39,8 @@ public class AdminController {
     }
 
     @PostMapping
-    public BaseResponse<Admins> createAdmin(@Valid @RequestBody Admins admins) {
-        return adminService.createAdmin(admins);
+    public BaseResponse<AdminDTO> createAdmin(@Valid @RequestBody AdminDTO adminDTO) {
+        return new OkResponse<AdminDTO>(adminService.createAdmin(adminDTO));
     }
 
     @PostMapping("/{id}")

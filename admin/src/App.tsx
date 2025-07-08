@@ -14,8 +14,11 @@ import { CreateCoupon, EditCoupon, ListCoupon, ShowCoupon } from "./pages/coupon
 import { CreateCouponType, EditCouponType, ListCouponType, ShowCouponType } from "./pages/coupon_type";
 import { CreateGame, EditGame, ListGame, ShowGame } from "./pages/game";
 import { CreatePlatform, EditPlatform, ListPlatform, ShowPlatform } from "./pages/platform";
+import { Register } from "./pages/register";
+import { accessControlProvider } from "./providers/accessControllerProvider";
 
 function App() {
+  authProvider.check()
   return (
     <BrowserRouter>
       <ConfigProvider>
@@ -25,6 +28,7 @@ function App() {
             authProvider={authProvider}
             routerProvider={routerProvider}
             notificationProvider={useNotificationProvider}
+            accessControlProvider={accessControlProvider}
             resources={[
               {
                 name: "game",
@@ -125,6 +129,7 @@ function App() {
                 }
               >
                 <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
               </Route>
             </Routes>
           </Refine>

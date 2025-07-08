@@ -1,16 +1,16 @@
 package com.cybersoft.capstone.filter;
 
 import java.io.IOException;
-import java.util.List;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import com.cybersoft.capstone.dto.CustomAdminDetails;
 import com.cybersoft.capstone.dto.CustomUserDetails;
+import com.cybersoft.capstone.service.implement.AdminDetailsServiceImpl;
 import com.cybersoft.capstone.service.implement.UserDetailsServiceImpl;
-import com.cybersoft.capstone.service.interfaces.UserService;
 import com.cybersoft.capstone.utils.JwtHelper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class CustomAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private UserDetailsServiceImpl userDetailsServiceImpl;
+    @Autowired
+    private AdminDetailsServiceImpl adminDetailsServiceImpl;
 
     @Autowired
     private JwtHelper jwtHelper;
@@ -39,13 +38,21 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
         if(authenHeader != null && authenHeader.startsWith("Bearer ")) {
             String token = authenHeader.substring(7);
             String email = jwtHelper.decodeToken(token);
-            System.out.println(email);
-            CustomUserDetails user = userDetailsServiceImpl.loadUserByUsername(email);
 
-            if(email != null) {
-                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, List.of());
-                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(auth);
+            if (request.getRequestURI().startsWith("/admin")) {
+                CustomAdminDetails admin = adminDetailsServiceImpl.loadUserByUsername(email);
+                if(email != null) {
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(admin, null, admin.getAuthorities());
+                    auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
+            } else if (request.getRequestURI().startsWith("/api")) {
+                CustomUserDetails user = userDetailsServiceImpl.loadUserByUsername(email);
+                if(email != null) {
+                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                    auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
             }
         }
         filterChain.doFilter(request, response);

@@ -9,6 +9,7 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -21,14 +22,15 @@ public class JwtHelper {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String generateToken(String data) {
-        Map<String, Object> claims = new HashMap<>();
+    public String generateToken(String data, String role) {
+        Map<String, String> claims = new HashMap<>();
+        claims.put("role", role);
         return Jwts
           .builder()
           .claims(claims)
           .subject(data)
           .issuedAt(new Date(System.currentTimeMillis()))
-          .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 30 * 1000))
+          .expiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000))
           .signWith(getSecretKey())
           .compact();
     }
@@ -51,6 +53,24 @@ public class JwtHelper {
         }
 
         return data;
+    }
+
+    public String extractRole(String token) {
+        String role = null;
+        try {
+            Claims claims = Jwts
+              .parser()
+              .verifyWith(getSecretKey())
+              .build()
+              .parseSignedClaims(token)
+              .getPayload();
+            role = claims.get("role").toString();
+        } catch (ExpiredJwtException e) {
+            System.out.println("Token Expired!");
+        } catch (JwtException e) {
+            System.out.println("Decode Token!");
+        }
+        return role;
     }
 
     private SecretKey getSecretKey() {

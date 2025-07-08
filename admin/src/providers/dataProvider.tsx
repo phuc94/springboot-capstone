@@ -1,15 +1,13 @@
-import type { DataProvider, DeleteOneParams } from "@refinedev/core";
+import type { DataProvider } from "@refinedev/core";
 
 const API_URL = `http://${import.meta.env.VITE_API_SERVER_DOMAIN ?? 'localhost'}:8080/admin`;
 
 const fetcher = async (url: string, options?: RequestInit) => {
-  console.log(url)
-  console.log(options)
   return fetch(url, {
     ...options,
     headers: {
       ...options?.headers,
-      Authorization: localStorage.getItem("my_access_token") as string,
+      Authorization: 'Bearer ' + localStorage.getItem("my_access_token") as string,
     },
   });
 };
