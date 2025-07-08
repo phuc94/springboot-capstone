@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.cybersoft.capstone.entity.Carts;
-import com.cybersoft.capstone.entity.Users;
+import com.cybersoft.capstone.entity.Admins;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,19 +12,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import lombok.Data;
 
 @Data
-public class CustomUserDetails implements UserDetails {
+public class CustomAdminDetails implements UserDetails {
     private int id;
     private String name;
     private String email;
     private RoleDTO role;
-    private Carts cart;
 
-    public CustomUserDetails(Users user) {
-      this.id = user.getId();
-      this.name = user.getName();
-      this.email = user.getEmail();
-      this.cart = user.getCart();
-      RoleDTO role = new RoleDTO(user.getRole().getId(), user.getRole().getTitle());
+    public CustomAdminDetails(Admins admin) {
+      this.id = admin.getId();
+      this.name = admin.getName();
+      this.email = admin.getEmail();
+      RoleDTO role = new RoleDTO(admin.getRole().getId(), admin.getRole().getTitle());
       this.role = role;
     }
 
@@ -49,4 +46,3 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() { return true; }
 }
-

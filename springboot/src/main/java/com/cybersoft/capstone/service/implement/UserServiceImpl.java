@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // Generate JWT token
-        String token = jwtHelper.generateToken(user.getEmail());
+        String token = jwtHelper.generateToken(user.getEmail(), "ROLE_USER");
         AuthResponse authRes = new AuthResponse();
         UserDTO userdto = new UserDTO();
         userdto.setId(userDB.getId());

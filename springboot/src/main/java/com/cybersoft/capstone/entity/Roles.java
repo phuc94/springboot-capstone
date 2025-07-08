@@ -36,4 +36,7 @@ public class Roles implements Serializable {
     @OneToMany(mappedBy = "role")
     private List<Admins> admins;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "role")
+    private List<Users> users;
 }

@@ -1,13 +1,13 @@
 package com.cybersoft.capstone.controller.client;
 
-import com.cybersoft.capstone.dto.mapper.CartMapper;
+import com.cybersoft.capstone.entity.Roles;
 import com.cybersoft.capstone.entity.Users;
 import com.cybersoft.capstone.payload.request.SignInRequest;
 import com.cybersoft.capstone.payload.request.SignUpRequest;
 import com.cybersoft.capstone.payload.response.AuthResponse;
 import com.cybersoft.capstone.payload.response.BaseResponse;
 import com.cybersoft.capstone.payload.response.OkResponse;
-import com.cybersoft.capstone.service.interfaces.ClientAuthenticationService;
+import com.cybersoft.capstone.service.interfaces.RoleService;
 import com.cybersoft.capstone.service.interfaces.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClientAuthenticationController {
 
     @Autowired
-    private ClientAuthenticationService authenticationService;
-    @Autowired
     private UserService userService;
     @Autowired
-    private CartMapper cartMapper;
+    private RoleService roleService;
 
     @PostMapping("/register")
     public BaseResponse<?> signUp(@RequestBody SignUpRequest signUpRequest) {
@@ -35,6 +33,8 @@ public class ClientAuthenticationController {
         user.setName(signUpRequest.getName());
         user.setEmail(signUpRequest.getEmail());
         user.setPassword(signUpRequest.getPassword());
+        Roles role = roleService.getRoleByTitle("ROLE_USER");
+        user.setRole(role);
 
         return new OkResponse<>(userService.signUp(user));
     }
