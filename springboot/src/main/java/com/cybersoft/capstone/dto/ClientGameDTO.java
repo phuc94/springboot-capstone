@@ -10,5 +10,6 @@ public class ClientGameDTO {
     private int salePrice;
     private int stock;
     private int avgRating;
+    private int ratingCount;
     private SaleDTO sale;
 }

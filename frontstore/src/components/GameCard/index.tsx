@@ -68,7 +68,7 @@ const GameCard = ({data}: any) => {
           <Space h="xs" />
           <Text size="xl" ta="center">{data.title}</Text>
           <Space h="xs" />
-          <Rating value={5} color="#faf737" size="md" readOnly/>
+          <Rating value={data.avgRating} color="#faf737" size="md" readOnly/>
           {data.sale ?
             <Box>
               <Text size="xl" c="dimmed" td="line-through">

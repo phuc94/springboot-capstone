@@ -31,6 +31,7 @@ public interface OrderMapper {
                 OrderItemDTO orderItemDTO = new OrderItemDTO();
                 orderItemDTO.setPrice(orderItem.getUnitPrice());
                 orderItemDTO.setQuantity(orderItem.getQuantity());
+                orderItemDTO.setReviewed(orderItem.getReviewed());
                 if (orderItem.getGame() != null) {
                   orderItemDTO.setGameId(orderItem.getGame().getId());
                   orderItemDTO.setImg(orderItem.getGame().getMedias().get(0).getUrl());

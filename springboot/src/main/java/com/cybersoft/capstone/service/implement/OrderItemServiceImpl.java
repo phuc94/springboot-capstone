@@ -3,6 +3,7 @@ package com.cybersoft.capstone.service.implement;
 import java.util.List;
 
 import com.cybersoft.capstone.entity.OrderItem;
+import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.repository.OrderItemRepository;
 import com.cybersoft.capstone.service.interfaces.OrderItemService;
 
@@ -25,6 +26,22 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public List<OrderItem> findByOrderId(int orderId) {
        return orderItemRepository.findByOrderId(orderId);
+    }
+
+    @Override
+    public Boolean existsByOrderIdAndGameId(int orderId, int gameId) {
+        return orderItemRepository.existsByOrderIdAndGameId(orderId, gameId);
+    }
+
+    @Override
+    public OrderItem findByOrderIdAndGameId(int orderId, int gameId) {
+        return orderItemRepository.findByOrderIdAndGameId(orderId, gameId)
+            .orElseThrow(()-> new NotFoundException("Order not found!"));
+    }
+
+    @Override
+    public OrderItem save(OrderItem orderItem) {
+        return orderItemRepository.save(orderItem);
     }
 
 }

@@ -1,4 +1,4 @@
-import { Flex, Group, Image, Space, Stack } from "@mantine/core"
+import { Flex, Group, Image, Space } from "@mantine/core"
 import SearchBar from "./SearchBar"
 import CTA from "./CTA"
 import Navbar from "./Navbar"

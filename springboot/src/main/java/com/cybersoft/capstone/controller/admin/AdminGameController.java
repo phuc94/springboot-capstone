@@ -8,6 +8,7 @@ import com.cybersoft.capstone.dto.AdminGameDTO;
 import com.cybersoft.capstone.exception.NotFoundException;
 import com.cybersoft.capstone.payload.request.SearchGameRequest;
 import com.cybersoft.capstone.payload.response.BaseResponse;
+import com.cybersoft.capstone.payload.response.OkResponse;
 import com.cybersoft.capstone.service.interfaces.AdminGameService;
 
 import org.springframework.data.domain.Page;
@@ -105,6 +106,20 @@ public class AdminGameController {
             return response;
         } catch (Exception ex) {
             BaseResponse<Void> response = new BaseResponse<>(500, "Xóa game không thành công");
+            response.setData(null);
+            return response;
+        }
+    }
+
+    @PostMapping("/no-auth")
+    public BaseResponse<AdminGameDTO> createGameNoAuth(@RequestBody AdminGameDTO adminGameDTO) {
+        try {
+            adminGameDTO.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            adminGameDTO.setUpdatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            adminGameDTO.setAvgRating(5);
+            return new OkResponse<AdminGameDTO>(adminGameService.createAdminGame(adminGameDTO));
+        } catch (NotFoundException ex) {
+            BaseResponse<AdminGameDTO> response = new BaseResponse<>(500, "Thêm không thành công!");
             response.setData(null);
             return response;
         }

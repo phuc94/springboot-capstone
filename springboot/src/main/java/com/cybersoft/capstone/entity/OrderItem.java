@@ -20,6 +20,7 @@ public class OrderItem implements Serializable {
     private int quantity;
     private int unitPrice;
     private int totalPrice;
+    private Boolean reviewed = false;
 
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
