@@ -17,7 +17,8 @@ const Payment = () => {
   const setStore = useCartStore(state => state.setStore);
   const [visible, { toggle }] = useDisclosure(false);
   const [couponApplied, setCouponApplied] = useState(false);
-  const fullStore = useCartStore(); // work around for zustand to trigger re-render when setStore
+  // eslint-ignore-next-line @typescript-eslint/no-unused-vars
+  const _ = useCartStore(); // work around for zustand to trigger re-render when setStore
 
   const form = useForm({
     mode: 'uncontrolled',

@@ -29,7 +29,7 @@ const SignInForm = ({closeModal}: any) => {
   });
 
   useEffect(()=>{
-    if (isSuccess && data.code == 200) {
+    if (isSuccess && data.code === 200) {
       notifications.show({
         message: 'Đăng nhập thành công!',
         color: 'green'

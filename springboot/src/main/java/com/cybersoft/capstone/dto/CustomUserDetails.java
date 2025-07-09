@@ -36,6 +36,14 @@ public class CustomUserDetails implements UserDetails {
         return roles;
     }
 
+    public SimpleUserDTO getSimpleUserDTO() {
+        SimpleUserDTO simpleUserDTO = new SimpleUserDTO();
+        simpleUserDTO.setId(id);
+        simpleUserDTO.setName(name);
+        simpleUserDTO.setEmail(email);
+        return simpleUserDTO;
+    }
+
     @Override
     public String getPassword() { return ""; }
     @Override

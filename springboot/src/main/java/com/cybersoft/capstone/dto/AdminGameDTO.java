@@ -11,6 +11,7 @@ public class AdminGameDTO {
     private int price;
     private int stock;
     private int avgRating;
+    private int ratingCount;
     private String media;
     private int platformId;
     private String description;

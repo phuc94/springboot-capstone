@@ -38,6 +38,7 @@ public class SecurityConfig {
 
                     request.requestMatchers("/admin/register").permitAll();
                     request.requestMatchers("/admin/login").permitAll();
+                    request.requestMatchers("/admin/game/no-auth").permitAll();
                     request.requestMatchers("/admin/**").hasAnyAuthority("ROLE_SUPER_ADMIN");
                     request.anyRequest().permitAll();
                 })

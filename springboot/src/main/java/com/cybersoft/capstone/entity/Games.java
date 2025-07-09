@@ -28,6 +28,7 @@ public class Games implements Serializable {
     private Integer price;
     private int stock;
     private int avgRating;
+    private int ratingCount;
     @Column(name = "deleted_on")
     private Timestamp deletedOn;
     private Timestamp createdAt;

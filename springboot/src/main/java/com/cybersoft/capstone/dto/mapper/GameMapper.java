@@ -18,8 +18,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface GameMapper {
 
-    Games toGames(AdminGameDTO gameDTO);
-
     @Mapping(source = "gameDescription.description", target = "description")
     @Mapping(source = "sale.id", target = "saleId")
     @Mapping(source = "platform.id", target = "platformId")

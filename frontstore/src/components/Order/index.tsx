@@ -1,10 +1,12 @@
 import { useCancelOrder, useOrderCanceled, useOrderPending, useOrderSuccess } from "@/hooks/useOrder";
-import { Box, Button, Card, Divider, Flex, Group, Image, Modal, Space, Stack, Table, Tabs, Text, Title } from "@mantine/core"
+import { Button, Card, Center, Flex, Image, Modal, Rating, Space, Stack, Table, Tabs, Text, Textarea, Title } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import Price from "../Price";
+import { useForm } from "@mantine/form";
+import { useCreateReview } from "@/hooks/useCreateReview";
 
 const Order = () => {
   const [activeTab, setActiveTab] = useState<string | null>(OrderType.SUCCESS.toString());
@@ -50,11 +52,45 @@ export default Order
 
 const SuccessTab = () => {
   const {data, isSuccess} = useOrderSuccess()
+  const [opened, { open, close }] = useDisclosure(false);
+  const [modalData, setModalData] = useState<any>();
+  const {mutate: createReview, isSuccess: isCreateReviewSuccess} = useCreateReview();
+  const setReviewedRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (isCreateReviewSuccess) {
+      notifications.show({
+        title: "Đánh giá sản phẩm thành công",
+        message: "Cảm ơn bạn đá đánh giá sản phẩm!"
+      })
+      const setReviewed = setReviewedRef.current;
+      if (setReviewed !== null) { setReviewed(true);}
+    }
+  },[isCreateReviewSuccess])
+
+  const onModalReview = (e: any, data: any, setReviewed: any) => {
+    e.preventDefault();
+    setModalData(data)
+    open();
+    setReviewedRef.current = setReviewed;
+  }
+
+  const onReviewSubmit = (review: any) => {
+    createReview({
+      gameId: review.data.item.gameId,
+      orderId: review.data.orderId,
+      rating: review.form.rating,
+      comment: review.form.comment 
+    })
+    close();
+  }
+
   if (!isSuccess) {return null;}
   return (
     <Stack gap={30}>
       <Space h="lg" />
-      {data.data?.length > 0 && data.data?.map((data: any) => <OrderCard key={data.id} data={data} onCancel={null} />)}
+      {data.data?.length > 0 && data.data?.map((data: any) => <OrderCard onModalReview={onModalReview} key={data.id} data={data} onCancel={null} />)}
+      <ReviewModal opened={opened} close={close} data={modalData} onReviewSubmit={onReviewSubmit} />
     </Stack>
   )
 }
@@ -122,7 +158,7 @@ const CanceledTab = () => {
   )
 }
 
-const OrderCard = ({data, onCancel}: any) => {
+const OrderCard = ({data, onCancel, onModalReview}: any) => {
   return (
     <Card padding={20}>
      <Table ta="center" withTableBorder >
@@ -133,7 +169,7 @@ const OrderCard = ({data, onCancel}: any) => {
             <Table.Th ta="center">Coupon</Table.Th>
             <Table.Th ta="center">Tổng</Table.Th>
             <Table.Th ta="center">Tình trạng</Table.Th>
-            {data.orderStatus == OrderType.PENDING.toString() &&
+            {data.orderStatus === OrderType.PENDING.toString() &&
               <Table.Th ta="center">Thao tác</Table.Th>
             }
           </Table.Tr>
@@ -145,7 +181,7 @@ const OrderCard = ({data, onCancel}: any) => {
             <Table.Td><Price value={-data.discountAmount} /></Table.Td>
             <Table.Td><Price value={data.totalAmount} /></Table.Td>
             <Table.Td>{renderOrderStats(data.orderStatus)}</Table.Td>
-            {data.orderStatus == OrderType.PENDING.toString() &&
+            {data.orderStatus === OrderType.PENDING.toString() &&
               <Table.Td>
                 <Link to={data.url}>
                   <Button>Thanh toán</Button>
@@ -170,10 +206,19 @@ const OrderCard = ({data, onCancel}: any) => {
             <Table.Th ta="center">Số lượng</Table.Th>
             <Table.Th ta="center">Đơn giá</Table.Th>
             <Table.Th ta="center">Tổng</Table.Th>
+            {data.orderStatus === OrderType.SUCCESS.toString() && <Table.Td>Thao tác</Table.Td> }
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {data.orderItems.map((item: any) =><OrderItem key={item.gameId} item={item}/>)}
+          {data.orderItems.map((item: any) =>
+             <OrderItem
+              key={item.gameId}
+              item={item}
+              orderStatus={data.orderStatus}
+              orderId={data.id}
+              onModalReview={onModalReview}
+             />
+          )}
         </Table.Tbody>
       </Table>
     </Card>
@@ -193,19 +238,39 @@ const renderOrderStats = (orderStatus: string) => {
   }
 }
 
-const OrderItem = ({item}: any) => (
-  <Table.Tr key={item.gameId}>
-    <Table.Td>
-        <Image src={item.img} w={60} h={100}/>
-    </Table.Td>
-    <Table.Td>
-      <Text fw={600}>{item.title}</Text>
-    </Table.Td>
-    <Table.Td>{item.quantity}</Table.Td>
-    <Table.Td><Price value={item.price} /></Table.Td>
-    <Table.Td><Price value={item.quantity * item.price} /></Table.Td>
-  </Table.Tr>
-)
+const OrderItem = ({item, orderStatus, orderId, onModalReview}: any) => {
+  const [reviewed, setReviewed] = useState<boolean>(item.reviewed);
+
+  return (
+    <Table.Tr key={item.gameId}>
+      <Table.Td>
+        <Link to="/game/$gameId" params={{gameId: item.gameId}} >
+          <Image src={item.img} w={80} h={100} />
+        </Link>
+      </Table.Td>
+      <Table.Td>
+        <Text fw={600}>
+          <Link to="/game/$gameId" params={{gameId: item.gameId}} >
+            {item.title}
+          </Link>
+        </Text>
+      </Table.Td>
+      <Table.Td>{item.quantity}</Table.Td>
+      <Table.Td><Price value={item.price} /></Table.Td>
+      <Table.Td><Price value={item.quantity * item.price} /></Table.Td>
+      {orderStatus === OrderType.SUCCESS.toString() &&
+        <Table.Td>
+          <Button
+            disabled={reviewed}
+            onClick={(e) => {onModalReview(e, {item, orderId}, setReviewed)}}
+          >
+            {reviewed ? 'Đã đánh giá' : 'Đánh giá'}
+          </Button>
+        </Table.Td>
+      }
+    </Table.Tr>
+  )
+}
 
 enum OrderType {
   SUCCESS = "COMPLETED",
@@ -213,3 +278,67 @@ enum OrderType {
   CANCELLED = "CANCELLED"
 }
 
+const ReviewModal = ({opened, data, close, onReviewSubmit}: any) => {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      comment: '',
+      rating: null,
+    },
+    validate: {
+      rating: (value) => value === null
+    },
+  });
+  if (!data) {return;}
+
+  const onFormSubmit = (e: any) => {
+    e.preventDefault()
+    if (form.isValid()) {
+      onReviewSubmit({data, form: form.getValues()});
+      return;
+    }
+    notifications.show({
+      title: "Đánh giá sản phẩm",
+      message: "Vui lòng rating sản phẩm",
+      color: "red"
+    })
+  }
+
+  return (
+    <Modal
+      opened={opened} onClose={()=>{form.reset();close();}} centered
+      title="Đánh giá sản phẩm"
+      padding={30}
+      size="auto"
+    >
+      <form onSubmit={onFormSubmit} >
+        <Flex direction="column" align="center">
+          <Image src={data?.item?.img} w={40} h={50} />
+          <Space h="xs" />
+          <Title order={3}>{data?.item?.title}</Title>
+          <Space h="md" />
+          <Rating
+            key={form.key('rating')}
+            size="lg"
+            {...form.getInputProps('rating')}
+          />
+        </Flex>
+        <Space h="md" />
+        <Textarea
+          cols={80}
+          rows={8}
+          label="Bình luận của bạn:"
+          key={form.key('comment')}
+          {...form.getInputProps('comment')}
+        />
+        <Space h="md" />
+        <Center><Text c="dimmed" fs="italic">Bạn không thể thay đổi đánh giá sau khi đã hoàn thành.</Text></Center>
+        <Space h="md" />
+        <Flex justify="center" gap={20}>
+          <Button type="submit">Đánh giá</Button>
+          <Button color="green" onClick={close}>Hủy</Button>
+        </Flex>
+      </form>
+    </Modal>
+  )
+}

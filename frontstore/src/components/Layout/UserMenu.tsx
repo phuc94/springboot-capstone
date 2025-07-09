@@ -16,6 +16,7 @@ const UserMenu = () => {
     notifications.show({
       message: 'Bạn đã đăng xuất!',
     })
+    router.history.push("/")
   }
 
   return (

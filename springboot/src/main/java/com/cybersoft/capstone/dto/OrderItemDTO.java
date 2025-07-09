@@ -9,4 +9,5 @@ public class OrderItemDTO {
     private int gameId;
     private String title;
     private String img;
+    private Boolean reviewed;
 }

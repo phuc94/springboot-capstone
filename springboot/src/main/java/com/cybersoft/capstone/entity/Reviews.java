@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,7 +22,12 @@ public class Reviews implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Timestamp createdAt;
+
+    @Min(1)
+    @Max(5)
+    private int rating;
+
+    private String comment;
 
     @ManyToOne
     @JoinColumn(name = "game_id", referencedColumnName = "id")
@@ -32,6 +39,5 @@ public class Reviews implements Serializable {
     @JsonIgnore
     private Users user;
 
-    private int rating;
-    private String comment;
+    private Timestamp createdAt;
 }

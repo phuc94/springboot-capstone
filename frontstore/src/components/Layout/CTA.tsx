@@ -18,7 +18,7 @@ const CTA = () => {
         <Indicator
           color="red"
           label={items.length}
-          disabled={items.length == 0}
+          disabled={items.length === 0}
           size={18}
           radius="xl"
         >
